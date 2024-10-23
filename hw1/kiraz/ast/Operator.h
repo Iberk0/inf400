@@ -36,6 +36,9 @@ public:
         case OP_MULT:
             opstr = "Mult";
             break;
+        case OP_ASSIGN:
+            opstr = "OP_ASSIGN";
+            break;
         
         default:
             break;
@@ -66,7 +69,10 @@ public:
     OpMult(const Node::Ptr &left, const Node::Ptr &right) : OpBinary(OP_MULT, left, right) {}
 };
 
-
+class OpAssign: public OpBinary {
+public:
+    OpAssign(const Node::Ptr &left, const Node::Ptr &right) : OpBinary(OP_ASSIGN, left , right) {}
+};
 
 }
 

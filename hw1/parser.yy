@@ -21,7 +21,18 @@ extern int yylineno;
 %token OP_MULT
 
 
+%token OP_COMMA
+%token OP_ASSIGN
+%token OP_LBRACE
+%token OP_RBRACE
+%token OP_SCOLON
+
 %token L_INTEGER
+%token IDENTIFIER
+%token TYPE_ANNOT
+%token KW_FUNC
+%token KW_LET
+%token COLON
 
 %left OP_PLUS OP_MINUS
 %left OP_MULT OP_DIVF
@@ -33,14 +44,45 @@ extern int yylineno;
 %%
 
 
+stmt: 
+    func_stmt
+    | let_stmt
+    | addsub
+    ;
 
-stmt:
-    OP_LPAREN stmt OP_RPAREN { $$ = $2; }  
-    | addsub;
+func_stmt:
+    KW_FUNC IDENTIFIER OP_LPAREN arg_list OP_RPAREN COLON TYPE_ANNOT OP_LBRACE scope OP_RBRACE  { $$ == Node::add<ast::Func>($2, $4, $7, $9);}
+    ;
+
+arg_list:
+    
+    | arg_list OP_COMMA arg_declaration
+    | arg_declaration
+    ;
+
+arg_declaration:
+    IDENTIFIER COLON TYPE_ANNOT
+    ;
+
+scope:
+    stmt OP_SCOLON scope
+    | stmt OP_SCOLON
+    ;
+
+let_stmt:
+    KW_LET IDENTIFIER COLON TYPE_ANNOT
+    | KW_LET IDENTIFIER COLON TYPE_ANNOT OP_ASSIGN stmt
+    ;
+
+assignment_stmt:
+    IDENTIFIER OP_ASSIGN stmt { $$ = Node::add<ast::OpAssign>($1, $3); }
+    ;
+    
 
 
 addsub:
     muldiv
+    | OP_LPAREN addsub OP_RPAREN { $$ = $2;}
     | stmt OP_PLUS stmt  { $$ = Node::add<ast::OpAdd>($1,$3);}
     | stmt OP_MINUS stmt { $$ = Node::add<ast::OpSub>($1,$3);}
     ;

@@ -24,6 +24,7 @@ private:
     std::string m_value;
 };
 
+
 }
 
 #endif // KIRAZ_TOKEN_LITERAL_H

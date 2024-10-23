@@ -15,6 +15,17 @@ extern std::shared_ptr<Token> curtoken;
 %option yylineno
 
 %%
+"func"      {colno += yyleng; curtoken = Token::New<FuncKeyword>(); return KW_FUNC;}
+"let"       {colno += yyleng; curtoken = Token::New<LetKeyword>(); return KW_LET;}
+":"         {colno += yyleng; curtoken = Token::New<Colon>(); return COLON;}
+","         {colno += yyleng; curtoken = Token::New<OpComma>(); return OP_COMMA;}
+"="         {colno += yyleng; curtoken = Token::New<OpAssign>(); return OP_ASSIGN;}
+"{"         {colno += yyleng; curtoken = Token::New<OpLbrace>(); return OP_LBRACE;}
+"}"         {colno += yyleng; curtoken = Token::New<OpRbrace>(); return OP_RBRACE;}
+";"         {colno += yyleng; curtoken = Token::New<OpScolon>(); return OP_SCOLON;}
+
+[a-zA-Z_][a-zA-Z0-9_]*  {colno += yyleng; curtoken = Token::New<Identifier>(yytext); return IDENTIFIER;}
+[A-Z][a-zA-Z0-9_]*  {colno += yyleng; curtoken = Token::New<TypeAnnot>(yytext); return TYPE_ANNOT;}
 
 [0-9]+      {colno += yyleng; curtoken = Token::New<Integer>(10,yytext); return L_INTEGER;}
 

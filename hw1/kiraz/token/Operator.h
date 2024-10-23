@@ -33,6 +33,11 @@ public:
     std::string as_string() const override {return "OP_DIVF"; }
 };
 
+class OpAssign : public Operator{
+    OpAssign() : Operator(OP_ASSIGN) {}
+    std::string as_string() const override { return "OP_ASSIGN"; }
+};
+
 class OpLparen : public Operator {
 public:
     OpLparen() : Operator(OP_LPAREN) {}
