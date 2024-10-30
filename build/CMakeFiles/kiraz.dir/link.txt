@@ -1,0 +1,2 @@
+/usr/bin/ar qc libkiraz.a CMakeFiles/kiraz.dir/fmt/format.cc.o CMakeFiles/kiraz.dir/fmt/os.cc.o CMakeFiles/kiraz.dir/kiraz/Token.cpp.o CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o CMakeFiles/kiraz.dir/kiraz/Node.cpp.o CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o CMakeFiles/kiraz.dir/parser.cpp.o CMakeFiles/kiraz.dir/_lexer_gen.cpp.o
+/usr/bin/ranlib libkiraz.a
