@@ -372,8 +372,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 2
-#define YY_END_OF_BUFFER 3
+#define YY_NUM_RULES 30
+#define YY_END_OF_BUFFER 31
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -381,27 +381,32 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[7] =
+static const flex_int16_t yy_accept[60] =
     {   0,
-        0,    0,    3,    1,    2,    0
+        0,    0,   31,   29,   28,   28,   29,   29,   17,   18,
+       15,   13,    8,   14,   16,   26,    7,   12,   19,    9,
+       21,   25,   25,   25,   25,   25,   25,   10,   11,   28,
+       24,    0,   27,    0,   26,   20,   23,   22,   25,   25,
+       25,    3,   25,   25,   25,   25,   25,   25,    6,   25,
+       25,    2,   25,   25,    5,   25,    4,    1,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
+        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    2,    4,    5,    1,    1,    1,    1,    1,    6,
+        7,    8,    9,   10,   11,    1,   12,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   14,   15,   16,
+       17,   18,    1,    1,   19,   19,   19,   19,   19,   19,
+       19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
+       19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
+        1,   20,    1,    1,   19,    1,   21,   19,   22,   19,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       23,   24,   19,   25,   26,   19,   19,   27,   28,   29,
+       30,   31,   19,   32,   33,   34,   35,   19,   36,   19,
+       19,   19,   37,    1,   38,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -418,35 +423,75 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[3] =
+static const YY_CHAR yy_meta[39] =
     {   0,
-        1,    1
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    2,    1,    1,    1,    1,    1,    2,    1,
+        2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
+        2,    2,    2,    2,    2,    2,    1,    1
     } ;
 
-static const flex_int16_t yy_base[7] =
+static const flex_int16_t yy_base[62] =
     {   0,
-        0,    0,    3,    4,    4,    4
+        0,    0,   78,   79,   37,   39,   60,   38,   79,   79,
+       79,   79,   79,   79,   79,   63,   79,   79,   58,   57,
+       56,    0,   45,   36,   20,   47,   44,   79,   79,   43,
+       79,   42,   79,   65,   54,   79,   79,   79,    0,   45,
+       36,    0,   30,   26,   33,   24,   34,   25,    0,   27,
+       20,    0,   20,   28,    0,   16,    0,    0,   79,   62,
+       47
     } ;
 
-static const flex_int16_t yy_def[7] =
+static const flex_int16_t yy_def[62] =
     {   0,
-        6,    1,    6,    6,    6,    0
+       59,    1,   59,   59,   59,   59,   59,   60,   59,   59,
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+       59,   61,   61,   61,   61,   61,   61,   59,   59,   59,
+       59,   60,   59,   60,   59,   59,   59,   59,   61,   61,
+       61,   61,   61,   61,   61,   61,   61,   61,   61,   61,
+       61,   61,   61,   61,   61,   61,   61,   61,    0,   59,
+       59
     } ;
 
-static const flex_int16_t yy_nxt[7] =
+static const flex_int16_t yy_nxt[118] =
     {   0,
-        4,    5,    6,    3,    6,    6
+        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
+       14,   15,   16,   17,   18,   19,   20,   21,   22,    4,
+       22,   23,   22,   24,   22,   25,   26,   22,   22,   22,
+       22,   22,   22,   22,   22,   27,   28,   29,   30,   30,
+       30,   30,   33,   42,   30,   30,   33,   43,   39,   58,
+       57,   56,   55,   54,   53,   52,   51,   34,   50,   49,
+       48,   34,   32,   32,   47,   46,   35,   59,   45,   44,
+       41,   40,   38,   37,   36,   35,   31,   59,    3,   59,
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+       59,   59,   59,   59,   59,   59,   59
     } ;
 
-static const flex_int16_t yy_chk[7] =
+static const flex_int16_t yy_chk[118] =
     {   0,
-        1,    1,    3,    6,    6,    6
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    5,    5,
+        6,    6,    8,   25,   30,   30,   32,   25,   61,   56,
+       54,   53,   51,   50,   48,   47,   46,    8,   45,   44,
+       43,   32,   60,   60,   41,   40,   35,   34,   27,   26,
+       24,   23,   21,   20,   19,   16,    7,    3,   59,   59,
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+
+       59,   59,   59,   59,   59,   59,   59,   59,   59,   59,
+       59,   59,   59,   59,   59,   59,   59
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[3] =
+static const flex_int32_t yy_rule_can_match_eol[31] =
     {   0,
-0, 0,     };
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -471,8 +516,8 @@ char *yytext;
 static auto &colno = Token::colno;
 using namespace token;
 extern std::shared_ptr<Token> curtoken;
-#line 475 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
-#line 476 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
+#line 520 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
+#line 521 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
 
 #define INITIAL 0
 
@@ -689,10 +734,10 @@ YY_DECL
 		}
 
 	{
-#line 16 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+#line 17 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
 
 
-#line 696 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
+#line 741 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -719,13 +764,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 7 )
+				if ( yy_current_state >= 60 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 4 );
+		while ( yy_base[yy_current_state] != 79 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -761,15 +806,157 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 18 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
-;
+#line 19 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<Import>(); return KW_IMPORT; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+#line 20 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<Func>(); return KW_FUNC; }
+	YY_BREAK
+case 3:
+YY_RULE_SETUP
+#line 21 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<If>(); return KW_IF; }
+	YY_BREAK
+case 4:
+YY_RULE_SETUP
+#line 22 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<While>(); return KW_WHILE; }
+	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 23 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<Class>(); return KW_CLASS; }
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 26 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<Let>(); return KW_LET; }
+	YY_BREAK
+case 7:
+YY_RULE_SETUP
+#line 27 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpColon>(); return OP_COLON; }
+	YY_BREAK
+case 8:
+YY_RULE_SETUP
+#line 28 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpComma>(); return OP_COMMA; }
+	YY_BREAK
+case 9:
+YY_RULE_SETUP
+#line 29 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpAssign>(); return OP_ASSIGN; }
+	YY_BREAK
+case 10:
+YY_RULE_SETUP
+#line 30 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpLbrace>(); return OP_LBRACE; }
+	YY_BREAK
+case 11:
+YY_RULE_SETUP
+#line 31 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpRbrace>(); return OP_RBRACE; }
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 32 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpScolon>(); return OP_SCOLON; }
+	YY_BREAK
+case 13:
+YY_RULE_SETUP
+#line 33 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpPlus>(); return OP_PLUS; }
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 34 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpMinus>(); return OP_MINUS; }
+	YY_BREAK
+case 15:
+YY_RULE_SETUP
+#line 35 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpMult>(); return OP_MULT; }
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 36 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpDivF>(); return OP_DIVF; }
+	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 37 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpLparen>(); return OP_LPAREN; }
+	YY_BREAK
+case 18:
+YY_RULE_SETUP
+#line 38 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpRparen>(); return OP_RPAREN; }
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 39 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpLess>(); return OP_LESS; }
+	YY_BREAK
+case 20:
+YY_RULE_SETUP
+#line 40 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpLessEq>(); return OP_LESSEQ; }
+	YY_BREAK
+case 21:
+YY_RULE_SETUP
+#line 41 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpGreater>(); return OP_GREATER; }
+	YY_BREAK
+case 22:
+YY_RULE_SETUP
+#line 42 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpGreaterEq>(); return OP_GREATEREQ; }
+	YY_BREAK
+case 23:
+YY_RULE_SETUP
+#line 43 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpEqual>(); return OP_EQUAL; }
+	YY_BREAK
+case 24:
+YY_RULE_SETUP
+#line 44 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<OpNotEqual>(); return OP_NOT_EQUAL; }
+	YY_BREAK
+case 25:
+YY_RULE_SETUP
+#line 46 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<Identifier>(yytext); return IDENTIFIER; }
+	YY_BREAK
+case 26:
+YY_RULE_SETUP
+#line 48 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<Integer>(10, yytext); return L_INTEGER; }
+	YY_BREAK
+case 27:
+/* rule 27 can match eol */
+YY_RULE_SETUP
+#line 50 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{ colno += yyleng; curtoken = Token::New<StringLiteral>(yytext); return L_STRING; }
+	YY_BREAK
+case 28:
+/* rule 28 can match eol */
+YY_RULE_SETUP
+#line 53 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{colno += yyleng;}
+	YY_BREAK
+case 29:
+YY_RULE_SETUP
+#line 54 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+{colno += yyleng; curtoken = Token::New<Rejected>(); return YYUNDEF; }
+	YY_BREAK
+case 30:
+YY_RULE_SETUP
+#line 56 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
 ECHO;
 	YY_BREAK
-#line 773 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
+#line 960 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1066,7 +1253,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 7 )
+			if ( yy_current_state >= 60 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1094,11 +1281,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 7 )
+		if ( yy_current_state >= 60 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 6);
+	yy_is_jam = (yy_current_state == 59);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1786,4 +1973,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 19 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+#line 56 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"

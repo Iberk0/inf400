@@ -1,6 +1,33 @@
 Terminals unused in grammar
 
     REJECTED
+    L_INTEGER
+    L_STRING
+    IDENTIFIER
+    KW_IMPORT
+    KW_FUNC
+    KW_IF
+    KW_WHILE
+    KW_CLASS
+    KW_LET
+    OP_PLUS
+    OP_MINUS
+    OP_MULT
+    OP_DIVF
+    OP_ASSIGN
+    OP_LPAREN
+    OP_RPAREN
+    OP_LBRACE
+    OP_RBRACE
+    OP_SCOLON
+    OP_COLON
+    OP_COMMA
+    OP_LESS
+    OP_LESSEQ
+    OP_GREATER
+    OP_GREATEREQ
+    OP_EQUAL
+    OP_NOT_EQUAL
 
 
 Grammar
@@ -15,13 +42,40 @@ Terminals, with rules where they appear
     $end (0) 0
     error (256)
     REJECTED (258)
+    L_INTEGER (259)
+    L_STRING (260)
+    IDENTIFIER (261)
+    KW_IMPORT (262)
+    KW_FUNC (263)
+    KW_IF (264)
+    KW_WHILE (265)
+    KW_CLASS (266)
+    KW_LET (267)
+    OP_PLUS (268)
+    OP_MINUS (269)
+    OP_MULT (270)
+    OP_DIVF (271)
+    OP_ASSIGN (272)
+    OP_LPAREN (273)
+    OP_RPAREN (274)
+    OP_LBRACE (275)
+    OP_RBRACE (276)
+    OP_SCOLON (277)
+    OP_COLON (278)
+    OP_COMMA (279)
+    OP_LESS (280)
+    OP_LESSEQ (281)
+    OP_GREATER (282)
+    OP_GREATEREQ (283)
+    OP_EQUAL (284)
+    OP_NOT_EQUAL (285)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (4)
+    $accept (31)
         on left: 0
-    stmt (5)
+    stmt (32)
         on left: 1
         on right: 0
 

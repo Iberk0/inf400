@@ -24,11 +24,24 @@ private:
     std::string m_value;
 };
 
+class StringLiteral : public Token {
+public:
+    StringLiteral(std::string_view value) 
+        : Token(L_STRING), m_value(value) {}
+    virtual ~StringLiteral() {}
+
+    std::string as_string() const override { return fmt::format("Str({})", m_value); }
+
+    auto get_value() const { return m_value; }
+
+private:
+    std::string m_value;
+};
+
 class Identifier : public Token {
 public:
-    Identifier(std::string_view name) : Token(IDENTIFIER), m_name(name) {}
-    virtual ~Identifier() {}
-
+    Identifier(std::string_view name)
+        : Token(IDENTIFIER), m_name(name) {}
     std::string as_string() const override { return fmt::format("Id({})", m_name); }
 
     auto get_name() const { return m_name; }
@@ -40,11 +53,38 @@ private:
 class Import : public Token {
 public:
     Import() : Token(KW_IMPORT) {}
-
-    std::string as_string() const override {return fmt::format("KW_IMPORT");}
+    std::string as_string() const override { return "KW_IMPORT"; }
 };
 
+class Func : public Token {
+public:
+    Func() : Token(KW_FUNC) {}
+    std::string as_string() const override { return "KW_FUNC"; }
+};
 
+class If : public Token {
+public:
+    If() : Token(KW_IF) {}
+    std::string as_string() const override { return "KW_IF"; }
+};
+
+class While : public Token {
+public:
+    While() : Token(KW_WHILE) {}
+    std::string as_string() const override { return "KW_WHILE"; }
+};
+
+class Class : public Token {
+public:
+    Class() : Token(KW_CLASS) {}
+    std::string as_string() const override { return "KW_CLASS"; }
+};
+
+class Let : public Token {
+public:
+    Let() : Token(KW_LET) {}
+    std::string as_string() const override { return "KW_LET"; }
+};
 }
 
 #endif // KIRAZ_TOKEN_LITERAL_H

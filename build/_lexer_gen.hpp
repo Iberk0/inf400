@@ -467,7 +467,7 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 19 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+#line 56 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
 
 #line 473 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.hpp"
 #undef yyIN_HEADER

@@ -112,8 +112,35 @@ enum yysymbol_kind_t
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL_REJECTED = 3,                   /* REJECTED  */
-  YYSYMBOL_YYACCEPT = 4,                   /* $accept  */
-  YYSYMBOL_stmt = 5                        /* stmt  */
+  YYSYMBOL_L_INTEGER = 4,                  /* L_INTEGER  */
+  YYSYMBOL_L_STRING = 5,                   /* L_STRING  */
+  YYSYMBOL_IDENTIFIER = 6,                 /* IDENTIFIER  */
+  YYSYMBOL_KW_IMPORT = 7,                  /* KW_IMPORT  */
+  YYSYMBOL_KW_FUNC = 8,                    /* KW_FUNC  */
+  YYSYMBOL_KW_IF = 9,                      /* KW_IF  */
+  YYSYMBOL_KW_WHILE = 10,                  /* KW_WHILE  */
+  YYSYMBOL_KW_CLASS = 11,                  /* KW_CLASS  */
+  YYSYMBOL_KW_LET = 12,                    /* KW_LET  */
+  YYSYMBOL_OP_PLUS = 13,                   /* OP_PLUS  */
+  YYSYMBOL_OP_MINUS = 14,                  /* OP_MINUS  */
+  YYSYMBOL_OP_MULT = 15,                   /* OP_MULT  */
+  YYSYMBOL_OP_DIVF = 16,                   /* OP_DIVF  */
+  YYSYMBOL_OP_ASSIGN = 17,                 /* OP_ASSIGN  */
+  YYSYMBOL_OP_LPAREN = 18,                 /* OP_LPAREN  */
+  YYSYMBOL_OP_RPAREN = 19,                 /* OP_RPAREN  */
+  YYSYMBOL_OP_LBRACE = 20,                 /* OP_LBRACE  */
+  YYSYMBOL_OP_RBRACE = 21,                 /* OP_RBRACE  */
+  YYSYMBOL_OP_SCOLON = 22,                 /* OP_SCOLON  */
+  YYSYMBOL_OP_COLON = 23,                  /* OP_COLON  */
+  YYSYMBOL_OP_COMMA = 24,                  /* OP_COMMA  */
+  YYSYMBOL_OP_LESS = 25,                   /* OP_LESS  */
+  YYSYMBOL_OP_LESSEQ = 26,                 /* OP_LESSEQ  */
+  YYSYMBOL_OP_GREATER = 27,                /* OP_GREATER  */
+  YYSYMBOL_OP_GREATEREQ = 28,              /* OP_GREATEREQ  */
+  YYSYMBOL_OP_EQUAL = 29,                  /* OP_EQUAL  */
+  YYSYMBOL_OP_NOT_EQUAL = 30,              /* OP_NOT_EQUAL  */
+  YYSYMBOL_YYACCEPT = 31,                  /* $accept  */
+  YYSYMBOL_stmt = 32                       /* stmt  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -444,7 +471,7 @@ union yyalloc
 #define YYLAST   0
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  4
+#define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
@@ -453,7 +480,7 @@ union yyalloc
 #define YYNSTATES  3
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   258
+#define YYMAXUTOK   285
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -492,14 +519,17 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    22,    22
+       0,    27,    27
 };
 #endif
 
@@ -515,7 +545,12 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "REJECTED", "$accept",
+  "\"end of file\"", "error", "\"invalid token\"", "REJECTED",
+  "L_INTEGER", "L_STRING", "IDENTIFIER", "KW_IMPORT", "KW_FUNC", "KW_IF",
+  "KW_WHILE", "KW_CLASS", "KW_LET", "OP_PLUS", "OP_MINUS", "OP_MULT",
+  "OP_DIVF", "OP_ASSIGN", "OP_LPAREN", "OP_RPAREN", "OP_LBRACE",
+  "OP_RBRACE", "OP_SCOLON", "OP_COLON", "OP_COMMA", "OP_LESS", "OP_LESSEQ",
+  "OP_GREATER", "OP_GREATEREQ", "OP_EQUAL", "OP_NOT_EQUAL", "$accept",
   "stmt", YY_NULLPTR
 };
 
@@ -580,13 +615,13 @@ static const yytype_int8 yycheck[] =
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     5,     0
+       0,    32,     0
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,     4,     5
+       0,    31,    32
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -1056,7 +1091,7 @@ yyreduce:
   switch (yyn)
     {
 
-#line 1060 "/home/onuralp/Desktop/ODEV1/build/parser.cpp"
+#line 1095 "/home/onuralp/Desktop/ODEV1/build/parser.cpp"
 
       default: break;
     }
@@ -1249,7 +1284,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 24 "/home/onuralp/Desktop/ODEV1/hw1/parser.yy"
+#line 29 "/home/onuralp/Desktop/ODEV1/hw1/parser.yy"
 
 
 int yyerror(const char *s) {

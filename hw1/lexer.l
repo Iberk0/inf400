@@ -1,6 +1,6 @@
 
 %option noyywrap
-%option yylineno
+
 
 %{
 // https://stackoverflow.com/questions/9611682/flexlexer-support-for-unicode/9617585#9617585
@@ -12,6 +12,7 @@ using namespace token;
 extern std::shared_ptr<Token> curtoken;
 %}
 
+%option yylineno
 
 %%
 
@@ -23,7 +24,7 @@ extern std::shared_ptr<Token> curtoken;
 
 
 "let"       { colno += yyleng; curtoken = Token::New<Let>(); return KW_LET; }
-":"         { colno += yyleng; curtoken = Token::New<Colon>(); return OP_COLON; }
+":"         { colno += yyleng; curtoken = Token::New<OpColon>(); return OP_COLON; }
 ","         { colno += yyleng; curtoken = Token::New<OpComma>(); return OP_COMMA; }
 "="         { colno += yyleng; curtoken = Token::New<OpAssign>(); return OP_ASSIGN; }
 "{"         { colno += yyleng; curtoken = Token::New<OpLbrace>(); return OP_LBRACE; }
@@ -51,4 +52,4 @@ extern std::shared_ptr<Token> curtoken;
 
 [ \n\t]+    {colno += yyleng;}
 .           {colno += yyleng; curtoken = Token::New<Rejected>(); return YYUNDEF; }
-.        ;
+

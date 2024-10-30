@@ -54,7 +54,34 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    REJECTED = 258                 /* REJECTED  */
+    REJECTED = 258,                /* REJECTED  */
+    L_INTEGER = 259,               /* L_INTEGER  */
+    L_STRING = 260,                /* L_STRING  */
+    IDENTIFIER = 261,              /* IDENTIFIER  */
+    KW_IMPORT = 262,               /* KW_IMPORT  */
+    KW_FUNC = 263,                 /* KW_FUNC  */
+    KW_IF = 264,                   /* KW_IF  */
+    KW_WHILE = 265,                /* KW_WHILE  */
+    KW_CLASS = 266,                /* KW_CLASS  */
+    KW_LET = 267,                  /* KW_LET  */
+    OP_PLUS = 268,                 /* OP_PLUS  */
+    OP_MINUS = 269,                /* OP_MINUS  */
+    OP_MULT = 270,                 /* OP_MULT  */
+    OP_DIVF = 271,                 /* OP_DIVF  */
+    OP_ASSIGN = 272,               /* OP_ASSIGN  */
+    OP_LPAREN = 273,               /* OP_LPAREN  */
+    OP_RPAREN = 274,               /* OP_RPAREN  */
+    OP_LBRACE = 275,               /* OP_LBRACE  */
+    OP_RBRACE = 276,               /* OP_RBRACE  */
+    OP_SCOLON = 277,               /* OP_SCOLON  */
+    OP_COLON = 278,                /* OP_COLON  */
+    OP_COMMA = 279,                /* OP_COMMA  */
+    OP_LESS = 280,                 /* OP_LESS  */
+    OP_LESSEQ = 281,               /* OP_LESSEQ  */
+    OP_GREATER = 282,              /* OP_GREATER  */
+    OP_GREATEREQ = 283,            /* OP_GREATEREQ  */
+    OP_EQUAL = 284,                /* OP_EQUAL  */
+    OP_NOT_EQUAL = 285             /* OP_NOT_EQUAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif

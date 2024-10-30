@@ -34,6 +34,7 @@ private:
 
 class Rejected : public Token {
 public:
+    Rejected() : Token(YYUNDEF), m_text("") {}
     Rejected(const char *text) : Token(YYUNDEF), m_text(text) {}
     std::string as_string() const override { return fmt::format("REJECTED({})", m_text); }
 
