@@ -21,9 +21,27 @@ extern int yylineno;
 
 %%
 
-program:
-IDENTIFIER { $$ = Node::add<ast::Identifier>(curtoken);}
-;
+stmt:
+    addsub
+    |IDENTIFIER { $$= Node::add<ast::Identifier>(curtoken);}
+addsub:
+    muldiv
+    | OP_LPAREN addsub OP_RPAREN { $$ = $2;}
+    | stmt OP_PLUS stmt  { $$ = Node::add<ast::OpPlus>($1,$3);}
+    | stmt OP_MINUS stmt { $$ = Node::add<ast::OpMinus>($1,$3);}
+    ;
+
+muldiv:
+    posneg  
+    | stmt OP_MULT stmt { $$ = Node::add<ast::OpMult>($1,$3);}
+    | stmt OP_DIVF stmt { $$ = Node::add<ast::OpDivF>($1,$3);}
+    ;
+
+posneg:
+    L_INTEGER { $$ = Node::add<ast::Integer>(curtoken);}
+    | OP_PLUS stmt  { $$ = Node::add<ast::Signed>(OP_PLUS,$2);}
+    | OP_MINUS stmt { $$ = Node::add<ast::Signed>(OP_MINUS,$2);}
+    ;
 %%
 
 int yyerror(const char *s) {

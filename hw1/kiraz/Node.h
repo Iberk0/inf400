@@ -21,7 +21,7 @@ public:
 
     virtual std::string as_string() const = 0;
     void print() { fmt::print("{}\n", as_string()); }
-
+    auto get_id() const {return m_id;}
     void set_pos(int l, int c) {
         m_line = l;
         m_col = c;
