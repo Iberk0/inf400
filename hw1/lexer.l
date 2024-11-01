@@ -1,4 +1,3 @@
-
 %option noyywrap
 
 
@@ -19,6 +18,7 @@ extern std::shared_ptr<Token> curtoken;
 "import"    { colno += yyleng; curtoken = Token::New<Import>(); return KW_IMPORT; }
 "func"      { colno += yyleng; curtoken = Token::New<Func>(); return KW_FUNC; }
 "if"        { colno += yyleng; curtoken = Token::New<If>(); return KW_IF; }
+"else"      { colno += yyleng; curtoken = Token::New<Else>(); return KW_ELSE; }
 "while"     { colno += yyleng; curtoken = Token::New<While>(); return KW_WHILE; }
 "class"     { colno += yyleng; curtoken = Token::New<Class>(); return KW_CLASS; }
 
@@ -52,4 +52,3 @@ extern std::shared_ptr<Token> curtoken;
 
 [ \n\t]+    {colno += yyleng;}
 .           {colno += yyleng; curtoken = Token::New<Rejected>(); return YYUNDEF; }
-

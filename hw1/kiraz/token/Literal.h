@@ -26,17 +26,19 @@ private:
 
 class StringLiteral : public Token {
 public:
+    
     StringLiteral(std::string_view value) 
         : Token(L_STRING), m_value(value) {}
-    virtual ~StringLiteral() {}
 
     std::string as_string() const override { return fmt::format("Str({})", m_value); }
 
-    auto get_value() const { return m_value; }
+    
+    auto get_value() const {return m_value;}
 
 private:
     std::string m_value;
 };
+
 
 class Identifier : public Token {
 public:
@@ -84,6 +86,12 @@ class Let : public Token {
 public:
     Let() : Token(KW_LET) {}
     std::string as_string() const override { return "KW_LET"; }
+};
+
+class Else : public Token {
+public:
+    Else() : Token(KW_ELSE) {}
+    std::string as_string() const override { return "KW_ELSE"; }
 };
 }
 
