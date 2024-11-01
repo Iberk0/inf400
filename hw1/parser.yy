@@ -12,9 +12,8 @@ extern int yylineno;
 %}
 
 %token    REJECTED
-
 %token L_INTEGER L_STRING IDENTIFIER
-%token KW_IMPORT KW_FUNC KW_IF KW_WHILE KW_CLASS KW_LET
+%token KW_IMPORT KW_FUNC KW_IF KW_WHILE KW_CLASS KW_LET KW_ELSE
 %token OP_PLUS OP_MINUS OP_MULT OP_DIVF OP_ASSIGN
 %token OP_LPAREN OP_RPAREN OP_LBRACE OP_RBRACE
 %token OP_SCOLON OP_COLON OP_COMMA
@@ -22,10 +21,9 @@ extern int yylineno;
 
 %%
 
-/* TODO */
-
-stmt: %empty
-
+program:
+IDENTIFIER { $$ = Node::add<ast::Identifier>(curtoken);}
+;
 %%
 
 int yyerror(const char *s) {

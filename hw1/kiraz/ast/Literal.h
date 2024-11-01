@@ -9,6 +9,16 @@ public:
 // TODO
 };
 
+class Identifier : public Node {
+public:
+    Identifier(Token::Ptr);
+    
+    std::string as_string() const override {return fmt::format("Id({})",m_name);}
+
+private:
+    std::string m_name;
+};
+
 class SignedNode : public Node {
 public:
 // TODO

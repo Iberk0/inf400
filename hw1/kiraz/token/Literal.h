@@ -42,8 +42,9 @@ private:
 
 class Identifier : public Token {
 public:
-    Identifier(std::string_view name)
+    Identifier(std::string name)
         : Token(IDENTIFIER), m_name(name) {}
+        virtual ~Identifier();
     std::string as_string() const override { return fmt::format("Id({})", m_name); }
 
     auto get_name() const { return m_name; }
