@@ -18,30 +18,36 @@ extern int yylineno;
 %token OP_LPAREN OP_RPAREN OP_LBRACE OP_RBRACE
 %token OP_SCOLON OP_COLON OP_COMMA
 %token OP_LESS OP_LESSEQ OP_GREATER OP_GREATEREQ OP_EQUAL OP_NOT_EQUAL
+%left OP_PLUS OP_MINUS
+%left OP_MULT OP_DIVF
 
 %%
-
 stmt:
     addsub
-    |IDENTIFIER { $$= Node::add<ast::Identifier>(curtoken);}
+    | Inte OP_ASSIGN Inte { $$ = Node::add<ast::OpAssign>($1, $3); }
+  
+    ;
+Inte: 
+    L_INTEGER { $$ = Node::add<ast::Integer>(curtoken); }
+    | IDENTIFIER { $$ = Node::add<ast::Identifier>(curtoken); }
+    ;
 addsub:
     muldiv
-    | OP_LPAREN addsub OP_RPAREN { $$ = $2;}
-    | stmt OP_PLUS stmt  { $$ = Node::add<ast::OpPlus>($1,$3);}
-    | stmt OP_MINUS stmt { $$ = Node::add<ast::OpMinus>($1,$3);}
-    ;
+    | addsub OP_PLUS muldiv { $$ = Node::add<ast::OpPlus>($1, $3); }
+    | addsub OP_MINUS muldiv { $$ = Node::add<ast::OpMinus>($1, $3); }
 
 muldiv:
-    posneg  
-    | stmt OP_MULT stmt { $$ = Node::add<ast::OpMult>($1,$3);}
-    | stmt OP_DIVF stmt { $$ = Node::add<ast::OpDivF>($1,$3);}
-    ;
+    posneg
+    | muldiv OP_MULT posneg { $$ = Node::add<ast::OpMult>($1, $3); }
+    | muldiv OP_DIVF posneg { $$ = Node::add<ast::OpDivF>($1, $3); }
 
 posneg:
-    L_INTEGER { $$ = Node::add<ast::Integer>(curtoken);}
-    | OP_PLUS stmt  { $$ = Node::add<ast::Signed>(OP_PLUS,$2);}
-    | OP_MINUS stmt { $$ = Node::add<ast::Signed>(OP_MINUS,$2);}
+    L_INTEGER { $$ = Node::add<ast::Integer>(curtoken); }
+    | OP_PLUS posneg { $$ = Node::add<ast::Signed>(OP_PLUS, $2); }
+    | OP_MINUS posneg { $$ = Node::add<ast::Signed>(OP_MINUS, $2); }
+    | OP_LPAREN addsub OP_RPAREN { $$ = $2; }
     ;
+
 %%
 
 int yyerror(const char *s) {
