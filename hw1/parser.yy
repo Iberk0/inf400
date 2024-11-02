@@ -22,10 +22,25 @@ extern int yylineno;
 %left OP_MULT OP_DIVF
 
 %%
+
 program:
-        expr OP_SCOLON { $$ = Node::add<ast::Module>($1);  }
-        | let_stmt { $$ = Node::add<ast::Module>($1);  }
+        stmt_list { $$ = Node::add<ast::Module>($1);  }
         ;
+stmt_list:
+        stmt { 
+            auto nodeList = Node::add<ast::NodeList>();
+            nodeList->add_statement($1);
+            $$ = nodeList;
+        }
+        | stmt_list stmt { 
+            $$ = $1;
+            std::dynamic_pointer_cast<ast::NodeList>($$)->add_statement($2);
+        }
+        ;
+stmt:
+    expr OP_SCOLON 
+    | let_stmt 
+    ;         
 let_stmt:
     KW_LET literal OP_ASSIGN expr OP_SCOLON
     { $$ = Node::add<ast::Let>($2, nullptr, $4); }

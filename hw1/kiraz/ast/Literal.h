@@ -12,6 +12,37 @@ private:
     Node::Ptr m_body;
 };
 
+class NodeList : public Node {
+public:
+    NodeList() : Node(), m_statements{} {}
+
+    NodeList(const std::vector<Node::Ptr>& statements)
+        : Node(), m_statements(statements) {}
+
+    std::string as_string() const override {
+        if (m_statements.size() == 1) {
+            return m_statements[0]->as_string();
+        }
+
+        std::string result = "NodeList(";
+        for (const auto& stmt : m_statements) {
+            result += stmt->as_string() + "; ";
+        }
+        if (!m_statements.empty()) {
+            result.erase(result.size() - 2); 
+        }
+        result += ")";
+        return result;
+    }
+
+    void add_statement(Node::Ptr statement) {
+        m_statements.push_back(statement);
+    }
+
+private:
+    std::vector<Node::Ptr> m_statements;
+};
+
 class Let : public Node {
 public:
     Let(const Node::Ptr& name, const Node::Ptr& type, const Node::Ptr& init)
@@ -30,6 +61,7 @@ public:
             components.push_back(fmt::format("i={}", m_init->as_string()));
         }
 
+        
         return fmt::format("Let({})", fmt::join(components, ", "));
     }
 
