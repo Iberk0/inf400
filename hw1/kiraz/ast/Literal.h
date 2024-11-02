@@ -11,6 +11,34 @@ public:
 private: 
     Node::Ptr m_body;
 };
+
+class Let : public Node {
+public:
+    Let(const Node::Ptr& name, const Node::Ptr& type, const Node::Ptr& init)
+        : Node(KW_LET), m_name(name), m_type(type), m_init(init) {}
+
+    std::string as_string() const override {
+        std::vector<std::string> components;
+
+        if (m_name) {
+            components.push_back(fmt::format("n={}", m_name->as_string()));
+        }
+        if (m_type) {
+            components.push_back(fmt::format("t={}", m_type->as_string()));
+        }
+        if (m_init) {
+            components.push_back(fmt::format("i={}", m_init->as_string()));
+        }
+
+        return fmt::format("Let({})", fmt::join(components, ", "));
+    }
+
+private:
+    Node::Ptr m_name;
+    Node::Ptr m_type;
+    Node::Ptr m_init;
+};
+
 class Integer : public Node {
 public:
     Integer(Token::Ptr);

@@ -24,6 +24,17 @@ extern int yylineno;
 %%
 program:
         expr OP_SCOLON { $$ = Node::add<ast::Module>($1);  }
+        | let_stmt { $$ = Node::add<ast::Module>($1);  }
+        ;
+let_stmt:
+    KW_LET literal OP_ASSIGN expr OP_SCOLON
+    { $$ = Node::add<ast::Let>($2, nullptr, $4); }
+    | KW_LET literal OP_COLON literal OP_ASSIGN expr OP_SCOLON
+    { $$ = Node::add<ast::Let>($2, $4, $6); }
+    | KW_LET literal OP_COLON literal OP_SCOLON
+    { $$ = Node::add<ast::Let>($2, $4, nullptr); }
+    ;
+
 expr:
     expr OP_PLUS expr { $$ = Node::add<ast::OpPlus>($1, $3); }
     | expr OP_MINUS expr { $$ = Node::add<ast::OpMinus>($1, $3); }
@@ -41,6 +52,7 @@ expr:
     | OP_PLUS expr { $$ = Node::add<ast::Signed>(OP_PLUS, $2); }
     | literal
     ;
+
 
 literal:
     L_INTEGER { $$ = Node::add<ast::Integer>(curtoken); }
