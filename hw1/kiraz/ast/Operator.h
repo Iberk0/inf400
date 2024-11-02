@@ -41,20 +41,26 @@ public:
             break;
         case OP_EQUAL:
             opstr = "OpEq";
+            break;
         case OP_NOT_EQUAL:
             opstr = "OpNEq";
+            break;
         case OP_LESS:
             opstr = "OpLt";
+            break;
         case OP_LESSEQ:
             opstr = "OpLe";
+            break;
         case OP_GREATER:
             opstr = "OpGt";
+            break;
         case OP_GREATEREQ:
             opstr = "OpGe";
+            break;
         default:
             break;
         }
-        return fmt::format("{}(l={},r={})",opstr, get_left()->as_string(), get_right()->as_string());
+        return fmt::format("{}(l={}, r={})",opstr, get_left()->as_string(), get_right()->as_string());
     }
 private:
     Node::Ptr m_left, m_right;

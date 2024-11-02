@@ -22,30 +22,30 @@ extern int yylineno;
 %left OP_MULT OP_DIVF
 
 %%
-stmt:
-    addsub
-    | Inte OP_ASSIGN Inte { $$ = Node::add<ast::OpAssign>($1, $3); }
-  
+program:
+        expr OP_SCOLON { $$ = Node::add<ast::Module>($1);  }
+expr:
+    expr OP_PLUS expr { $$ = Node::add<ast::OpPlus>($1, $3); }
+    | expr OP_MINUS expr { $$ = Node::add<ast::OpMinus>($1, $3); }
+    | expr OP_MULT expr { $$ = Node::add<ast::OpMult>($1, $3); }
+    | expr OP_DIVF expr { $$ = Node::add<ast::OpDivF>($1, $3); }
+    | expr OP_LESS expr { $$ = Node::add<ast::OpLess>($1, $3); }
+    | expr OP_LESSEQ expr { $$ = Node::add<ast::OpLessEq>($1, $3); }
+    | expr OP_GREATER expr { $$ = Node::add<ast::OpGreater>($1, $3); }
+    | expr OP_GREATEREQ expr { $$ = Node::add<ast::OpGreaterEq>($1, $3); }
+    | expr OP_EQUAL expr { $$ = Node::add<ast::OpEqual>($1, $3); }
+    | expr OP_NOT_EQUAL expr { $$ = Node::add<ast::OpNotEqual>($1, $3); }
+    | expr OP_ASSIGN expr { $$ = Node::add<ast::OpAssign>($1, $3); }
+    | OP_LPAREN expr OP_RPAREN { $$ = $2; }
+    | OP_MINUS expr { $$ = Node::add<ast::Signed>(OP_MINUS, $2); }
+    | OP_PLUS expr { $$ = Node::add<ast::Signed>(OP_PLUS, $2); }
+    | literal
     ;
-Inte: 
+
+literal:
     L_INTEGER { $$ = Node::add<ast::Integer>(curtoken); }
+    | L_STRING { $$ = Node::add<ast::StringLiteral>(curtoken); }
     | IDENTIFIER { $$ = Node::add<ast::Identifier>(curtoken); }
-    ;
-addsub:
-    muldiv
-    | addsub OP_PLUS muldiv { $$ = Node::add<ast::OpPlus>($1, $3); }
-    | addsub OP_MINUS muldiv { $$ = Node::add<ast::OpMinus>($1, $3); }
-
-muldiv:
-    posneg
-    | muldiv OP_MULT posneg { $$ = Node::add<ast::OpMult>($1, $3); }
-    | muldiv OP_DIVF posneg { $$ = Node::add<ast::OpDivF>($1, $3); }
-
-posneg:
-    L_INTEGER { $$ = Node::add<ast::Integer>(curtoken); }
-    | OP_PLUS posneg { $$ = Node::add<ast::Signed>(OP_PLUS, $2); }
-    | OP_MINUS posneg { $$ = Node::add<ast::Signed>(OP_MINUS, $2); }
-    | OP_LPAREN addsub OP_RPAREN { $$ = $2; }
     ;
 
 %%
