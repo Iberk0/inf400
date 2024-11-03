@@ -26,10 +26,13 @@ public:
 
         std::string result = "NodeList(";
         for (const auto& stmt : m_statements) {
-            result += stmt->as_string() + "; ";
+            result += stmt->as_string() + ", ";
         }
         if (!m_statements.empty()) {
             result.erase(result.size() - 2); 
+        }
+        if (m_statements.empty()){
+            return "";
         }
         result += ")";
         return result;
@@ -38,8 +41,7 @@ public:
     void add_statement(Node::Ptr statement) {
         m_statements.push_back(statement);
     }
-
-private:
+    private:
     std::vector<Node::Ptr> m_statements;
 };
 
@@ -129,7 +131,91 @@ public:
 private:
     std::string m_value;
 };
+class Import : public Node {
+public:
+    Import(const Node::Ptr &name) : Node(KW_IMPORT), m_name(name) {}
 
+    std::string as_string() const override {
+        return fmt::format("Import({})", m_name->as_string());
+    }
+
+private:
+    Node::Ptr m_name;
+};
+
+class FuncArg : public Node {
+public:
+    FuncArg(const Node::Ptr &name, const Node::Ptr &type)
+        : Node(IDENTIFIER), m_name(name), m_type(type) {}
+
+    std::string as_string() const override {
+        return fmt::format("FArg(n={}, t={})", m_name->as_string(), m_type->as_string());
+    }
+
+private:
+    Node::Ptr m_name;
+    Node::Ptr m_type;  
+};
+
+class FuncArgs : public Node {
+public:
+    FuncArgs() : Node(), m_arguments{} {}
+
+    FuncArgs(const std::vector<Node::Ptr>& statements)
+        : Node(), m_arguments(statements) {}
+
+    std::string as_string() const override {
+        if (m_arguments.empty()){
+            return "[]";
+        }
+        std::string result = "FuncArgs([";
+        if (m_arguments.size() == 1) {
+            result +=  m_arguments[0]->as_string();
+            result += "])";
+            return result;
+        }
+
+        
+        for (const auto& stmt : m_arguments) {
+            result += stmt->as_string() + ", ";
+        }
+        if (!m_arguments.empty()) {
+            result.erase(result.size() - 2); 
+        }
+        
+        result += "])";
+        return result;
+    }
+
+    void add_statement(Node::Ptr statement) {
+        m_arguments.push_back(statement);
+    }
+
+private:
+    std::vector<Node::Ptr> m_arguments;
+};
+
+class Func : public Node {
+public:
+    Func(const Node::Ptr &name, const Node::Ptr &args, const Node::Ptr &ret_type, const Node::Ptr &body)
+        : Node(KW_FUNC), m_name(name), m_args(args), m_return_type(ret_type), m_body(body) {}
+
+    std::string as_string() const override {
+        std::string return_type_str = m_return_type ? m_return_type->as_string() : "None";
+        std::string body_str = m_body ? m_body->as_string() : "[]";
+        return fmt::format("Func(n={}, a={}, r={}, s=[{}])", 
+                           m_name->as_string(), 
+                           m_args->as_string(), 
+                           return_type_str, 
+                           body_str);
+    }
+
+private:
+    Node::Ptr m_name;        
+    Node::Ptr m_args;        
+    Node::Ptr m_return_type; 
+    Node::Ptr m_body;      
+};
 }
 
 #endif

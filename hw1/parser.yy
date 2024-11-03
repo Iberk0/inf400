@@ -40,7 +40,50 @@ stmt_list:
 stmt:
     expr OP_SCOLON 
     | let_stmt 
-    ;         
+    | func_decl OP_SCOLON
+    | import_stmt
+    ;      
+import_stmt:
+    KW_IMPORT literal OP_SCOLON
+    { $$ = Node::add<ast::Import>($2); }
+    ;  
+func_decl:
+    KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE
+    { $$ = Node::add<ast::Func>($2, $4, $7, $9); }
+    | KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_LBRACE scope OP_RBRACE 
+    { $$ = Node::add<ast::Func>($2, $4, nullptr, $8); }
+    ; 
+func_args:
+    /* empty */
+    { $$ = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{}); }
+    | func_arg
+    { $$ = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{ $1 }); }
+    | func_args OP_COMMA func_arg
+    {
+        auto args = std::dynamic_pointer_cast<ast::FuncArgs>($1);
+        args->add_statement($3);
+        $$ = args;
+    }
+    ;
+
+func_arg:
+    literal OP_COLON literal
+    {
+        $$ = Node::add<ast::FuncArg>($1, $3);
+    }
+    ;
+scope:
+    { $$ = Node::add<ast::NodeList>(std::vector<Node::Ptr>{}); }
+    |stmt { 
+            auto nodeList = Node::add<ast::NodeList>();
+            nodeList->add_statement($1);
+            $$ = nodeList;
+        }
+    | stmt_list stmt { 
+            $$ = $1;
+            std::dynamic_pointer_cast<ast::NodeList>($$)->add_statement($2);
+        }
+    ;
 let_stmt:
     KW_LET literal OP_ASSIGN expr OP_SCOLON
     { $$ = Node::add<ast::Let>($2, nullptr, $4); }
