@@ -7,7 +7,7 @@ namespace ast {
 class Module : public Node{
 public:
     Module(const Node::Ptr& t) : Node(0), m_body(t) {}
-    std::string as_string() const override {return fmt::format("Module([{}])",m_body->as_string());}
+    std::string as_string() const override {return fmt::format("Module({})",m_body->as_string());}
 private: 
     Node::Ptr m_body;
 };
@@ -20,30 +20,36 @@ public:
         : Node(), m_statements(statements) {}
 
     std::string as_string() const override {
+        if (m_statements.empty()){
+            return "[]";
+        }
+        std::string result = "[";
         if (m_statements.size() == 1) {
-            return m_statements[0]->as_string();
+            result +=  m_statements[0]->as_string();
+            result += "]";
+            return result;
         }
 
-        std::string result = "NodeList(";
+        
         for (const auto& stmt : m_statements) {
             result += stmt->as_string() + ", ";
         }
         if (!m_statements.empty()) {
             result.erase(result.size() - 2); 
         }
-        if (m_statements.empty()){
-            return "";
-        }
-        result += ")";
+        
+        result += "]";
         return result;
     }
 
     void add_statement(Node::Ptr statement) {
         m_statements.push_back(statement);
     }
-    private:
+
+private:
     std::vector<Node::Ptr> m_statements;
 };
+
 
 class Let : public Node {
 public:
@@ -202,12 +208,11 @@ public:
 
     std::string as_string() const override {
         std::string return_type_str = m_return_type ? m_return_type->as_string() : "None";
-        std::string body_str = m_body ? m_body->as_string() : "[]";
-        return fmt::format("Func(n={}, a={}, r={}, s=[{}])", 
+        return fmt::format("Func(n={}, a={}, r={}, s={})", 
                            m_name->as_string(), 
                            m_args->as_string(), 
                            return_type_str, 
-                           body_str);
+                           m_body->as_string());
     }
 
 private:
