@@ -4,6 +4,7 @@
 #include <kiraz/Node.h>
 
 namespace ast {
+
 class Module : public Node{
 public:
     Module(const Node::Ptr& t) : Node(0), m_body(t) {}
@@ -48,35 +49,6 @@ public:
 
 private:
     std::vector<Node::Ptr> m_statements;
-};
-
-
-class Let : public Node {
-public:
-    Let(const Node::Ptr& name, const Node::Ptr& type, const Node::Ptr& init)
-        : Node(KW_LET), m_name(name), m_type(type), m_init(init) {}
-
-    std::string as_string() const override {
-        std::vector<std::string> components;
-
-        if (m_name) {
-            components.push_back(fmt::format("n={}", m_name->as_string()));
-        }
-        if (m_type) {
-            components.push_back(fmt::format("t={}", m_type->as_string()));
-        }
-        if (m_init) {
-            components.push_back(fmt::format("i={}", m_init->as_string()));
-        }
-
-        
-        return fmt::format("Let({})", fmt::join(components, ", "));
-    }
-
-private:
-    Node::Ptr m_name;
-    Node::Ptr m_type;
-    Node::Ptr m_init;
 };
 
 class Integer : public Node {
@@ -137,6 +109,33 @@ public:
 private:
     std::string m_value;
 };
+
+class Let : public Node {
+public:
+    Let(const Node::Ptr& name, const Node::Ptr& type, const Node::Ptr& init)
+        : Node(KW_LET), m_name(name), m_type(type), m_init(init) {}
+
+    std::string as_string() const override {
+        std::vector<std::string> components;
+
+        if (m_name) {
+            components.push_back(fmt::format("n={}", m_name->as_string()));
+        }
+        if (m_type) {
+            components.push_back(fmt::format("t={}", m_type->as_string()));
+        }
+        if (m_init) {
+            components.push_back(fmt::format("i={}", m_init->as_string()));
+        }
+        return fmt::format("Let({})", fmt::join(components, ", "));
+    }
+
+private:
+    Node::Ptr m_name;
+    Node::Ptr m_type;
+    Node::Ptr m_init;
+};
+
 class Import : public Node {
 public:
     Import(const Node::Ptr &name) : Node(KW_IMPORT), m_name(name) {}
@@ -208,6 +207,7 @@ public:
 
     std::string as_string() const override {
         std::string return_type_str = m_return_type ? m_return_type->as_string() : "None";
+        
         return fmt::format("Func(n={}, a={}, r={}, s={})", 
                            m_name->as_string(), 
                            m_args->as_string(), 
@@ -221,6 +221,61 @@ private:
     Node::Ptr m_return_type; 
     Node::Ptr m_body;      
 };
+
+class Class : public Node {
+public:
+    Class(const Node::Ptr &name, const Node::Ptr &body)
+        : Node(KW_CLASS), m_name(name), m_body(body) {}
+
+    std::string as_string() const override {
+        return fmt::format("Class(n={}, s={})", 
+                           m_name->as_string(), 
+                           m_body ? m_body->as_string() : "[]");
+    }
+
+private:
+    Node::Ptr m_name;
+    Node::Ptr m_body;
+};
+
+class ClassBody : public Node {
+public:
+    ClassBody() : Node(), m_members{} {}
+
+    ClassBody(const std::vector<Node::Ptr>& statements)
+        : Node(), m_members(statements) {}
+
+    std::string as_string() const override {
+        if (m_members.empty()){
+            return "[]";
+        }
+        std::string result = "[";
+        if (m_members.size() == 1) {
+            result +=  m_members[0]->as_string();
+            result += "]";
+            return result;
+        }
+
+        
+        for (const auto& stmt : m_members) {
+            result += stmt->as_string() + ", ";
+        }
+        if (!m_members.empty()) {
+            result.erase(result.size() - 2); 
+        }
+        
+        result += "]";
+        return result;
+    }
+
+    void add_statement(Node::Ptr statement) {
+        m_members.push_back(statement);
+    }
+
+private:
+    std::vector<Node::Ptr> m_members;
+};
+
 }
 
 #endif
