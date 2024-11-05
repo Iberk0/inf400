@@ -276,6 +276,20 @@ private:
     std::vector<Node::Ptr> m_members;
 };
 
+class While : public Node {
+public:
+    While(const Node::Ptr& condition, const Node::Ptr& body)
+        : Node(KW_WHILE), m_condition(condition), m_body(body) {}
+
+    std::string as_string() const override {
+        return fmt::format("While(?={}, repeat={})", m_condition->as_string(), m_body->as_string());
+    }
+
+private:
+    Node::Ptr m_condition;
+    Node::Ptr m_body;
+};
+
 }
 
 #endif

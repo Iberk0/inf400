@@ -44,6 +44,7 @@ stmt:
     | let_stmt
     | func_decl  OP_SCOLON
     | class_decl OP_SCOLON
+    | while_stmt OP_SCOLON
     | import_stmt
     ;
 
@@ -120,7 +121,11 @@ func_arg:
         $$ = Node::add<ast::FuncArg>($1, $3);
     }
     ;
-
+    
+while_stmt:
+    KW_WHILE OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+    { $$ = Node::add<ast::While>($3, $6); }
+    ;
 
 
 scope:
