@@ -46,6 +46,7 @@ stmt:
     | class_decl OP_SCOLON
     | while_stmt OP_SCOLON
     | import_stmt
+    | if_stmt OP_SCOLON
     ;
 
 expr_stmt:
@@ -127,6 +128,17 @@ while_stmt:
     { $$ = Node::add<ast::While>($3, $6); }
     ;
 
+if_stmt:
+    KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt
+    { $$ = Node::add<ast::If>($3, $6, $9); }
+    | KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+    { $$ = Node::add<ast::If>($3, $6, nullptr); }
+    ;
+
+else_stmt:
+    OP_LBRACE scope OP_RBRACE { $$ = $2;}
+    | if_stmt
+    ;
 
 scope:
     { $$ = Node::add<ast::NodeList>(std::vector<Node::Ptr>{}); }

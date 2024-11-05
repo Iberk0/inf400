@@ -238,6 +238,7 @@ private:
     Node::Ptr m_body;
 };
 
+
 class ClassBody : public Node {
 public:
     ClassBody() : Node(), m_members{} {}
@@ -289,6 +290,27 @@ private:
     Node::Ptr m_condition;
     Node::Ptr m_body;
 };
+
+class If : public Node {
+public:
+    If(const Node::Ptr &condition, const Node::Ptr &then_body, const Node::Ptr &else_body)
+        : Node(KW_IF), m_condition(condition), m_then_body(then_body), m_else_body(else_body) {}
+
+    std::string as_string() const override {
+        std::string else_str = m_else_body ? m_else_body->as_string() : "[]";
+        return fmt::format("If(?={}, then={}, else={})", 
+                           m_condition->as_string(), 
+                           m_then_body->as_string(), 
+                           else_str);
+    }
+
+private:
+    Node::Ptr m_condition;  
+    Node::Ptr m_then_body;  
+    Node::Ptr m_else_body;  
+};
+
+
 
 }
 
