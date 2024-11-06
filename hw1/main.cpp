@@ -51,7 +51,35 @@ static int handle_mode_text(std::string_view arg) {
 }
 
 static int handle_mode_file(std::string_view arg) {
-    fmt::print("TODO\n");
+   FILE *file = fopen(arg.data(), "r");
+    if (!file) {
+        fmt::print("Error: Cannot open file {}\n", arg);
+        return ERR;
+    }
+
+    
+    fseek(file, 0, SEEK_END);
+    long file_size = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    
+    std::vector<char> buffer(file_size + 1);  
+    size_t read_size = fread(buffer.data(), 1, file_size, file);
+    fclose(file);
+
+    if (read_size != file_size) {
+        fmt::print("Error: Could not read the complete file {}\n", arg);
+        return ERR;
+    }
+
+    buffer[file_size] = '\0';
+
+    
+    if (auto ret = test(buffer.data()); ret != OK) {
+        return ret;
+    }
+
+    return OK;
     return ERR;
 }
 

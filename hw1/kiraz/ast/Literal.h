@@ -226,6 +226,8 @@ class Class : public Node {
 public:
     Class(const Node::Ptr &name, const Node::Ptr &body)
         : Node(KW_CLASS), m_name(name), m_body(body) {}
+    Class(const Node::Ptr &name)
+        : Node(KW_CLASS), m_name(name) {}    
 
     std::string as_string() const override {
         return fmt::format("Class(n={}, s={})", 
@@ -237,7 +239,6 @@ private:
     Node::Ptr m_name;
     Node::Ptr m_body;
 };
-
 
 class ClassBody : public Node {
 public:
@@ -291,6 +292,7 @@ private:
     Node::Ptr m_body;
 };
 
+
 class If : public Node {
 public:
     If(const Node::Ptr &condition, const Node::Ptr &then_body, const Node::Ptr &else_body)
@@ -311,7 +313,30 @@ private:
 };
 
 
+class Call : public Node {
+public:
+    Call(const Node::Ptr &expr, const Node::Ptr &args) 
+        : Node(0), m_expr(expr), m_args(args) {}
+    
+    std::string as_string() const override {
+        return fmt::format("Call(n={}, a={})", m_expr->as_string(), m_args->as_string());
+    }
+    
+private:
+    Node::Ptr m_expr, m_args;
+};
 
+class Return : public Node {
+public: 
+    Return(const Node::Ptr &body) : Node(KW_RETURN), m_body(body) {}
+
+    std::string as_string() const override {
+        return fmt::format("Return({})", m_body->as_string());
+    }
+
+private:
+    Node::Ptr m_body;
+};
 }
 
 #endif

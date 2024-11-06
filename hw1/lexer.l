@@ -1,3 +1,4 @@
+
 %option noyywrap
 
 
@@ -21,7 +22,7 @@ extern std::shared_ptr<Token> curtoken;
 "else"      { colno += yyleng; curtoken = Token::New<Else>(); return KW_ELSE; }
 "while"     { colno += yyleng; curtoken = Token::New<While>(); return KW_WHILE; }
 "class"     { colno += yyleng; curtoken = Token::New<Class>(); return KW_CLASS; }
-
+"return"    { colno += yyleng; curtoken = Token::New<Return>(); return KW_RETURN; }
 
 "let"       { colno += yyleng; curtoken = Token::New<Let>(); return KW_LET; }
 ":"         { colno += yyleng; curtoken = Token::New<OpColon>(); return OP_COLON; }
@@ -42,7 +43,7 @@ extern std::shared_ptr<Token> curtoken;
 ">="        { colno += yyleng; curtoken = Token::New<OpGreaterEq>(); return OP_GREATEREQ; }
 "=="        { colno += yyleng; curtoken = Token::New<OpEqual>(); return OP_EQUAL; }
 "!="        { colno += yyleng; curtoken = Token::New<OpNotEqual>(); return OP_NOT_EQUAL; }
-
+"."         {colno += yyleng; curtoken = Token::New<OpDot>(); return OP_DOT; }
 [a-zA-Z_][a-zA-Z0-9_]* { colno += yyleng; curtoken = Token::New<Identifier>(yytext); return IDENTIFIER; }
 
 [0-9]+      { colno += yyleng; curtoken = Token::New<Integer>(10, yytext); return L_INTEGER; }
@@ -52,6 +53,4 @@ extern std::shared_ptr<Token> curtoken;
 
 [ \n\t]+    {colno += yyleng;}
 .           {colno += yyleng; curtoken = Token::New<Rejected>(); return YYUNDEF; }
-
-%%
 

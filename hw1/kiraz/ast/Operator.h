@@ -57,6 +57,9 @@ public:
         case OP_GREATEREQ:
             opstr = "OpGe";
             break;
+        case OP_DOT:
+            opstr = "Dot";
+            break;
         default:
             break;
         }
@@ -119,6 +122,11 @@ public:
 class OpGreaterEq : public OpBinary {
 public:
     OpGreaterEq(const Node::Ptr &left, const Node::Ptr &right) : OpBinary(OP_GREATEREQ, left, right) {}
+};
+
+class OpDot : public OpBinary {
+public:
+    OpDot(const Node::Ptr &left, const Node::Ptr &right) : OpBinary(OP_DOT, left, right) {}
 };
 }
 

@@ -94,6 +94,12 @@ public:
     Else() : Token(KW_ELSE) {}
     std::string as_string() const override { return "KW_ELSE"; }
 };
+
+class Return : public Token {
+public: 
+    Return() : Token(KW_RETURN) {}
+    std::string as_string() const override { return "KW_RETURN";}
+};
 }
 
 #endif // KIRAZ_TOKEN_LITERAL_H

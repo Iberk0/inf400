@@ -13,7 +13,7 @@ namespace ast {
     }
     catch(std::out_of_range &e)
     {
-        //BURAYA BİR ŞEYLER EKLENECEK
+        
     }
 
 }
