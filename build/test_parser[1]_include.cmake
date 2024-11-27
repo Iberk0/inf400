@@ -1,5 +1,5 @@
-if(EXISTS "/home/onuralp/Desktop/ODEV1/build/test_parser[1]_tests.cmake")
-  include("/home/onuralp/Desktop/ODEV1/build/test_parser[1]_tests.cmake")
+if(EXISTS "/home/onuralp/Desktop/ODEV/inf400/build/test_parser[1]_tests.cmake")
+  include("/home/onuralp/Desktop/ODEV/inf400/build/test_parser[1]_tests.cmake")
 else()
   add_test(test_parser_NOT_BUILT test_parser_NOT_BUILT)
 endif()

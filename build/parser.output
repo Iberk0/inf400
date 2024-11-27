@@ -1,40 +1,101 @@
 Terminals unused in grammar
 
     REJECTED
-    L_INTEGER
-    L_STRING
-    IDENTIFIER
-    KW_IMPORT
-    KW_FUNC
-    KW_IF
-    KW_WHILE
-    KW_CLASS
-    KW_LET
-    OP_PLUS
-    OP_MINUS
-    OP_MULT
-    OP_DIVF
-    OP_ASSIGN
-    OP_LPAREN
-    OP_RPAREN
-    OP_LBRACE
-    OP_RBRACE
-    OP_SCOLON
-    OP_COLON
-    OP_COMMA
-    OP_LESS
-    OP_LESSEQ
-    OP_GREATER
-    OP_GREATEREQ
-    OP_EQUAL
-    OP_NOT_EQUAL
 
 
 Grammar
 
-    0 $accept: stmt $end
+    0 $accept: program $end
 
-    1 stmt: ε
+    1 program: stmt_list
+
+    2 stmt_list: stmt
+    3          | stmt_list stmt
+
+    4 stmt: expr_stmt
+    5     | let_stmt
+    6     | func_decl OP_SCOLON
+    7     | class_decl OP_SCOLON
+    8     | if_stmt OP_SCOLON
+    9     | while_stmt OP_SCOLON
+   10     | import_stmt
+   11     | call_stmt OP_SCOLON
+   12     | return_stmt OP_SCOLON
+
+   13 expr_stmt: expr OP_SCOLON
+
+   14 class_decl: KW_CLASS literal OP_LBRACE stmt_list OP_RBRACE
+   15           | KW_CLASS literal OP_LBRACE OP_RBRACE
+
+   16 let_stmt: KW_LET literal OP_ASSIGN expr OP_SCOLON
+   17         | KW_LET literal OP_COLON literal OP_ASSIGN expr OP_SCOLON
+   18         | KW_LET literal OP_COLON literal OP_SCOLON
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE
+
+   20 func_args: ε
+   21          | func_arg
+   22          | func_args OP_COMMA func_arg
+
+   23 func_arg: literal OP_COLON literal
+
+   24 if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt
+   25        | KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+   26 else_stmt: OP_LBRACE scope OP_RBRACE
+   27          | if_stmt
+
+   28 while_stmt: KW_WHILE OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+   29 import_stmt: KW_IMPORT literal OP_SCOLON
+
+   30 call_stmt: dot OP_LPAREN call_args OP_RPAREN
+
+   31 dot: literal
+   32    | dot OP_DOT literal
+
+   33 call_args: ε
+   34          | literal
+   35          | call_args OP_COMMA literal
+
+   36 return_stmt: KW_RETURN return_value
+
+   37 return_value: call_stmt
+   38             | compare_expr
+
+   39 scope: ε
+   40      | stmt
+   41      | stmt_list stmt
+
+   42 expr: assign_expr
+
+   43 assign_expr: compare_expr
+   44            | compare_expr OP_ASSIGN compare_expr
+
+   45 compare_expr: addsub
+   46             | compare_expr OP_LESS addsub
+   47             | compare_expr OP_LESSEQ addsub
+   48             | compare_expr OP_GREATER addsub
+   49             | compare_expr OP_GREATEREQ addsub
+   50             | compare_expr OP_EQUAL addsub
+   51             | compare_expr OP_NOT_EQUAL addsub
+
+   52 addsub: muldiv
+   53       | addsub OP_PLUS muldiv
+   54       | addsub OP_MINUS muldiv
+
+   55 muldiv: posneg
+   56       | muldiv OP_MULT posneg
+   57       | muldiv OP_DIVF posneg
+
+   58 posneg: OP_MINUS posneg
+   59       | OP_PLUS posneg
+   60       | OP_LPAREN expr OP_RPAREN
+   61       | literal
+
+   62 literal: L_INTEGER
+   63        | L_STRING
+   64        | IDENTIFIER
 
 
 Terminals, with rules where they appear
@@ -42,62 +103,1744 @@ Terminals, with rules where they appear
     $end (0) 0
     error (256)
     REJECTED (258)
-    L_INTEGER (259)
-    L_STRING (260)
-    IDENTIFIER (261)
-    KW_IMPORT (262)
-    KW_FUNC (263)
-    KW_IF (264)
-    KW_WHILE (265)
-    KW_CLASS (266)
-    KW_LET (267)
-    OP_PLUS (268)
-    OP_MINUS (269)
-    OP_MULT (270)
-    OP_DIVF (271)
-    OP_ASSIGN (272)
-    OP_LPAREN (273)
-    OP_RPAREN (274)
-    OP_LBRACE (275)
-    OP_RBRACE (276)
-    OP_SCOLON (277)
-    OP_COLON (278)
-    OP_COMMA (279)
-    OP_LESS (280)
-    OP_LESSEQ (281)
-    OP_GREATER (282)
-    OP_GREATEREQ (283)
-    OP_EQUAL (284)
-    OP_NOT_EQUAL (285)
+    L_INTEGER (259) 62
+    L_STRING (260) 63
+    IDENTIFIER (261) 64
+    KW_IMPORT (262) 29
+    KW_FUNC (263) 19
+    KW_IF (264) 24 25
+    KW_WHILE (265) 28
+    KW_CLASS (266) 14 15
+    KW_LET (267) 16 17 18
+    KW_ELSE (268) 24
+    KW_RETURN (269) 36
+    OP_PLUS (270) 53 59
+    OP_MINUS (271) 54 58
+    OP_MULT (272) 56
+    OP_DIVF (273) 57
+    OP_ASSIGN (274) 16 17 44
+    OP_LPAREN (275) 19 24 25 28 30 60
+    OP_RPAREN (276) 19 24 25 28 30 60
+    OP_LBRACE (277) 14 15 19 24 25 26 28
+    OP_RBRACE (278) 14 15 19 24 25 26 28
+    OP_SCOLON (279) 6 7 8 9 11 12 13 16 17 18 29
+    OP_COLON (280) 17 18 19 23
+    OP_COMMA (281) 22 35
+    OP_DOT (282) 32
+    OP_LESS (283) 46
+    OP_LESSEQ (284) 47
+    OP_GREATER (285) 48
+    OP_GREATEREQ (286) 49
+    OP_EQUAL (287) 50
+    OP_NOT_EQUAL (288) 51
 
 
 Nonterminals, with rules where they appear
 
-    $accept (31)
+    $accept (34)
         on left: 0
-    stmt (32)
+    program (35)
         on left: 1
         on right: 0
+    stmt_list (36)
+        on left: 2 3
+        on right: 1 3 14 41
+    stmt (37)
+        on left: 4 5 6 7 8 9 10 11 12
+        on right: 2 3 40 41
+    expr_stmt (38)
+        on left: 13
+        on right: 4
+    class_decl (39)
+        on left: 14 15
+        on right: 7
+    let_stmt (40)
+        on left: 16 17 18
+        on right: 5
+    func_decl (41)
+        on left: 19
+        on right: 6
+    func_args (42)
+        on left: 20 21 22
+        on right: 19 22
+    func_arg (43)
+        on left: 23
+        on right: 21 22
+    if_stmt (44)
+        on left: 24 25
+        on right: 8 27
+    else_stmt (45)
+        on left: 26 27
+        on right: 24
+    while_stmt (46)
+        on left: 28
+        on right: 9
+    import_stmt (47)
+        on left: 29
+        on right: 10
+    call_stmt (48)
+        on left: 30
+        on right: 11 37
+    dot (49)
+        on left: 31 32
+        on right: 30 32
+    call_args (50)
+        on left: 33 34 35
+        on right: 30 35
+    return_stmt (51)
+        on left: 36
+        on right: 12
+    return_value (52)
+        on left: 37 38
+        on right: 36
+    scope (53)
+        on left: 39 40 41
+        on right: 19 24 25 26 28
+    expr (54)
+        on left: 42
+        on right: 13 16 17 24 25 28 60
+    assign_expr (55)
+        on left: 43 44
+        on right: 42
+    compare_expr (56)
+        on left: 45 46 47 48 49 50 51
+        on right: 38 43 44 46 47 48 49 50 51
+    addsub (57)
+        on left: 52 53 54
+        on right: 45 46 47 48 49 50 51 53 54
+    muldiv (58)
+        on left: 55 56 57
+        on right: 52 53 54 56 57
+    posneg (59)
+        on left: 58 59 60 61
+        on right: 55 56 57 58 59
+    literal (60)
+        on left: 62 63 64
+        on right: 14 15 16 17 18 19 23 29 31 32 34 35 61
 
 
 State 0
 
-    0 $accept: • stmt $end
+    0 $accept: • program $end
 
-    $default  reduce using rule 1 (stmt)
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
 
-    stmt  go to state 1
+    program       go to state 14
+    stmt_list     go to state 15
+    stmt          go to state 16
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
 
 
 State 1
 
-    0 $accept: stmt • $end
+   62 literal: L_INTEGER •
 
-    $end  shift, and go to state 2
+    $default  reduce using rule 62 (literal)
 
 
 State 2
 
-    0 $accept: stmt $end •
+   63 literal: L_STRING •
+
+    $default  reduce using rule 63 (literal)
+
+
+State 3
+
+   64 literal: IDENTIFIER •
+
+    $default  reduce using rule 64 (literal)
+
+
+State 4
+
+   29 import_stmt: KW_IMPORT • literal OP_SCOLON
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 34
+
+
+State 5
+
+   19 func_decl: KW_FUNC • literal OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 35
+
+
+State 6
+
+   24 if_stmt: KW_IF • OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt
+   25        | KW_IF • OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+    OP_LPAREN  shift, and go to state 36
+
+
+State 7
+
+   28 while_stmt: KW_WHILE • OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+    OP_LPAREN  shift, and go to state 37
+
+
+State 8
+
+   14 class_decl: KW_CLASS • literal OP_LBRACE stmt_list OP_RBRACE
+   15           | KW_CLASS • literal OP_LBRACE OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 38
+
+
+State 9
+
+   16 let_stmt: KW_LET • literal OP_ASSIGN expr OP_SCOLON
+   17         | KW_LET • literal OP_COLON literal OP_ASSIGN expr OP_SCOLON
+   18         | KW_LET • literal OP_COLON literal OP_SCOLON
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 39
+
+
+State 10
+
+   36 return_stmt: KW_RETURN • return_value
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    call_stmt     go to state 40
+    dot           go to state 25
+    return_value  go to state 41
+    compare_expr  go to state 42
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 11
+
+   59 posneg: OP_PLUS • posneg
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    posneg   go to state 43
+    literal  go to state 44
+
+
+State 12
+
+   58 posneg: OP_MINUS • posneg
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    posneg   go to state 45
+    literal  go to state 44
+
+
+State 13
+
+   60 posneg: OP_LPAREN • expr OP_RPAREN
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    expr          go to state 46
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 44
+
+
+State 14
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 47
+
+
+State 15
+
+    1 program: stmt_list •
+    3 stmt_list: stmt_list • stmt
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    $default  reduce using rule 1 (program)
+
+    stmt          go to state 48
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 16
+
+    2 stmt_list: stmt •
+
+    $default  reduce using rule 2 (stmt_list)
+
+
+State 17
+
+    4 stmt: expr_stmt •
+
+    $default  reduce using rule 4 (stmt)
+
+
+State 18
+
+    7 stmt: class_decl • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 49
+
+
+State 19
+
+    5 stmt: let_stmt •
+
+    $default  reduce using rule 5 (stmt)
+
+
+State 20
+
+    6 stmt: func_decl • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 50
+
+
+State 21
+
+    8 stmt: if_stmt • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 51
+
+
+State 22
+
+    9 stmt: while_stmt • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 52
+
+
+State 23
+
+   10 stmt: import_stmt •
+
+    $default  reduce using rule 10 (stmt)
+
+
+State 24
+
+   11 stmt: call_stmt • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 53
+
+
+State 25
+
+   30 call_stmt: dot • OP_LPAREN call_args OP_RPAREN
+   32 dot: dot • OP_DOT literal
+
+    OP_LPAREN  shift, and go to state 54
+    OP_DOT     shift, and go to state 55
+
+
+State 26
+
+   12 stmt: return_stmt • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 56
+
+
+State 27
+
+   13 expr_stmt: expr • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 57
+
+
+State 28
+
+   42 expr: assign_expr •
+
+    $default  reduce using rule 42 (expr)
+
+
+State 29
+
+   43 assign_expr: compare_expr •
+   44            | compare_expr • OP_ASSIGN compare_expr
+   46 compare_expr: compare_expr • OP_LESS addsub
+   47             | compare_expr • OP_LESSEQ addsub
+   48             | compare_expr • OP_GREATER addsub
+   49             | compare_expr • OP_GREATEREQ addsub
+   50             | compare_expr • OP_EQUAL addsub
+   51             | compare_expr • OP_NOT_EQUAL addsub
+
+    OP_ASSIGN     shift, and go to state 58
+    OP_LESS       shift, and go to state 59
+    OP_LESSEQ     shift, and go to state 60
+    OP_GREATER    shift, and go to state 61
+    OP_GREATEREQ  shift, and go to state 62
+    OP_EQUAL      shift, and go to state 63
+    OP_NOT_EQUAL  shift, and go to state 64
+
+    $default  reduce using rule 43 (assign_expr)
+
+
+State 30
+
+   45 compare_expr: addsub •
+   53 addsub: addsub • OP_PLUS muldiv
+   54       | addsub • OP_MINUS muldiv
+
+    OP_PLUS   shift, and go to state 65
+    OP_MINUS  shift, and go to state 66
+
+    $default  reduce using rule 45 (compare_expr)
+
+
+State 31
+
+   52 addsub: muldiv •
+   56 muldiv: muldiv • OP_MULT posneg
+   57       | muldiv • OP_DIVF posneg
+
+    OP_MULT  shift, and go to state 67
+    OP_DIVF  shift, and go to state 68
+
+    $default  reduce using rule 52 (addsub)
+
+
+State 32
+
+   55 muldiv: posneg •
+
+    $default  reduce using rule 55 (muldiv)
+
+
+State 33
+
+   31 dot: literal •
+   61 posneg: literal •
+
+    OP_LPAREN  reduce using rule 31 (dot)
+    OP_DOT     reduce using rule 31 (dot)
+    $default   reduce using rule 61 (posneg)
+
+
+State 34
+
+   29 import_stmt: KW_IMPORT literal • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 69
+
+
+State 35
+
+   19 func_decl: KW_FUNC literal • OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE
+
+    OP_LPAREN  shift, and go to state 70
+
+
+State 36
+
+   24 if_stmt: KW_IF OP_LPAREN • expr OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt
+   25        | KW_IF OP_LPAREN • expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    expr          go to state 71
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 44
+
+
+State 37
+
+   28 while_stmt: KW_WHILE OP_LPAREN • expr OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    expr          go to state 72
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 44
+
+
+State 38
+
+   14 class_decl: KW_CLASS literal • OP_LBRACE stmt_list OP_RBRACE
+   15           | KW_CLASS literal • OP_LBRACE OP_RBRACE
+
+    OP_LBRACE  shift, and go to state 73
+
+
+State 39
+
+   16 let_stmt: KW_LET literal • OP_ASSIGN expr OP_SCOLON
+   17         | KW_LET literal • OP_COLON literal OP_ASSIGN expr OP_SCOLON
+   18         | KW_LET literal • OP_COLON literal OP_SCOLON
+
+    OP_ASSIGN  shift, and go to state 74
+    OP_COLON   shift, and go to state 75
+
+
+State 40
+
+   37 return_value: call_stmt •
+
+    $default  reduce using rule 37 (return_value)
+
+
+State 41
+
+   36 return_stmt: KW_RETURN return_value •
+
+    $default  reduce using rule 36 (return_stmt)
+
+
+State 42
+
+   38 return_value: compare_expr •
+   46 compare_expr: compare_expr • OP_LESS addsub
+   47             | compare_expr • OP_LESSEQ addsub
+   48             | compare_expr • OP_GREATER addsub
+   49             | compare_expr • OP_GREATEREQ addsub
+   50             | compare_expr • OP_EQUAL addsub
+   51             | compare_expr • OP_NOT_EQUAL addsub
+
+    OP_LESS       shift, and go to state 59
+    OP_LESSEQ     shift, and go to state 60
+    OP_GREATER    shift, and go to state 61
+    OP_GREATEREQ  shift, and go to state 62
+    OP_EQUAL      shift, and go to state 63
+    OP_NOT_EQUAL  shift, and go to state 64
+
+    $default  reduce using rule 38 (return_value)
+
+
+State 43
+
+   59 posneg: OP_PLUS posneg •
+
+    $default  reduce using rule 59 (posneg)
+
+
+State 44
+
+   61 posneg: literal •
+
+    $default  reduce using rule 61 (posneg)
+
+
+State 45
+
+   58 posneg: OP_MINUS posneg •
+
+    $default  reduce using rule 58 (posneg)
+
+
+State 46
+
+   60 posneg: OP_LPAREN expr • OP_RPAREN
+
+    OP_RPAREN  shift, and go to state 76
+
+
+State 47
+
+    0 $accept: program $end •
 
     $default  accept
+
+
+State 48
+
+    3 stmt_list: stmt_list stmt •
+
+    $default  reduce using rule 3 (stmt_list)
+
+
+State 49
+
+    7 stmt: class_decl OP_SCOLON •
+
+    $default  reduce using rule 7 (stmt)
+
+
+State 50
+
+    6 stmt: func_decl OP_SCOLON •
+
+    $default  reduce using rule 6 (stmt)
+
+
+State 51
+
+    8 stmt: if_stmt OP_SCOLON •
+
+    $default  reduce using rule 8 (stmt)
+
+
+State 52
+
+    9 stmt: while_stmt OP_SCOLON •
+
+    $default  reduce using rule 9 (stmt)
+
+
+State 53
+
+   11 stmt: call_stmt OP_SCOLON •
+
+    $default  reduce using rule 11 (stmt)
+
+
+State 54
+
+   30 call_stmt: dot OP_LPAREN • call_args OP_RPAREN
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    $default  reduce using rule 33 (call_args)
+
+    call_args  go to state 77
+    literal    go to state 78
+
+
+State 55
+
+   32 dot: dot OP_DOT • literal
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 79
+
+
+State 56
+
+   12 stmt: return_stmt OP_SCOLON •
+
+    $default  reduce using rule 12 (stmt)
+
+
+State 57
+
+   13 expr_stmt: expr OP_SCOLON •
+
+    $default  reduce using rule 13 (expr_stmt)
+
+
+State 58
+
+   44 assign_expr: compare_expr OP_ASSIGN • compare_expr
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    compare_expr  go to state 80
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 44
+
+
+State 59
+
+   46 compare_expr: compare_expr OP_LESS • addsub
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    addsub   go to state 81
+    muldiv   go to state 31
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 60
+
+   47 compare_expr: compare_expr OP_LESSEQ • addsub
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    addsub   go to state 82
+    muldiv   go to state 31
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 61
+
+   48 compare_expr: compare_expr OP_GREATER • addsub
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    addsub   go to state 83
+    muldiv   go to state 31
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 62
+
+   49 compare_expr: compare_expr OP_GREATEREQ • addsub
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    addsub   go to state 84
+    muldiv   go to state 31
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 63
+
+   50 compare_expr: compare_expr OP_EQUAL • addsub
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    addsub   go to state 85
+    muldiv   go to state 31
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 64
+
+   51 compare_expr: compare_expr OP_NOT_EQUAL • addsub
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    addsub   go to state 86
+    muldiv   go to state 31
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 65
+
+   53 addsub: addsub OP_PLUS • muldiv
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    muldiv   go to state 87
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 66
+
+   54 addsub: addsub OP_MINUS • muldiv
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    muldiv   go to state 88
+    posneg   go to state 32
+    literal  go to state 44
+
+
+State 67
+
+   56 muldiv: muldiv OP_MULT • posneg
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    posneg   go to state 89
+    literal  go to state 44
+
+
+State 68
+
+   57 muldiv: muldiv OP_DIVF • posneg
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    posneg   go to state 90
+    literal  go to state 44
+
+
+State 69
+
+   29 import_stmt: KW_IMPORT literal OP_SCOLON •
+
+    $default  reduce using rule 29 (import_stmt)
+
+
+State 70
+
+   19 func_decl: KW_FUNC literal OP_LPAREN • func_args OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    $default  reduce using rule 20 (func_args)
+
+    func_args  go to state 91
+    func_arg   go to state 92
+    literal    go to state 93
+
+
+State 71
+
+   24 if_stmt: KW_IF OP_LPAREN expr • OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt
+   25        | KW_IF OP_LPAREN expr • OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+    OP_RPAREN  shift, and go to state 94
+
+
+State 72
+
+   28 while_stmt: KW_WHILE OP_LPAREN expr • OP_RPAREN OP_LBRACE scope OP_RBRACE
+
+    OP_RPAREN  shift, and go to state 95
+
+
+State 73
+
+   14 class_decl: KW_CLASS literal OP_LBRACE • stmt_list OP_RBRACE
+   15           | KW_CLASS literal OP_LBRACE • OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+    OP_RBRACE   shift, and go to state 96
+
+    stmt_list     go to state 97
+    stmt          go to state 16
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 74
+
+   16 let_stmt: KW_LET literal OP_ASSIGN • expr OP_SCOLON
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    expr          go to state 98
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 44
+
+
+State 75
+
+   17 let_stmt: KW_LET literal OP_COLON • literal OP_ASSIGN expr OP_SCOLON
+   18         | KW_LET literal OP_COLON • literal OP_SCOLON
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 99
+
+
+State 76
+
+   60 posneg: OP_LPAREN expr OP_RPAREN •
+
+    $default  reduce using rule 60 (posneg)
+
+
+State 77
+
+   30 call_stmt: dot OP_LPAREN call_args • OP_RPAREN
+   35 call_args: call_args • OP_COMMA literal
+
+    OP_RPAREN  shift, and go to state 100
+    OP_COMMA   shift, and go to state 101
+
+
+State 78
+
+   34 call_args: literal •
+
+    $default  reduce using rule 34 (call_args)
+
+
+State 79
+
+   32 dot: dot OP_DOT literal •
+
+    $default  reduce using rule 32 (dot)
+
+
+State 80
+
+   44 assign_expr: compare_expr OP_ASSIGN compare_expr •
+   46 compare_expr: compare_expr • OP_LESS addsub
+   47             | compare_expr • OP_LESSEQ addsub
+   48             | compare_expr • OP_GREATER addsub
+   49             | compare_expr • OP_GREATEREQ addsub
+   50             | compare_expr • OP_EQUAL addsub
+   51             | compare_expr • OP_NOT_EQUAL addsub
+
+    OP_LESS       shift, and go to state 59
+    OP_LESSEQ     shift, and go to state 60
+    OP_GREATER    shift, and go to state 61
+    OP_GREATEREQ  shift, and go to state 62
+    OP_EQUAL      shift, and go to state 63
+    OP_NOT_EQUAL  shift, and go to state 64
+
+    $default  reduce using rule 44 (assign_expr)
+
+
+State 81
+
+   46 compare_expr: compare_expr OP_LESS addsub •
+   53 addsub: addsub • OP_PLUS muldiv
+   54       | addsub • OP_MINUS muldiv
+
+    OP_PLUS   shift, and go to state 65
+    OP_MINUS  shift, and go to state 66
+
+    $default  reduce using rule 46 (compare_expr)
+
+
+State 82
+
+   47 compare_expr: compare_expr OP_LESSEQ addsub •
+   53 addsub: addsub • OP_PLUS muldiv
+   54       | addsub • OP_MINUS muldiv
+
+    OP_PLUS   shift, and go to state 65
+    OP_MINUS  shift, and go to state 66
+
+    $default  reduce using rule 47 (compare_expr)
+
+
+State 83
+
+   48 compare_expr: compare_expr OP_GREATER addsub •
+   53 addsub: addsub • OP_PLUS muldiv
+   54       | addsub • OP_MINUS muldiv
+
+    OP_PLUS   shift, and go to state 65
+    OP_MINUS  shift, and go to state 66
+
+    $default  reduce using rule 48 (compare_expr)
+
+
+State 84
+
+   49 compare_expr: compare_expr OP_GREATEREQ addsub •
+   53 addsub: addsub • OP_PLUS muldiv
+   54       | addsub • OP_MINUS muldiv
+
+    OP_PLUS   shift, and go to state 65
+    OP_MINUS  shift, and go to state 66
+
+    $default  reduce using rule 49 (compare_expr)
+
+
+State 85
+
+   50 compare_expr: compare_expr OP_EQUAL addsub •
+   53 addsub: addsub • OP_PLUS muldiv
+   54       | addsub • OP_MINUS muldiv
+
+    OP_PLUS   shift, and go to state 65
+    OP_MINUS  shift, and go to state 66
+
+    $default  reduce using rule 50 (compare_expr)
+
+
+State 86
+
+   51 compare_expr: compare_expr OP_NOT_EQUAL addsub •
+   53 addsub: addsub • OP_PLUS muldiv
+   54       | addsub • OP_MINUS muldiv
+
+    OP_PLUS   shift, and go to state 65
+    OP_MINUS  shift, and go to state 66
+
+    $default  reduce using rule 51 (compare_expr)
+
+
+State 87
+
+   53 addsub: addsub OP_PLUS muldiv •
+   56 muldiv: muldiv • OP_MULT posneg
+   57       | muldiv • OP_DIVF posneg
+
+    OP_MULT  shift, and go to state 67
+    OP_DIVF  shift, and go to state 68
+
+    $default  reduce using rule 53 (addsub)
+
+
+State 88
+
+   54 addsub: addsub OP_MINUS muldiv •
+   56 muldiv: muldiv • OP_MULT posneg
+   57       | muldiv • OP_DIVF posneg
+
+    OP_MULT  shift, and go to state 67
+    OP_DIVF  shift, and go to state 68
+
+    $default  reduce using rule 54 (addsub)
+
+
+State 89
+
+   56 muldiv: muldiv OP_MULT posneg •
+
+    $default  reduce using rule 56 (muldiv)
+
+
+State 90
+
+   57 muldiv: muldiv OP_DIVF posneg •
+
+    $default  reduce using rule 57 (muldiv)
+
+
+State 91
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args • OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE
+   22 func_args: func_args • OP_COMMA func_arg
+
+    OP_RPAREN  shift, and go to state 102
+    OP_COMMA   shift, and go to state 103
+
+
+State 92
+
+   21 func_args: func_arg •
+
+    $default  reduce using rule 21 (func_args)
+
+
+State 93
+
+   23 func_arg: literal • OP_COLON literal
+
+    OP_COLON  shift, and go to state 104
+
+
+State 94
+
+   24 if_stmt: KW_IF OP_LPAREN expr OP_RPAREN • OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt
+   25        | KW_IF OP_LPAREN expr OP_RPAREN • OP_LBRACE scope OP_RBRACE
+
+    OP_LBRACE  shift, and go to state 105
+
+
+State 95
+
+   28 while_stmt: KW_WHILE OP_LPAREN expr OP_RPAREN • OP_LBRACE scope OP_RBRACE
+
+    OP_LBRACE  shift, and go to state 106
+
+
+State 96
+
+   15 class_decl: KW_CLASS literal OP_LBRACE OP_RBRACE •
+
+    $default  reduce using rule 15 (class_decl)
+
+
+State 97
+
+    3 stmt_list: stmt_list • stmt
+   14 class_decl: KW_CLASS literal OP_LBRACE stmt_list • OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+    OP_RBRACE   shift, and go to state 107
+
+    stmt          go to state 48
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 98
+
+   16 let_stmt: KW_LET literal OP_ASSIGN expr • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 108
+
+
+State 99
+
+   17 let_stmt: KW_LET literal OP_COLON literal • OP_ASSIGN expr OP_SCOLON
+   18         | KW_LET literal OP_COLON literal • OP_SCOLON
+
+    OP_ASSIGN  shift, and go to state 109
+    OP_SCOLON  shift, and go to state 110
+
+
+State 100
+
+   30 call_stmt: dot OP_LPAREN call_args OP_RPAREN •
+
+    $default  reduce using rule 30 (call_stmt)
+
+
+State 101
+
+   35 call_args: call_args OP_COMMA • literal
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 111
+
+
+State 102
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN • OP_COLON literal OP_LBRACE scope OP_RBRACE
+
+    OP_COLON  shift, and go to state 112
+
+
+State 103
+
+   22 func_args: func_args OP_COMMA • func_arg
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    func_arg  go to state 113
+    literal   go to state 93
+
+
+State 104
+
+   23 func_arg: literal OP_COLON • literal
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 114
+
+
+State 105
+
+   24 if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE • scope OP_RBRACE KW_ELSE else_stmt
+   25        | KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE • scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    $default  reduce using rule 39 (scope)
+
+    stmt_list     go to state 115
+    stmt          go to state 116
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    scope         go to state 117
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 106
+
+   28 while_stmt: KW_WHILE OP_LPAREN expr OP_RPAREN OP_LBRACE • scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    $default  reduce using rule 39 (scope)
+
+    stmt_list     go to state 115
+    stmt          go to state 116
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    scope         go to state 118
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 107
+
+   14 class_decl: KW_CLASS literal OP_LBRACE stmt_list OP_RBRACE •
+
+    $default  reduce using rule 14 (class_decl)
+
+
+State 108
+
+   16 let_stmt: KW_LET literal OP_ASSIGN expr OP_SCOLON •
+
+    $default  reduce using rule 16 (let_stmt)
+
+
+State 109
+
+   17 let_stmt: KW_LET literal OP_COLON literal OP_ASSIGN • expr OP_SCOLON
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    expr          go to state 119
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 44
+
+
+State 110
+
+   18 let_stmt: KW_LET literal OP_COLON literal OP_SCOLON •
+
+    $default  reduce using rule 18 (let_stmt)
+
+
+State 111
+
+   35 call_args: call_args OP_COMMA literal •
+
+    $default  reduce using rule 35 (call_args)
+
+
+State 112
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON • literal OP_LBRACE scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+
+    literal  go to state 120
+
+
+State 113
+
+   22 func_args: func_args OP_COMMA func_arg •
+
+    $default  reduce using rule 22 (func_args)
+
+
+State 114
+
+   23 func_arg: literal OP_COLON literal •
+
+    $default  reduce using rule 23 (func_arg)
+
+
+State 115
+
+    3 stmt_list: stmt_list • stmt
+   41 scope: stmt_list • stmt
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    stmt          go to state 121
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 116
+
+    2 stmt_list: stmt •
+   40 scope: stmt •
+
+    OP_RBRACE  reduce using rule 40 (scope)
+    $default   reduce using rule 2 (stmt_list)
+
+
+State 117
+
+   24 if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope • OP_RBRACE KW_ELSE else_stmt
+   25        | KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope • OP_RBRACE
+
+    OP_RBRACE  shift, and go to state 122
+
+
+State 118
+
+   28 while_stmt: KW_WHILE OP_LPAREN expr OP_RPAREN OP_LBRACE scope • OP_RBRACE
+
+    OP_RBRACE  shift, and go to state 123
+
+
+State 119
+
+   17 let_stmt: KW_LET literal OP_COLON literal OP_ASSIGN expr • OP_SCOLON
+
+    OP_SCOLON  shift, and go to state 124
+
+
+State 120
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON literal • OP_LBRACE scope OP_RBRACE
+
+    OP_LBRACE  shift, and go to state 125
+
+
+State 121
+
+    3 stmt_list: stmt_list stmt •
+   41 scope: stmt_list stmt •
+
+    OP_RBRACE  reduce using rule 41 (scope)
+    $default   reduce using rule 3 (stmt_list)
+
+
+State 122
+
+   24 if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE • KW_ELSE else_stmt
+   25        | KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE •
+
+    KW_ELSE  shift, and go to state 126
+
+    $default  reduce using rule 25 (if_stmt)
+
+
+State 123
+
+   28 while_stmt: KW_WHILE OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE •
+
+    $default  reduce using rule 28 (while_stmt)
+
+
+State 124
+
+   17 let_stmt: KW_LET literal OP_COLON literal OP_ASSIGN expr OP_SCOLON •
+
+    $default  reduce using rule 17 (let_stmt)
+
+
+State 125
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE • scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    $default  reduce using rule 39 (scope)
+
+    stmt_list     go to state 115
+    stmt          go to state 116
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    scope         go to state 127
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 126
+
+   24 if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE • else_stmt
+
+    KW_IF      shift, and go to state 6
+    OP_LBRACE  shift, and go to state 128
+
+    if_stmt    go to state 129
+    else_stmt  go to state 130
+
+
+State 127
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE scope • OP_RBRACE
+
+    OP_RBRACE  shift, and go to state 131
+
+
+State 128
+
+   26 else_stmt: OP_LBRACE • scope OP_RBRACE
+
+    L_INTEGER   shift, and go to state 1
+    L_STRING    shift, and go to state 2
+    IDENTIFIER  shift, and go to state 3
+    KW_IMPORT   shift, and go to state 4
+    KW_FUNC     shift, and go to state 5
+    KW_IF       shift, and go to state 6
+    KW_WHILE    shift, and go to state 7
+    KW_CLASS    shift, and go to state 8
+    KW_LET      shift, and go to state 9
+    KW_RETURN   shift, and go to state 10
+    OP_PLUS     shift, and go to state 11
+    OP_MINUS    shift, and go to state 12
+    OP_LPAREN   shift, and go to state 13
+
+    $default  reduce using rule 39 (scope)
+
+    stmt_list     go to state 115
+    stmt          go to state 116
+    expr_stmt     go to state 17
+    class_decl    go to state 18
+    let_stmt      go to state 19
+    func_decl     go to state 20
+    if_stmt       go to state 21
+    while_stmt    go to state 22
+    import_stmt   go to state 23
+    call_stmt     go to state 24
+    dot           go to state 25
+    return_stmt   go to state 26
+    scope         go to state 132
+    expr          go to state 27
+    assign_expr   go to state 28
+    compare_expr  go to state 29
+    addsub        go to state 30
+    muldiv        go to state 31
+    posneg        go to state 32
+    literal       go to state 33
+
+
+State 129
+
+   27 else_stmt: if_stmt •
+
+    $default  reduce using rule 27 (else_stmt)
+
+
+State 130
+
+   24 if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt •
+
+    $default  reduce using rule 24 (if_stmt)
+
+
+State 131
+
+   19 func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE •
+
+    $default  reduce using rule 19 (func_decl)
+
+
+State 132
+
+   26 else_stmt: OP_LBRACE scope • OP_RBRACE
+
+    OP_RBRACE  shift, and go to state 133
+
+
+State 133
+
+   26 else_stmt: OP_LBRACE scope OP_RBRACE •
+
+    $default  reduce using rule 26 (else_stmt)

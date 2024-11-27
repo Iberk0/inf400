@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DYYDEBUG=1
 
-CXX_INCLUDES = -I/home/onuralp/Desktop/ODEV1/build -I/home/onuralp/Desktop/ODEV1/hw1 -I/home/onuralp/Desktop/ODEV1/build/_deps/googletest-src/googlemock/include -I/home/onuralp/Desktop/ODEV1/build/_deps/googletest-src/googlemock -isystem /home/onuralp/Desktop/ODEV1/build/_deps/googletest-src/googletest/include -isystem /home/onuralp/Desktop/ODEV1/build/_deps/googletest-src/googletest
+CXX_INCLUDES = -I/home/onuralp/Desktop/ODEV/inf400/build -I/home/onuralp/Desktop/ODEV/inf400 -I/home/onuralp/Desktop/ODEV/inf400/build/_deps/googletest-src/googlemock/include -I/home/onuralp/Desktop/ODEV/inf400/build/_deps/googletest-src/googlemock -isystem /home/onuralp/Desktop/ODEV/inf400/build/_deps/googletest-src/googletest/include -isystem /home/onuralp/Desktop/ODEV/inf400/build/_deps/googletest-src/googletest
 
 CXX_FLAGS = -Wall -Wshadow -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=1 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Werror=return-type -Werror=dangling-else -Werror=non-virtual-dtor -Werror=suggest-override -Werror=return-local-addr -Wno-free-nonheap-object -std=c++20
 

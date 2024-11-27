@@ -1,9 +1,9 @@
 CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o: \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Operator.cpp \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Operator.cpp \
  /usr/include/stdc-predef.h \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Operator.h \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/Token.h \
- /home/onuralp/Desktop/ODEV1/hw1/main.h /usr/include/c++/11/memory \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Operator.h \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/Token.h \
+ /home/onuralp/Desktop/ODEV/inf400/main.h /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -202,7 +202,7 @@ CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o: \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h /usr/include/c++/11/cmath \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h /usr/include/c++/11/cmath \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -226,7 +226,7 @@ CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o: \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc /usr/include/c++/11/cstring \
  /usr/include/string.h /usr/include/strings.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/core.h /usr/include/c++/11/cstddef \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/ranges.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h \
- /home/onuralp/Desktop/ODEV1/build/parser.hpp
+ /home/onuralp/Desktop/ODEV/inf400/fmt/core.h /usr/include/c++/11/cstddef \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/ranges.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h \
+ /home/onuralp/Desktop/ODEV/inf400/build/parser.hpp

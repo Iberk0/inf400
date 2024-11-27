@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "../CMakeLists.txt"
   "CMakeFiles/3.22.1/CMakeCCompiler.cmake"
   "CMakeFiles/3.22.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.22.1/CMakeSystem.cmake"
@@ -19,8 +20,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "_deps/googletest-src/googletest/cmake/gtest.pc.in"
   "_deps/googletest-src/googletest/cmake/gtest_main.pc.in"
   "_deps/googletest-src/googletest/cmake/internal_utils.cmake"
-  "/home/onuralp/Desktop/ODEV1/hw1/CMakeLists.txt"
-  "/home/onuralp/Desktop/ODEV1/hw1/test.cmake"
+  "../test.cmake"
   "/usr/share/cmake-3.22/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in"
   "/usr/share/cmake-3.22/Modules/CMakeCCompiler.cmake.in"
   "/usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c"

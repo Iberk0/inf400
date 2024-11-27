@@ -1,6 +1,6 @@
 CMakeFiles/kiraz.dir/fmt/os.cc.o: \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/os.cc /usr/include/stdc-predef.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/os.h /usr/include/c++/11/cerrno \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/os.cc /usr/include/stdc-predef.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/os.h /usr/include/c++/11/cerrno \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -143,7 +143,7 @@ CMakeFiles/kiraz.dir/fmt/os.cc.o: \
  /usr/include/c++/11/ext/string_conversions.h \
  /usr/include/c++/11/bits/charconv.h \
  /usr/include/c++/11/bits/basic_string.tcc \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h /usr/include/c++/11/cmath \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h /usr/include/c++/11/cmath \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -225,7 +225,7 @@ CMakeFiles/kiraz.dir/fmt/os.cc.o: \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/core.h /usr/include/fcntl.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/core.h /usr/include/fcntl.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl.h \
  /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \

@@ -67,20 +67,19 @@
 
 
 /* First part of user prologue.  */
-#line 1 "/home/onuralp/Desktop/ODEV1/hw1/parser.yy"
+#line 1 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
 
 #include "lexer.hpp"
 
 #include <kiraz/ast/Operator.h>
 #include <kiraz/ast/Literal.h>
-
 #include <kiraz/token/Literal.h>
 
 int yyerror(const char *msg);
 extern std::shared_ptr<Token> curtoken;
 extern int yylineno;
 
-#line 84 "/home/onuralp/Desktop/ODEV1/build/parser.cpp"
+#line 83 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -121,26 +120,54 @@ enum yysymbol_kind_t
   YYSYMBOL_KW_WHILE = 10,                  /* KW_WHILE  */
   YYSYMBOL_KW_CLASS = 11,                  /* KW_CLASS  */
   YYSYMBOL_KW_LET = 12,                    /* KW_LET  */
-  YYSYMBOL_OP_PLUS = 13,                   /* OP_PLUS  */
-  YYSYMBOL_OP_MINUS = 14,                  /* OP_MINUS  */
-  YYSYMBOL_OP_MULT = 15,                   /* OP_MULT  */
-  YYSYMBOL_OP_DIVF = 16,                   /* OP_DIVF  */
-  YYSYMBOL_OP_ASSIGN = 17,                 /* OP_ASSIGN  */
-  YYSYMBOL_OP_LPAREN = 18,                 /* OP_LPAREN  */
-  YYSYMBOL_OP_RPAREN = 19,                 /* OP_RPAREN  */
-  YYSYMBOL_OP_LBRACE = 20,                 /* OP_LBRACE  */
-  YYSYMBOL_OP_RBRACE = 21,                 /* OP_RBRACE  */
-  YYSYMBOL_OP_SCOLON = 22,                 /* OP_SCOLON  */
-  YYSYMBOL_OP_COLON = 23,                  /* OP_COLON  */
-  YYSYMBOL_OP_COMMA = 24,                  /* OP_COMMA  */
-  YYSYMBOL_OP_LESS = 25,                   /* OP_LESS  */
-  YYSYMBOL_OP_LESSEQ = 26,                 /* OP_LESSEQ  */
-  YYSYMBOL_OP_GREATER = 27,                /* OP_GREATER  */
-  YYSYMBOL_OP_GREATEREQ = 28,              /* OP_GREATEREQ  */
-  YYSYMBOL_OP_EQUAL = 29,                  /* OP_EQUAL  */
-  YYSYMBOL_OP_NOT_EQUAL = 30,              /* OP_NOT_EQUAL  */
-  YYSYMBOL_YYACCEPT = 31,                  /* $accept  */
-  YYSYMBOL_stmt = 32                       /* stmt  */
+  YYSYMBOL_KW_ELSE = 13,                   /* KW_ELSE  */
+  YYSYMBOL_KW_RETURN = 14,                 /* KW_RETURN  */
+  YYSYMBOL_OP_PLUS = 15,                   /* OP_PLUS  */
+  YYSYMBOL_OP_MINUS = 16,                  /* OP_MINUS  */
+  YYSYMBOL_OP_MULT = 17,                   /* OP_MULT  */
+  YYSYMBOL_OP_DIVF = 18,                   /* OP_DIVF  */
+  YYSYMBOL_OP_ASSIGN = 19,                 /* OP_ASSIGN  */
+  YYSYMBOL_OP_LPAREN = 20,                 /* OP_LPAREN  */
+  YYSYMBOL_OP_RPAREN = 21,                 /* OP_RPAREN  */
+  YYSYMBOL_OP_LBRACE = 22,                 /* OP_LBRACE  */
+  YYSYMBOL_OP_RBRACE = 23,                 /* OP_RBRACE  */
+  YYSYMBOL_OP_SCOLON = 24,                 /* OP_SCOLON  */
+  YYSYMBOL_OP_COLON = 25,                  /* OP_COLON  */
+  YYSYMBOL_OP_COMMA = 26,                  /* OP_COMMA  */
+  YYSYMBOL_OP_DOT = 27,                    /* OP_DOT  */
+  YYSYMBOL_OP_LESS = 28,                   /* OP_LESS  */
+  YYSYMBOL_OP_LESSEQ = 29,                 /* OP_LESSEQ  */
+  YYSYMBOL_OP_GREATER = 30,                /* OP_GREATER  */
+  YYSYMBOL_OP_GREATEREQ = 31,              /* OP_GREATEREQ  */
+  YYSYMBOL_OP_EQUAL = 32,                  /* OP_EQUAL  */
+  YYSYMBOL_OP_NOT_EQUAL = 33,              /* OP_NOT_EQUAL  */
+  YYSYMBOL_YYACCEPT = 34,                  /* $accept  */
+  YYSYMBOL_program = 35,                   /* program  */
+  YYSYMBOL_stmt_list = 36,                 /* stmt_list  */
+  YYSYMBOL_stmt = 37,                      /* stmt  */
+  YYSYMBOL_expr_stmt = 38,                 /* expr_stmt  */
+  YYSYMBOL_class_decl = 39,                /* class_decl  */
+  YYSYMBOL_let_stmt = 40,                  /* let_stmt  */
+  YYSYMBOL_func_decl = 41,                 /* func_decl  */
+  YYSYMBOL_func_args = 42,                 /* func_args  */
+  YYSYMBOL_func_arg = 43,                  /* func_arg  */
+  YYSYMBOL_if_stmt = 44,                   /* if_stmt  */
+  YYSYMBOL_else_stmt = 45,                 /* else_stmt  */
+  YYSYMBOL_while_stmt = 46,                /* while_stmt  */
+  YYSYMBOL_import_stmt = 47,               /* import_stmt  */
+  YYSYMBOL_call_stmt = 48,                 /* call_stmt  */
+  YYSYMBOL_dot = 49,                       /* dot  */
+  YYSYMBOL_call_args = 50,                 /* call_args  */
+  YYSYMBOL_return_stmt = 51,               /* return_stmt  */
+  YYSYMBOL_return_value = 52,              /* return_value  */
+  YYSYMBOL_scope = 53,                     /* scope  */
+  YYSYMBOL_expr = 54,                      /* expr  */
+  YYSYMBOL_assign_expr = 55,               /* assign_expr  */
+  YYSYMBOL_compare_expr = 56,              /* compare_expr  */
+  YYSYMBOL_addsub = 57,                    /* addsub  */
+  YYSYMBOL_muldiv = 58,                    /* muldiv  */
+  YYSYMBOL_posneg = 59,                    /* posneg  */
+  YYSYMBOL_literal = 60                    /* literal  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -257,7 +284,7 @@ typedef int yytype_uint16;
 
 
 /* Stored state numbers (used for stacks). */
-typedef yytype_int8 yy_state_t;
+typedef yytype_uint8 yy_state_t;
 
 /* State numbers in computations.  */
 typedef int yy_state_fast_t;
@@ -466,21 +493,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  2
+#define YYFINAL  47
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   0
+#define YYLAST   164
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  31
+#define YYNTOKENS  34
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  2
+#define YYNNTS  27
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  2
+#define YYNRULES  65
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  3
+#define YYNSTATES  134
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   285
+#define YYMAXUTOK   288
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -522,14 +549,20 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30
+      25,    26,    27,    28,    29,    30,    31,    32,    33
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27
+       0,    27,    27,    31,    36,    43,    44,    45,    46,    47,
+      48,    49,    50,    51,    55,    59,    61,    65,    67,    69,
+      74,    80,    81,    83,    92,    99,   101,   106,   107,   111,
+     116,   121,   127,   128,   132,   133,   135,   143,   147,   148,
+     151,   152,   157,   165,   169,   170,   174,   175,   176,   177,
+     178,   179,   180,   184,   185,   186,   190,   191,   192,   196,
+     197,   198,   199,   203,   204,   205
 };
 #endif
 
@@ -547,11 +580,15 @@ static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "REJECTED",
   "L_INTEGER", "L_STRING", "IDENTIFIER", "KW_IMPORT", "KW_FUNC", "KW_IF",
-  "KW_WHILE", "KW_CLASS", "KW_LET", "OP_PLUS", "OP_MINUS", "OP_MULT",
-  "OP_DIVF", "OP_ASSIGN", "OP_LPAREN", "OP_RPAREN", "OP_LBRACE",
-  "OP_RBRACE", "OP_SCOLON", "OP_COLON", "OP_COMMA", "OP_LESS", "OP_LESSEQ",
-  "OP_GREATER", "OP_GREATEREQ", "OP_EQUAL", "OP_NOT_EQUAL", "$accept",
-  "stmt", YY_NULLPTR
+  "KW_WHILE", "KW_CLASS", "KW_LET", "KW_ELSE", "KW_RETURN", "OP_PLUS",
+  "OP_MINUS", "OP_MULT", "OP_DIVF", "OP_ASSIGN", "OP_LPAREN", "OP_RPAREN",
+  "OP_LBRACE", "OP_RBRACE", "OP_SCOLON", "OP_COLON", "OP_COMMA", "OP_DOT",
+  "OP_LESS", "OP_LESSEQ", "OP_GREATER", "OP_GREATEREQ", "OP_EQUAL",
+  "OP_NOT_EQUAL", "$accept", "program", "stmt_list", "stmt", "expr_stmt",
+  "class_decl", "let_stmt", "func_decl", "func_args", "func_arg",
+  "if_stmt", "else_stmt", "while_stmt", "import_stmt", "call_stmt", "dot",
+  "call_args", "return_stmt", "return_value", "scope", "expr",
+  "assign_expr", "compare_expr", "addsub", "muldiv", "posneg", "literal", YY_NULLPTR
 };
 
 static const char *
@@ -561,21 +598,34 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-1)
+#define YYPACT_NINF (-96)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-1)
+#define YYTABLE_NINF (-43)
 
 #define yytable_value_is_error(Yyn) \
   0
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-static const yytype_int8 yypact[] =
+static const yytype_int16 yypact[] =
 {
-      -1,     0,    -1
+      76,   -96,   -96,   -96,   105,   105,   -13,    -3,   105,   105,
+       8,     8,     8,     8,    51,    76,   -96,   -96,    41,   -96,
+      43,    54,    65,   -96,    69,    -2,    78,    83,   -96,    89,
+      19,    77,   -96,     2,    99,    49,     8,     8,    50,    27,
+     -96,   -96,    29,   -96,   -96,   -96,    79,   -96,   -96,   -96,
+     -96,   -96,   -96,   -96,   105,   105,   -96,   -96,     8,     8,
+       8,     8,     8,     8,     8,     8,     8,     8,     8,   -96,
+     105,   103,   106,    33,     8,   105,   -96,    42,   -96,   -96,
+      29,    19,    19,    19,    19,    19,    19,    77,    77,   -96,
+     -96,    45,   -96,   101,   116,   120,   -96,   125,   119,    12,
+     -96,   105,   121,   105,   105,    76,    76,   -96,   -96,     8,
+     -96,   -96,   105,   -96,   -96,    76,   124,   132,   133,   134,
+     122,   136,   144,   -96,   -96,    76,    10,   137,    76,   -96,
+     -96,   -96,   138,   -96
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -583,51 +633,125 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     0,     1
+       0,    63,    64,    65,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     2,     3,     5,     0,     6,
+       0,     0,     0,    11,     0,     0,     0,     0,    43,    44,
+      46,    53,    56,    62,     0,     0,     0,     0,     0,     0,
+      38,    37,    39,    60,    62,    59,     0,     1,     4,     8,
+       7,     9,    10,    12,    34,     0,    13,    14,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,    30,
+      21,     0,     0,     0,     0,     0,    61,     0,    35,    33,
+      45,    47,    48,    49,    50,    51,    52,    54,    55,    57,
+      58,     0,    22,     0,     0,     0,    16,     0,     0,     0,
+      31,     0,     0,     0,     0,    40,    40,    15,    17,     0,
+      19,    36,     0,    23,    24,     0,     3,     0,     0,     0,
+       0,     4,    26,    29,    18,    40,     0,     0,    40,    28,
+      25,    20,     0,    27
 };
 
 /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int8 yypgoto[] =
+static const yytype_int16 yypgoto[] =
 {
-      -1,    -1
+     -96,   -96,     6,     1,   -96,   -96,   -96,   -96,   -96,    59,
+      37,   -96,   -96,   -96,   154,   -96,   -96,   -96,   -96,   -95,
+     -10,   -96,    -8,    90,    48,     9,     0
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
-static const yytype_int8 yydefgoto[] =
+static const yytype_uint8 yydefgoto[] =
 {
-       0,     1
+       0,    14,   115,   116,    17,    18,    19,    20,    91,    92,
+      21,   130,    22,    23,    24,    25,    77,    26,    41,   117,
+      27,    28,    29,    30,    31,    32,    44
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule whose
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_int8 yytable[] =
+static const yytype_int16 yytable[] =
 {
-       2
+      33,    16,    42,    46,    34,    35,    15,    36,    38,    39,
+      33,   118,     1,     2,     3,    33,    48,    37,    54,     6,
+      43,    45,   -32,    11,    12,    55,    71,    72,    13,   -32,
+     127,   109,   128,   132,    65,    66,   110,     1,     2,     3,
+       4,     5,     6,     7,     8,     9,    74,    10,    11,    12,
+      80,    47,    75,    13,    78,    79,    96,    59,    60,    61,
+      62,    63,    64,   100,    98,    49,   102,    50,   101,    70,
+      93,   103,    73,    33,    16,    99,    89,    90,    51,    97,
+       1,     2,     3,     4,     5,     6,     7,     8,     9,    52,
+      10,    11,    12,    53,    67,    68,    13,    33,    48,   119,
+      76,   111,    56,    93,   114,    33,    33,    57,    58,     1,
+       2,     3,   120,    87,    88,    33,   121,    59,    60,    61,
+      62,    63,    64,    69,    94,    33,   104,    95,    33,     1,
+       2,     3,     4,     5,     6,     7,     8,     9,   105,    10,
+      11,    12,   106,   108,   125,    13,   112,   -41,   107,    81,
+      82,    83,    84,    85,    86,   122,   123,   126,   124,   -42,
+     131,   133,   113,   129,    40
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       0
+       0,     0,    10,    13,     4,     5,     0,    20,     8,     9,
+      10,   106,     4,     5,     6,    15,    15,    20,    20,     9,
+      11,    12,    20,    15,    16,    27,    36,    37,    20,    27,
+     125,    19,    22,   128,    15,    16,    24,     4,     5,     6,
+       7,     8,     9,    10,    11,    12,    19,    14,    15,    16,
+      58,     0,    25,    20,    54,    55,    23,    28,    29,    30,
+      31,    32,    33,    21,    74,    24,    21,    24,    26,    20,
+      70,    26,    22,    73,    73,    75,    67,    68,    24,    73,
+       4,     5,     6,     7,     8,     9,    10,    11,    12,    24,
+      14,    15,    16,    24,    17,    18,    20,    97,    97,   109,
+      21,   101,    24,   103,   104,   105,   106,    24,    19,     4,
+       5,     6,   112,    65,    66,   115,   115,    28,    29,    30,
+      31,    32,    33,    24,    21,   125,    25,    21,   128,     4,
+       5,     6,     7,     8,     9,    10,    11,    12,    22,    14,
+      15,    16,    22,    24,    22,    20,    25,    23,    23,    59,
+      60,    61,    62,    63,    64,    23,    23,    13,    24,    23,
+      23,    23,   103,   126,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    32,     0
+       0,     4,     5,     6,     7,     8,     9,    10,    11,    12,
+      14,    15,    16,    20,    35,    36,    37,    38,    39,    40,
+      41,    44,    46,    47,    48,    49,    51,    54,    55,    56,
+      57,    58,    59,    60,    60,    60,    20,    20,    60,    60,
+      48,    52,    56,    59,    60,    59,    54,     0,    37,    24,
+      24,    24,    24,    24,    20,    27,    24,    24,    19,    28,
+      29,    30,    31,    32,    33,    15,    16,    17,    18,    24,
+      20,    54,    54,    22,    19,    25,    21,    50,    60,    60,
+      56,    57,    57,    57,    57,    57,    57,    58,    58,    59,
+      59,    42,    43,    60,    21,    21,    23,    36,    54,    60,
+      21,    26,    21,    26,    25,    22,    22,    23,    24,    19,
+      24,    60,    25,    43,    60,    36,    37,    53,    53,    54,
+      60,    37,    23,    23,    24,    22,    13,    53,    22,    44,
+      45,    23,    53,    23
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    31,    32
+       0,    34,    35,    36,    36,    37,    37,    37,    37,    37,
+      37,    37,    37,    37,    38,    39,    39,    40,    40,    40,
+      41,    42,    42,    42,    43,    44,    44,    45,    45,    46,
+      47,    48,    49,    49,    50,    50,    50,    51,    52,    52,
+      53,    53,    53,    54,    55,    55,    56,    56,    56,    56,
+      56,    56,    56,    57,    57,    57,    58,    58,    58,    59,
+      59,    59,    59,    60,    60,    60
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0
+       0,     2,     1,     1,     2,     1,     1,     2,     2,     2,
+       2,     1,     2,     2,     2,     5,     4,     5,     7,     5,
+      10,     0,     1,     3,     3,     9,     7,     3,     1,     7,
+       3,     4,     1,     3,     0,     1,     3,     2,     1,     1,
+       0,     1,     2,     1,     1,     3,     1,     3,     3,     3,
+       3,     3,     3,     1,     3,     3,     1,     3,     3,     2,
+       2,     3,     1,     1,     1,     1
 };
 
 
@@ -1090,8 +1214,298 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2: /* program: stmt_list  */
+#line 27 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+              {yyval = Node::add<ast::Module>(yyvsp[0]);}
+#line 1221 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
 
-#line 1095 "/home/onuralp/Desktop/ODEV1/build/parser.cpp"
+  case 3: /* stmt_list: stmt  */
+#line 31 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+         { 
+            auto nodeList = Node::add<ast::NodeList>();
+            nodeList->add_statement(yyvsp[0]);
+            yyval = nodeList;
+        }
+#line 1231 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 4: /* stmt_list: stmt_list stmt  */
+#line 36 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                     { 
+            yyval = yyvsp[-1];
+            std::dynamic_pointer_cast<ast::NodeList>(yyval)->add_statement(yyvsp[0]);
+        }
+#line 1240 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 15: /* class_decl: KW_CLASS literal OP_LBRACE stmt_list OP_RBRACE  */
+#line 60 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::Class>(yyvsp[-3], yyvsp[-1]); }
+#line 1246 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 16: /* class_decl: KW_CLASS literal OP_LBRACE OP_RBRACE  */
+#line 61 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                          { yyval = Node::add<ast::Class>(yyvsp[-2]);}
+#line 1252 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 17: /* let_stmt: KW_LET literal OP_ASSIGN expr OP_SCOLON  */
+#line 66 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::Let>(yyvsp[-3], nullptr, yyvsp[-1]); }
+#line 1258 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 18: /* let_stmt: KW_LET literal OP_COLON literal OP_ASSIGN expr OP_SCOLON  */
+#line 68 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::Let>(yyvsp[-5], yyvsp[-3], yyvsp[-1]); }
+#line 1264 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 19: /* let_stmt: KW_LET literal OP_COLON literal OP_SCOLON  */
+#line 70 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::Let>(yyvsp[-3], yyvsp[-1], nullptr); }
+#line 1270 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 20: /* func_decl: KW_FUNC literal OP_LPAREN func_args OP_RPAREN OP_COLON literal OP_LBRACE scope OP_RBRACE  */
+#line 75 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::Func>(yyvsp[-8], yyvsp[-6], yyvsp[-3], yyvsp[-1]); }
+#line 1276 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 21: /* func_args: %empty  */
+#line 80 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{}); }
+#line 1282 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 22: /* func_args: func_arg  */
+#line 82 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{ yyvsp[0] }); }
+#line 1288 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 23: /* func_args: func_args OP_COMMA func_arg  */
+#line 84 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    {
+        auto args = std::dynamic_pointer_cast<ast::FuncArgs>(yyvsp[-2]);
+        args->add_statement(yyvsp[0]);
+        yyval = args;
+    }
+#line 1298 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 24: /* func_arg: literal OP_COLON literal  */
+#line 93 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    {
+        yyval = Node::add<ast::FuncArg>(yyvsp[-2], yyvsp[0]);
+    }
+#line 1306 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 25: /* if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt  */
+#line 100 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::If>(yyvsp[-6], yyvsp[-3], yyvsp[0]); }
+#line 1312 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 26: /* if_stmt: KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE  */
+#line 102 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::If>(yyvsp[-4], yyvsp[-1], nullptr); }
+#line 1318 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 27: /* else_stmt: OP_LBRACE scope OP_RBRACE  */
+#line 106 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                              { yyval = yyvsp[-1];}
+#line 1324 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 29: /* while_stmt: KW_WHILE OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE  */
+#line 112 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::While>(yyvsp[-4], yyvsp[-1]); }
+#line 1330 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 30: /* import_stmt: KW_IMPORT literal OP_SCOLON  */
+#line 117 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::Import>(yyvsp[-1]); }
+#line 1336 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 31: /* call_stmt: dot OP_LPAREN call_args OP_RPAREN  */
+#line 121 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                      {
+        yyval = Node::add<ast::Call>(yyvsp[-3], yyvsp[-1]);
+    }
+#line 1344 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 33: /* dot: dot OP_DOT literal  */
+#line 128 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                         { yyval = Node::add<ast::OpDot>(yyvsp[-2],yyvsp[0]);}
+#line 1350 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 34: /* call_args: %empty  */
+#line 132 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{}); }
+#line 1356 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 35: /* call_args: literal  */
+#line 134 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{ yyvsp[0] }); }
+#line 1362 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 36: /* call_args: call_args OP_COMMA literal  */
+#line 136 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    {
+        auto args = std::dynamic_pointer_cast<ast::FuncArgs>(yyvsp[-2]);
+        args->add_statement(yyvsp[0]);
+        yyval = args;
+    }
+#line 1372 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 37: /* return_stmt: KW_RETURN return_value  */
+#line 143 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                     { yyval = Node::add<ast::Return>(yyvsp[0]);}
+#line 1378 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 40: /* scope: %empty  */
+#line 151 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+    { yyval = Node::add<ast::NodeList>(std::vector<Node::Ptr>{}); }
+#line 1384 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 41: /* scope: stmt  */
+#line 152 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+          { 
+            auto nodeList = Node::add<ast::NodeList>();
+            nodeList->add_statement(yyvsp[0]);
+            yyval = nodeList;
+        }
+#line 1394 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 42: /* scope: stmt_list stmt  */
+#line 157 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                     { 
+            yyval = yyvsp[-1];
+            std::dynamic_pointer_cast<ast::NodeList>(yyval)->add_statement(yyvsp[0]);
+        }
+#line 1403 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 45: /* assign_expr: compare_expr OP_ASSIGN compare_expr  */
+#line 170 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                          { yyval = Node::add<ast::OpAssign>(yyvsp[-2], yyvsp[0]); }
+#line 1409 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 47: /* compare_expr: compare_expr OP_LESS addsub  */
+#line 175 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                  { yyval = Node::add<ast::OpLess>(yyvsp[-2], yyvsp[0]); }
+#line 1415 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 48: /* compare_expr: compare_expr OP_LESSEQ addsub  */
+#line 176 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                    { yyval = Node::add<ast::OpLessEq>(yyvsp[-2], yyvsp[0]); }
+#line 1421 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 49: /* compare_expr: compare_expr OP_GREATER addsub  */
+#line 177 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                     { yyval = Node::add<ast::OpGreater>(yyvsp[-2], yyvsp[0]); }
+#line 1427 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 50: /* compare_expr: compare_expr OP_GREATEREQ addsub  */
+#line 178 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                       { yyval = Node::add<ast::OpGreaterEq>(yyvsp[-2], yyvsp[0]); }
+#line 1433 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 51: /* compare_expr: compare_expr OP_EQUAL addsub  */
+#line 179 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                   { yyval = Node::add<ast::OpEqual>(yyvsp[-2], yyvsp[0]); }
+#line 1439 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 52: /* compare_expr: compare_expr OP_NOT_EQUAL addsub  */
+#line 180 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                                       { yyval = Node::add<ast::OpNotEqual>(yyvsp[-2], yyvsp[0]); }
+#line 1445 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 54: /* addsub: addsub OP_PLUS muldiv  */
+#line 185 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                            { yyval = Node::add<ast::OpPlus>(yyvsp[-2], yyvsp[0]); }
+#line 1451 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 55: /* addsub: addsub OP_MINUS muldiv  */
+#line 186 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                             { yyval = Node::add<ast::OpMinus>(yyvsp[-2], yyvsp[0]); }
+#line 1457 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 57: /* muldiv: muldiv OP_MULT posneg  */
+#line 191 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                            { yyval = Node::add<ast::OpMult>(yyvsp[-2], yyvsp[0]); }
+#line 1463 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 58: /* muldiv: muldiv OP_DIVF posneg  */
+#line 192 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                            { yyval = Node::add<ast::OpDivF>(yyvsp[-2], yyvsp[0]); }
+#line 1469 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 59: /* posneg: OP_MINUS posneg  */
+#line 196 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                    { yyval = Node::add<ast::Signed>(OP_MINUS, yyvsp[0]); }
+#line 1475 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 60: /* posneg: OP_PLUS posneg  */
+#line 197 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                     { yyval = Node::add<ast::Signed>(OP_PLUS, yyvsp[0]); }
+#line 1481 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 61: /* posneg: OP_LPAREN expr OP_RPAREN  */
+#line 198 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                               { yyval = yyvsp[-1]; }
+#line 1487 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 63: /* literal: L_INTEGER  */
+#line 203 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+              { yyval = Node::add<ast::Integer>(curtoken); }
+#line 1493 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 64: /* literal: L_STRING  */
+#line 204 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+               { yyval = Node::add<ast::StringLiteral>(curtoken); }
+#line 1499 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+  case 65: /* literal: IDENTIFIER  */
+#line 205 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
+                 { yyval = Node::add<ast::Identifier>(curtoken); }
+#line 1505 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
+    break;
+
+
+#line 1509 "/home/onuralp/Desktop/ODEV/inf400/build/parser.cpp"
 
       default: break;
     }
@@ -1284,17 +1698,16 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 29 "/home/onuralp/Desktop/ODEV1/hw1/parser.yy"
+#line 208 "/home/onuralp/Desktop/ODEV/inf400/parser.yy"
 
 
 int yyerror(const char *s) {
     if (curtoken) {
         fmt::print("** Parser Error at {}:{} at token: {}\n",
-            yylineno, Token::colno, curtoken->as_string());
-    }
-    else {
+                   yylineno, Token::colno, curtoken->as_string());
+    } else {
         fmt::print("** Parser Error at {}:{}, null token\n",
-            yylineno, Token::colno);
+                   yylineno, Token::colno);
     }
     Token::colno = 0;
     Node::reset_root();

@@ -1,5 +1,5 @@
 CMakeFiles/kirazc.dir/main.cpp.o: \
- /home/onuralp/Desktop/ODEV1/hw1/main.cpp /usr/include/stdc-predef.h \
+ /home/onuralp/Desktop/ODEV/inf400/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/11/cassert \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -29,8 +29,9 @@ CMakeFiles/kirazc.dir/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
- /home/onuralp/Desktop/ODEV1/hw1/lexer.hpp \
- /home/onuralp/Desktop/ODEV1/build/_lexer_gen.hpp /usr/include/string.h \
+ /home/onuralp/Desktop/ODEV/inf400/lexer.hpp \
+ /home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.hpp \
+ /usr/include/string.h \
  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
  /usr/include/strings.h /usr/include/errno.h \
@@ -71,8 +72,9 @@ CMakeFiles/kirazc.dir/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
- /usr/include/linux/close_range.h /home/onuralp/Desktop/ODEV1/hw1/main.h \
- /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_algobase.h \
+ /usr/include/linux/close_range.h \
+ /home/onuralp/Desktop/ODEV/inf400/main.h /usr/include/c++/11/memory \
+ /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/c++/11/bits/functexcept.h \
  /usr/include/c++/11/bits/exception_defines.h \
  /usr/include/c++/11/bits/cpp_type_traits.h \
@@ -204,7 +206,7 @@ CMakeFiles/kirazc.dir/main.cpp.o: \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h /usr/include/c++/11/cmath \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h /usr/include/c++/11/cmath \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -227,12 +229,12 @@ CMakeFiles/kirazc.dir/main.cpp.o: \
  /usr/include/c++/11/tr1/poly_hermite.tcc \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc /usr/include/c++/11/cstring \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/core.h /usr/include/c++/11/cstddef \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/ranges.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h \
- /home/onuralp/Desktop/ODEV1/build/parser.hpp \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/Node.h /usr/include/c++/11/vector \
- /usr/include/c++/11/bits/stl_vector.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/core.h /usr/include/c++/11/cstddef \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/ranges.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h \
+ /home/onuralp/Desktop/ODEV/inf400/build/parser.hpp \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/Node.h \
+ /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/Token.h
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/Token.h

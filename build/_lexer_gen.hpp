@@ -2,9 +2,9 @@
 #define yyHEADER_H 1
 #define yyIN_HEADER 1
 
-#line 6 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.hpp"
+#line 6 "/home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.hpp"
 
-#line 8 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.hpp"
+#line 8 "/home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.hpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -467,8 +467,8 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 56 "/home/onuralp/Desktop/ODEV1/hw1/lexer.l"
+#line 57 "/home/onuralp/Desktop/ODEV/inf400/lexer.l"
 
-#line 473 "/home/onuralp/Desktop/ODEV1/build/_lexer_gen.hpp"
+#line 473 "/home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.hpp"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

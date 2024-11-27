@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_HOME_ONURALP_DESKTOP_ODEV1_BUILD_PARSER_HPP_INCLUDED
-# define YY_YY_HOME_ONURALP_DESKTOP_ODEV1_BUILD_PARSER_HPP_INCLUDED
+#ifndef YY_YY_HOME_ONURALP_DESKTOP_ODEV_INF400_BUILD_PARSER_HPP_INCLUDED
+# define YY_YY_HOME_ONURALP_DESKTOP_ODEV_INF400_BUILD_PARSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -64,24 +64,27 @@ extern int yydebug;
     KW_WHILE = 265,                /* KW_WHILE  */
     KW_CLASS = 266,                /* KW_CLASS  */
     KW_LET = 267,                  /* KW_LET  */
-    OP_PLUS = 268,                 /* OP_PLUS  */
-    OP_MINUS = 269,                /* OP_MINUS  */
-    OP_MULT = 270,                 /* OP_MULT  */
-    OP_DIVF = 271,                 /* OP_DIVF  */
-    OP_ASSIGN = 272,               /* OP_ASSIGN  */
-    OP_LPAREN = 273,               /* OP_LPAREN  */
-    OP_RPAREN = 274,               /* OP_RPAREN  */
-    OP_LBRACE = 275,               /* OP_LBRACE  */
-    OP_RBRACE = 276,               /* OP_RBRACE  */
-    OP_SCOLON = 277,               /* OP_SCOLON  */
-    OP_COLON = 278,                /* OP_COLON  */
-    OP_COMMA = 279,                /* OP_COMMA  */
-    OP_LESS = 280,                 /* OP_LESS  */
-    OP_LESSEQ = 281,               /* OP_LESSEQ  */
-    OP_GREATER = 282,              /* OP_GREATER  */
-    OP_GREATEREQ = 283,            /* OP_GREATEREQ  */
-    OP_EQUAL = 284,                /* OP_EQUAL  */
-    OP_NOT_EQUAL = 285             /* OP_NOT_EQUAL  */
+    KW_ELSE = 268,                 /* KW_ELSE  */
+    KW_RETURN = 269,               /* KW_RETURN  */
+    OP_PLUS = 270,                 /* OP_PLUS  */
+    OP_MINUS = 271,                /* OP_MINUS  */
+    OP_MULT = 272,                 /* OP_MULT  */
+    OP_DIVF = 273,                 /* OP_DIVF  */
+    OP_ASSIGN = 274,               /* OP_ASSIGN  */
+    OP_LPAREN = 275,               /* OP_LPAREN  */
+    OP_RPAREN = 276,               /* OP_RPAREN  */
+    OP_LBRACE = 277,               /* OP_LBRACE  */
+    OP_RBRACE = 278,               /* OP_RBRACE  */
+    OP_SCOLON = 279,               /* OP_SCOLON  */
+    OP_COLON = 280,                /* OP_COLON  */
+    OP_COMMA = 281,                /* OP_COMMA  */
+    OP_DOT = 282,                  /* OP_DOT  */
+    OP_LESS = 283,                 /* OP_LESS  */
+    OP_LESSEQ = 284,               /* OP_LESSEQ  */
+    OP_GREATER = 285,              /* OP_GREATER  */
+    OP_GREATEREQ = 286,            /* OP_GREATEREQ  */
+    OP_EQUAL = 287,                /* OP_EQUAL  */
+    OP_NOT_EQUAL = 288             /* OP_NOT_EQUAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -100,4 +103,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_HOME_ONURALP_DESKTOP_ODEV1_BUILD_PARSER_HPP_INCLUDED  */
+#endif /* !YY_YY_HOME_ONURALP_DESKTOP_ODEV_INF400_BUILD_PARSER_HPP_INCLUDED  */

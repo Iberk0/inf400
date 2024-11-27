@@ -1,6 +1,7 @@
 CMakeFiles/kiraz.dir/fmt/format.cc.o: \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.cc /usr/include/stdc-predef.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format-inl.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.cc \
+ /usr/include/stdc-predef.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format-inl.h \
  /usr/include/c++/11/algorithm /usr/include/c++/11/utility \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -216,8 +217,9 @@ CMakeFiles/kiraz.dir/fmt/format.cc.o: \
  /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h /usr/include/c++/11/cstring \
- /usr/include/string.h /usr/include/strings.h /usr/include/c++/11/memory \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h \
+ /usr/include/c++/11/cstring /usr/include/string.h /usr/include/strings.h \
+ /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
  /usr/include/c++/11/bits/align.h /usr/include/c++/11/bit \
  /usr/include/c++/11/bits/shared_ptr.h \
@@ -244,4 +246,4 @@ CMakeFiles/kiraz.dir/fmt/format.cc.o: \
  /usr/include/c++/11/bits/ranges_uninitialized.h \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/core.h /usr/include/c++/11/cstddef
+ /home/onuralp/Desktop/ODEV/inf400/fmt/core.h /usr/include/c++/11/cstddef

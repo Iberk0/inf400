@@ -1,7 +1,7 @@
 CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Operator.cpp \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Operator.cpp \
  /usr/include/stdc-predef.h \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Operator.h \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Operator.h \
  /usr/include/c++/11/cassert \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -14,8 +14,8 @@ CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/cpu_defines.h \
  /usr/include/c++/11/pstl/pstl_config.h /usr/include/assert.h \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/Node.h /usr/include/c++/11/vector \
- /usr/include/c++/11/bits/stl_algobase.h \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/Node.h \
+ /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/c++/11/bits/functexcept.h \
  /usr/include/c++/11/bits/exception_defines.h \
  /usr/include/c++/11/bits/cpp_type_traits.h \
@@ -90,7 +90,7 @@ CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: \
  /usr/include/c++/11/bits/hash_bytes.h \
  /usr/include/c++/11/bits/range_access.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h /usr/include/c++/11/cmath \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h /usr/include/c++/11/cmath \
  /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/math-vector.h \
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
@@ -231,9 +231,9 @@ CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: \
  /usr/include/c++/11/bits/uses_allocator_args.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/core.h /usr/include/c++/11/cstddef \
- /home/onuralp/Desktop/ODEV1/hw1/kiraz/Token.h \
- /home/onuralp/Desktop/ODEV1/hw1/main.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/ranges.h \
- /home/onuralp/Desktop/ODEV1/hw1/fmt/format.h \
- /home/onuralp/Desktop/ODEV1/build/parser.hpp
+ /home/onuralp/Desktop/ODEV/inf400/fmt/core.h /usr/include/c++/11/cstddef \
+ /home/onuralp/Desktop/ODEV/inf400/kiraz/Token.h \
+ /home/onuralp/Desktop/ODEV/inf400/main.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/ranges.h \
+ /home/onuralp/Desktop/ODEV/inf400/fmt/format.h \
+ /home/onuralp/Desktop/ODEV/inf400/build/parser.hpp

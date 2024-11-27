@@ -56,10 +56,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/onuralp/Desktop/ODEV1/hw1
+CMAKE_SOURCE_DIR = /home/onuralp/Desktop/ODEV/inf400
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/onuralp/Desktop/ODEV1/build
+CMAKE_BINARY_DIR = /home/onuralp/Desktop/ODEV/inf400/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/kiraz.dir/depend.make
@@ -72,160 +72,160 @@ include CMakeFiles/kiraz.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/kiraz.dir/flags.make
 
-parser.cpp: /home/onuralp/Desktop/ODEV1/hw1/parser.yy
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "[BISON][PARSER] Building parser with bison 3.8.2"
-	cd /home/onuralp/Desktop/ODEV1/hw1 && /usr/bin/bison -d -v -Wcounterexamples -d -o /home/onuralp/Desktop/ODEV1/build/parser.cpp /home/onuralp/Desktop/ODEV1/hw1/parser.yy
+parser.cpp: ../parser.yy
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "[BISON][PARSER] Building parser with bison 3.8.2"
+	cd /home/onuralp/Desktop/ODEV/inf400 && /usr/bin/bison -d -v -Wcounterexamples -d -o /home/onuralp/Desktop/ODEV/inf400/build/parser.cpp /home/onuralp/Desktop/ODEV/inf400/parser.yy
 
 parser.hpp: parser.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate parser.hpp
 
-_lexer_gen.cpp: /home/onuralp/Desktop/ODEV1/hw1/lexer.l
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "[FLEX][LEXER] Building scanner with flex 2.6.4"
-	cd /home/onuralp/Desktop/ODEV1/hw1 && /usr/bin/flex --header-file=/home/onuralp/Desktop/ODEV1/build/_lexer_gen.hpp -o/home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp /home/onuralp/Desktop/ODEV1/hw1/lexer.l
+_lexer_gen.cpp: ../lexer.l
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "[FLEX][LEXER] Building scanner with flex 2.6.4"
+	cd /home/onuralp/Desktop/ODEV/inf400 && /usr/bin/flex --header-file=/home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.hpp -o/home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.cpp /home/onuralp/Desktop/ODEV/inf400/lexer.l
 
 _lexer_gen.hpp: _lexer_gen.cpp
 	@$(CMAKE_COMMAND) -E touch_nocreate _lexer_gen.hpp
 
 CMakeFiles/kiraz.dir/fmt/format.cc.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/fmt/format.cc.o: /home/onuralp/Desktop/ODEV1/hw1/fmt/format.cc
+CMakeFiles/kiraz.dir/fmt/format.cc.o: ../fmt/format.cc
 CMakeFiles/kiraz.dir/fmt/format.cc.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/kiraz.dir/fmt/format.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/fmt/format.cc.o -MF CMakeFiles/kiraz.dir/fmt/format.cc.o.d -o CMakeFiles/kiraz.dir/fmt/format.cc.o -c /home/onuralp/Desktop/ODEV1/hw1/fmt/format.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/kiraz.dir/fmt/format.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/fmt/format.cc.o -MF CMakeFiles/kiraz.dir/fmt/format.cc.o.d -o CMakeFiles/kiraz.dir/fmt/format.cc.o -c /home/onuralp/Desktop/ODEV/inf400/fmt/format.cc
 
 CMakeFiles/kiraz.dir/fmt/format.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/fmt/format.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/fmt/format.cc > CMakeFiles/kiraz.dir/fmt/format.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/fmt/format.cc > CMakeFiles/kiraz.dir/fmt/format.cc.i
 
 CMakeFiles/kiraz.dir/fmt/format.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/fmt/format.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/fmt/format.cc -o CMakeFiles/kiraz.dir/fmt/format.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/fmt/format.cc -o CMakeFiles/kiraz.dir/fmt/format.cc.s
 
 CMakeFiles/kiraz.dir/fmt/os.cc.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/fmt/os.cc.o: /home/onuralp/Desktop/ODEV1/hw1/fmt/os.cc
+CMakeFiles/kiraz.dir/fmt/os.cc.o: ../fmt/os.cc
 CMakeFiles/kiraz.dir/fmt/os.cc.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/kiraz.dir/fmt/os.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/fmt/os.cc.o -MF CMakeFiles/kiraz.dir/fmt/os.cc.o.d -o CMakeFiles/kiraz.dir/fmt/os.cc.o -c /home/onuralp/Desktop/ODEV1/hw1/fmt/os.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/kiraz.dir/fmt/os.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/fmt/os.cc.o -MF CMakeFiles/kiraz.dir/fmt/os.cc.o.d -o CMakeFiles/kiraz.dir/fmt/os.cc.o -c /home/onuralp/Desktop/ODEV/inf400/fmt/os.cc
 
 CMakeFiles/kiraz.dir/fmt/os.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/fmt/os.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/fmt/os.cc > CMakeFiles/kiraz.dir/fmt/os.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/fmt/os.cc > CMakeFiles/kiraz.dir/fmt/os.cc.i
 
 CMakeFiles/kiraz.dir/fmt/os.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/fmt/os.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/fmt/os.cc -o CMakeFiles/kiraz.dir/fmt/os.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/fmt/os.cc -o CMakeFiles/kiraz.dir/fmt/os.cc.s
 
 CMakeFiles/kiraz.dir/kiraz/Token.cpp.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/kiraz/Token.cpp.o: /home/onuralp/Desktop/ODEV1/hw1/kiraz/Token.cpp
+CMakeFiles/kiraz.dir/kiraz/Token.cpp.o: ../kiraz/Token.cpp
 CMakeFiles/kiraz.dir/kiraz/Token.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/kiraz.dir/kiraz/Token.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/Token.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/Token.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/Token.cpp.o -c /home/onuralp/Desktop/ODEV1/hw1/kiraz/Token.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/kiraz.dir/kiraz/Token.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/Token.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/Token.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/Token.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/kiraz/Token.cpp
 
 CMakeFiles/kiraz.dir/kiraz/Token.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/kiraz/Token.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/kiraz/Token.cpp > CMakeFiles/kiraz.dir/kiraz/Token.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/kiraz/Token.cpp > CMakeFiles/kiraz.dir/kiraz/Token.cpp.i
 
 CMakeFiles/kiraz.dir/kiraz/Token.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/kiraz/Token.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/kiraz/Token.cpp -o CMakeFiles/kiraz.dir/kiraz/Token.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/kiraz/Token.cpp -o CMakeFiles/kiraz.dir/kiraz/Token.cpp.s
 
 CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o: /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Literal.cpp
+CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o: ../kiraz/token/Literal.cpp
 CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o -c /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Literal.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Literal.cpp
 
 CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Literal.cpp > CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Literal.cpp > CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.i
 
 CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Literal.cpp -o CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Literal.cpp -o CMakeFiles/kiraz.dir/kiraz/token/Literal.cpp.s
 
 CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o: /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Operator.cpp
+CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o: ../kiraz/token/Operator.cpp
 CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o -c /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Operator.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Operator.cpp
 
 CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Operator.cpp > CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Operator.cpp > CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.i
 
 CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/kiraz/token/Operator.cpp -o CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/kiraz/token/Operator.cpp -o CMakeFiles/kiraz.dir/kiraz/token/Operator.cpp.s
 
 CMakeFiles/kiraz.dir/kiraz/Node.cpp.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/kiraz/Node.cpp.o: /home/onuralp/Desktop/ODEV1/hw1/kiraz/Node.cpp
+CMakeFiles/kiraz.dir/kiraz/Node.cpp.o: ../kiraz/Node.cpp
 CMakeFiles/kiraz.dir/kiraz/Node.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/kiraz.dir/kiraz/Node.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/Node.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/Node.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/Node.cpp.o -c /home/onuralp/Desktop/ODEV1/hw1/kiraz/Node.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/kiraz.dir/kiraz/Node.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/Node.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/Node.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/Node.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/kiraz/Node.cpp
 
 CMakeFiles/kiraz.dir/kiraz/Node.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/kiraz/Node.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/kiraz/Node.cpp > CMakeFiles/kiraz.dir/kiraz/Node.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/kiraz/Node.cpp > CMakeFiles/kiraz.dir/kiraz/Node.cpp.i
 
 CMakeFiles/kiraz.dir/kiraz/Node.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/kiraz/Node.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/kiraz/Node.cpp -o CMakeFiles/kiraz.dir/kiraz/Node.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/kiraz/Node.cpp -o CMakeFiles/kiraz.dir/kiraz/Node.cpp.s
 
 CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Operator.cpp
+CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: ../kiraz/ast/Operator.cpp
 CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o -c /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Operator.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Operator.cpp
 
 CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Operator.cpp > CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Operator.cpp > CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.i
 
 CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Operator.cpp -o CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Operator.cpp -o CMakeFiles/kiraz.dir/kiraz/ast/Operator.cpp.s
 
 CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o: CMakeFiles/kiraz.dir/flags.make
-CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o: /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Literal.cpp
+CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o: ../kiraz/ast/Literal.cpp
 CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o -c /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Literal.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o -MF CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o.d -o CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Literal.cpp
 
 CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Literal.cpp > CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Literal.cpp > CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.i
 
 CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/hw1/kiraz/ast/Literal.cpp -o CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/kiraz/ast/Literal.cpp -o CMakeFiles/kiraz.dir/kiraz/ast/Literal.cpp.s
 
 CMakeFiles/kiraz.dir/parser.cpp.o: CMakeFiles/kiraz.dir/flags.make
 CMakeFiles/kiraz.dir/parser.cpp.o: parser.cpp
 CMakeFiles/kiraz.dir/parser.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/kiraz.dir/parser.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/parser.cpp.o -MF CMakeFiles/kiraz.dir/parser.cpp.o.d -o CMakeFiles/kiraz.dir/parser.cpp.o -c /home/onuralp/Desktop/ODEV1/build/parser.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/kiraz.dir/parser.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/parser.cpp.o -MF CMakeFiles/kiraz.dir/parser.cpp.o.d -o CMakeFiles/kiraz.dir/parser.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/build/parser.cpp
 
 CMakeFiles/kiraz.dir/parser.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/parser.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/build/parser.cpp > CMakeFiles/kiraz.dir/parser.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/build/parser.cpp > CMakeFiles/kiraz.dir/parser.cpp.i
 
 CMakeFiles/kiraz.dir/parser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/parser.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/build/parser.cpp -o CMakeFiles/kiraz.dir/parser.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/build/parser.cpp -o CMakeFiles/kiraz.dir/parser.cpp.s
 
 CMakeFiles/kiraz.dir/_lexer_gen.cpp.o: CMakeFiles/kiraz.dir/flags.make
 CMakeFiles/kiraz.dir/_lexer_gen.cpp.o: _lexer_gen.cpp
 CMakeFiles/kiraz.dir/_lexer_gen.cpp.o: parser.hpp
 CMakeFiles/kiraz.dir/_lexer_gen.cpp.o: CMakeFiles/kiraz.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/kiraz.dir/_lexer_gen.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/_lexer_gen.cpp.o -MF CMakeFiles/kiraz.dir/_lexer_gen.cpp.o.d -o CMakeFiles/kiraz.dir/_lexer_gen.cpp.o -c /home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/kiraz.dir/_lexer_gen.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/kiraz.dir/_lexer_gen.cpp.o -MF CMakeFiles/kiraz.dir/_lexer_gen.cpp.o.d -o CMakeFiles/kiraz.dir/_lexer_gen.cpp.o -c /home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.cpp
 
 CMakeFiles/kiraz.dir/_lexer_gen.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/kiraz.dir/_lexer_gen.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp > CMakeFiles/kiraz.dir/_lexer_gen.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.cpp > CMakeFiles/kiraz.dir/_lexer_gen.cpp.i
 
 CMakeFiles/kiraz.dir/_lexer_gen.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/kiraz.dir/_lexer_gen.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV1/build/_lexer_gen.cpp -o CMakeFiles/kiraz.dir/_lexer_gen.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/onuralp/Desktop/ODEV/inf400/build/_lexer_gen.cpp -o CMakeFiles/kiraz.dir/_lexer_gen.cpp.s
 
 # Object files for target kiraz
 kiraz_OBJECTS = \
@@ -255,7 +255,7 @@ libkiraz.a: CMakeFiles/kiraz.dir/parser.cpp.o
 libkiraz.a: CMakeFiles/kiraz.dir/_lexer_gen.cpp.o
 libkiraz.a: CMakeFiles/kiraz.dir/build.make
 libkiraz.a: CMakeFiles/kiraz.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/onuralp/Desktop/ODEV1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libkiraz.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX static library libkiraz.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/kiraz.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/kiraz.dir/link.txt --verbose=$(VERBOSE)
 
@@ -271,6 +271,6 @@ CMakeFiles/kiraz.dir/depend: _lexer_gen.cpp
 CMakeFiles/kiraz.dir/depend: _lexer_gen.hpp
 CMakeFiles/kiraz.dir/depend: parser.cpp
 CMakeFiles/kiraz.dir/depend: parser.hpp
-	cd /home/onuralp/Desktop/ODEV1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/onuralp/Desktop/ODEV1/hw1 /home/onuralp/Desktop/ODEV1/hw1 /home/onuralp/Desktop/ODEV1/build /home/onuralp/Desktop/ODEV1/build /home/onuralp/Desktop/ODEV1/build/CMakeFiles/kiraz.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/onuralp/Desktop/ODEV/inf400/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/onuralp/Desktop/ODEV/inf400 /home/onuralp/Desktop/ODEV/inf400 /home/onuralp/Desktop/ODEV/inf400/build /home/onuralp/Desktop/ODEV/inf400/build /home/onuralp/Desktop/ODEV/inf400/build/CMakeFiles/kiraz.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/kiraz.dir/depend
 
