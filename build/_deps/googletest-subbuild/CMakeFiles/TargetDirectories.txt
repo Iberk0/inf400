@@ -1,3 +1,0 @@
-/home/onuralp/Desktop/ODEV/inf400/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
-/home/onuralp/Desktop/ODEV/inf400/build/_deps/googletest-subbuild/CMakeFiles/edit_cache.dir
-/home/onuralp/Desktop/ODEV/inf400/build/_deps/googletest-subbuild/CMakeFiles/rebuild_cache.dir

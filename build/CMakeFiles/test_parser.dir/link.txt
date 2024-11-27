@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/test_parser.dir/kiraz/test/test_parser.cc.o -o test_parser  libkiraz.a lib/libgtest_main.a /usr/lib/x86_64-linux-gnu/libfl.so lib/libgtest.a 
