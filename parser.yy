@@ -121,10 +121,15 @@ call_stmt:
     dot OP_LPAREN call_args OP_RPAREN {
         $$ = Node::add<ast::Call>($1, $3);
     }
+    | dot_NotArg { $$ = Node::add<ast::Call>($1);}
     ;
 
 dot:
     literal
+    | dot OP_DOT literal { $$ = Node::add<ast::OpDot>($1,$3);}
+    ;
+
+dot_NotArg:
     | dot OP_DOT literal { $$ = Node::add<ast::OpDot>($1,$3);}
     ;
 
@@ -138,7 +143,7 @@ call_args:
         args->add_statement($3);
         $$ = args;
     }
-
+    ;
 return_stmt:
     KW_RETURN return_value           { $$ = Node::add<ast::Return>($2);}
     ;
