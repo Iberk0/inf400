@@ -2,14 +2,24 @@
 #define KIRAZ_AST_LITERAL_H
 
 #include <kiraz/Node.h>
+#include <memory>
+#include <kiraz/Compiler.h>
+#include <vector>
 
 namespace ast {
 
-class Module : public Node{
+
+class Module : public Node {
 public:
-    Module(const Node::Ptr& t) : Node(0), m_body(t) {}
-    std::string as_string() const override {return fmt::format("Module({})",m_body->as_string());}
-private: 
+    Module(const Node::Ptr& t) : Node(0), m_body(t){}
+    std::string as_string() const override { return fmt::format("Module({})", m_body->as_string()); }
+
+    // Getter
+    Node::Ptr get_body() const { return m_body; }
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+    
+private:
+    std::unique_ptr<SymbolTable> m_symtab;
     Node::Ptr m_body;
 };
 
@@ -21,24 +31,23 @@ public:
         : Node(), m_statements(statements) {}
 
     std::string as_string() const override {
-        if (m_statements.empty()){
+        if (m_statements.empty()) {
             return "[]";
         }
         std::string result = "[";
         if (m_statements.size() == 1) {
-            result +=  m_statements[0]->as_string();
+            result += m_statements[0]->as_string();
             result += "]";
             return result;
         }
 
-        
         for (const auto& stmt : m_statements) {
             result += stmt->as_string() + ", ";
         }
         if (!m_statements.empty()) {
-            result.erase(result.size() - 2); 
+            result.erase(result.size() - 2);
         }
-        
+
         result += "]";
         return result;
     }
@@ -47,6 +56,9 @@ public:
         m_statements.push_back(statement);
     }
 
+    // Getter
+    const std::vector<Node::Ptr>& get_statements() const { return m_statements; }
+        bool is_stmt_list() const override { return true; }
 private:
     std::vector<Node::Ptr> m_statements;
 };
@@ -54,8 +66,11 @@ private:
 class Integer : public Node {
 public:
     Integer(Token::Ptr);
-    
-    std::string as_string() const override {return fmt::format("Int({})",m_value); }
+
+    std::string as_string() const override { return fmt::format("Int({})", m_value); }
+
+    // Getter
+    int64_t get_value() const { return m_value; }
     
 private:
     int64_t m_value;
@@ -68,6 +83,11 @@ public:
         std::string sign = (m_operator == 260) ? "OP_PLUS" : "OP_MINUS";
         return fmt::format("Signed({}, {})", sign, m_operand->as_string());
     }
+
+    // Getters
+    int get_operator() const { return m_operator; }
+    Node::Cptr get_operand() const { return m_operand; }
+    
 private:
     int m_operator;
     Node::Cptr m_operand;
@@ -76,9 +96,12 @@ private:
 class Identifier : public Node {
 public:
     Identifier(Token::Ptr);
-    
-    std::string as_string() const override {return fmt::format("Id({})",m_name);}
+    Identifier(const std::string& name) : m_name(name) {}
+    std::string as_string() const override { return fmt::format("Id({})", m_name); }
 
+    // Getter
+    const std::string& get_name() const { return m_name; }
+    
 private:
     std::string m_name;
 };
@@ -86,26 +109,30 @@ private:
 class StringLiteral : public Node {
 public:
     StringLiteral(Token::Ptr);
-    
-    std::string as_string() const override { 
+
+    std::string as_string() const override {
         std::string str;
         std::string res;
         if (m_value.length() > 1 && m_value.front() == '\"' && m_value.back() == '\"') {
-        str = m_value.substr(1, m_value.length() - 2);
+            str = m_value.substr(1, m_value.length() - 2);
         }
         for (size_t i = 0; i < str.size(); ++i) {
-        if (str[i] == '\\' && i + 1 < str.size()) {
-            switch (str[i + 1]) {
-                case 'n': res += '\n'; ++i; break;
-                default: res += str[i];
+            if (str[i] == '\\' && i + 1 < str.size()) {
+                switch (str[i + 1]) {
+                    case 'n': res += '\n'; ++i; break;
+                    default: res += str[i];
+                }
+            } else {
+                res += str[i];
             }
-        } else {
-            res += str[i];
         }
-        }
-        
-        return fmt::format("Str({})", res); 
+
+        return fmt::format("Str({})", res);
     }
+
+    // Getter
+    const std::string& get_value() const { return m_value; }
+    
 private:
     std::string m_value;
 };
@@ -130,6 +157,11 @@ public:
         return fmt::format("Let({})", fmt::join(components, ", "));
     }
 
+    // Getters
+    Node::Ptr get_name() const { return m_name; }
+    Node::Ptr get_type() const { return m_type; }
+    Node::Ptr get_init() const { return m_init; }
+    
 private:
     Node::Ptr m_name;
     Node::Ptr m_type;
@@ -144,6 +176,9 @@ public:
         return fmt::format("Import({})", m_name->as_string());
     }
 
+    // Getter
+    Node::Ptr get_name() const { return m_name; }
+    
 private:
     Node::Ptr m_name;
 };
@@ -157,9 +192,13 @@ public:
         return fmt::format("FArg(n={}, t={})", m_name->as_string(), m_type->as_string());
     }
 
+    // Getters
+    Node::Ptr get_name() const { return m_name; }
+    Node::Ptr get_type() const { return m_type; }
+    
 private:
     Node::Ptr m_name;
-    Node::Ptr m_type;  
+    Node::Ptr m_type;
 };
 
 class FuncArgs : public Node {
@@ -170,32 +209,34 @@ public:
         : Node(), m_arguments(statements) {}
 
     std::string as_string() const override {
-        if (m_arguments.empty()){
+        if (m_arguments.empty()) {
             return "[]";
         }
         std::string result = "FuncArgs([";
         if (m_arguments.size() == 1) {
-            result +=  m_arguments[0]->as_string();
+            result += m_arguments[0]->as_string();
             result += "])";
             return result;
         }
 
-        
         for (const auto& stmt : m_arguments) {
             result += stmt->as_string() + ", ";
         }
         if (!m_arguments.empty()) {
-            result.erase(result.size() - 2); 
+            result.erase(result.size() - 2);
         }
-        
+
         result += "])";
         return result;
     }
-
+    bool is_funcarg_list() const override { return true; }
     void add_statement(Node::Ptr statement) {
         m_arguments.push_back(statement);
     }
 
+    // Getter
+    const std::vector<Node::Ptr>& get_arguments() const { return m_arguments; }
+    
 private:
     std::vector<Node::Ptr> m_arguments;
 };
@@ -207,19 +248,29 @@ public:
 
     std::string as_string() const override {
         std::string return_type_str = m_return_type ? m_return_type->as_string() : "None";
-        
-        return fmt::format("Func(n={}, a={}, r={}, s={})", 
-                           m_name->as_string(), 
-                           m_args->as_string(), 
-                           return_type_str, 
+
+        return fmt::format("Func(n={}, a={}, r={}, s={})",
+                           m_name->as_string(),
+                           m_args->as_string(),
+                           return_type_str,
                            m_body->as_string());
     }
+    bool is_func() const override { return true; }
 
+
+    // Getters
+    Node::Ptr get_name() const { return m_name; }
+    Node::Ptr get_args() const { return m_args; }
+    Node::Cptr get_return_type() const { return m_return_type; }
+    Node::Ptr get_body() const { return m_body; }
+    
+    
 private:
-    Node::Ptr m_name;        
-    Node::Ptr m_args;        
-    Node::Ptr m_return_type; 
-    Node::Ptr m_body;      
+    Node::Ptr m_name;
+    Node::Ptr m_args;
+    Node::Cptr m_return_type;
+    Node::Ptr m_body;
+    
 };
 
 class Class : public Node {
@@ -227,17 +278,24 @@ public:
     Class(const Node::Ptr &name, const Node::Ptr &body)
         : Node(KW_CLASS), m_name(name), m_body(body) {}
     Class(const Node::Ptr &name)
-        : Node(KW_CLASS), m_name(name) {}    
+        : Node(KW_CLASS), m_name(name) {}
 
     std::string as_string() const override {
-        return fmt::format("Class(n={}, s={})", 
-                           m_name->as_string(), 
+        return fmt::format("Class(n={}, s={})",
+                           m_name->as_string(),
                            m_body ? m_body->as_string() : "[]");
     }
 
+    // Getters
+    Node::Ptr get_name() const { return m_name; }
+    
+    Node::Ptr get_body() const { return m_body; }
+    bool is_class() const override { return true; }
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
 private:
     Node::Ptr m_name;
     Node::Ptr m_body;
+    std::unique_ptr<SymbolTable> m_symtab;
 };
 
 class ClassBody : public Node {
@@ -248,24 +306,23 @@ public:
         : Node(), m_members(statements) {}
 
     std::string as_string() const override {
-        if (m_members.empty()){
+        if (m_members.empty()) {
             return "[]";
         }
         std::string result = "[";
         if (m_members.size() == 1) {
-            result +=  m_members[0]->as_string();
+            result += m_members[0]->as_string();
             result += "]";
             return result;
         }
 
-        
         for (const auto& stmt : m_members) {
             result += stmt->as_string() + ", ";
         }
         if (!m_members.empty()) {
-            result.erase(result.size() - 2); 
+            result.erase(result.size() - 2);
         }
-        
+
         result += "]";
         return result;
     }
@@ -274,6 +331,9 @@ public:
         m_members.push_back(statement);
     }
 
+    // Getter
+    const std::vector<Node::Ptr>& get_members() const { return m_members; }
+    
 private:
     std::vector<Node::Ptr> m_members;
 };
@@ -287,11 +347,15 @@ public:
         return fmt::format("While(?={}, repeat={})", m_condition->as_string(), m_body->as_string());
     }
 
+    // Getters
+    Node::Ptr get_condition() const { return m_condition; }
+    Node::Ptr get_body() const { return m_body; }
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+    
 private:
     Node::Ptr m_condition;
     Node::Ptr m_body;
 };
-
 
 class If : public Node {
 public:
@@ -300,43 +364,57 @@ public:
 
     std::string as_string() const override {
         std::string else_str = m_else_body ? m_else_body->as_string() : "[]";
-        return fmt::format("If(?={}, then={}, else={})", 
-                           m_condition->as_string(), 
-                           m_then_body->as_string(), 
+        return fmt::format("If(?={}, then={}, else={})",
+                           m_condition->as_string(),
+                           m_then_body->as_string(),
                            else_str);
     }
 
+    // Getters
+    Node::Ptr get_condition() const { return m_condition; }
+    Node::Ptr get_then_body() const { return m_then_body; }
+    Node::Ptr get_else_body() const { return m_else_body; }
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
 private:
-    Node::Ptr m_condition;  
-    Node::Ptr m_then_body;  
-    Node::Ptr m_else_body;  
+    Node::Ptr m_condition;
+    Node::Ptr m_then_body;
+    Node::Ptr m_else_body;
 };
-
 
 class Call : public Node {
 public:
-    Call(const Node::Ptr &expr, const Node::Ptr &args) 
+    Call(const Node::Ptr &expr, const Node::Ptr &args)
         : Node(0), m_expr(expr), m_args(args) {}
-    
+    Call(const Node::Ptr &expr)
+        : Node(0), m_expr(expr) {}
+
     std::string as_string() const override {
-        return fmt::format("Call(n={}, a={})", m_expr->as_string(), m_args->as_string());
+        return fmt::format("Call(n={}, a={})", m_expr->as_string(), m_args ? m_args->as_string() : "[]");
     }
+
+    // Getters
+    Node::Ptr get_expr() const { return m_expr; }
+    Node::Ptr get_args() const { return m_args; }
     
 private:
     Node::Ptr m_expr, m_args;
 };
 
 class Return : public Node {
-public: 
+public:
     Return(const Node::Ptr &body) : Node(KW_RETURN), m_body(body) {}
 
     std::string as_string() const override {
         return fmt::format("Return({})", m_body->as_string());
     }
 
+    // Getter
+    Node::Ptr get_body() const { return m_body; }
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
 private:
     Node::Ptr m_body;
 };
+
 }
 
 #endif

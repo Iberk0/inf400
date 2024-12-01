@@ -1,3 +1,6 @@
+#ifndef KIRAZ_COMPILER_H
+#define KIRAZ_COMPILER_H
+
 
 #include <cassert>
 #include <map>
@@ -117,3 +120,4 @@ private:
     std::string m_error;
     static Compiler *s_current;
 };
+#endif

@@ -3,8 +3,23 @@
 #include <cassert>
 
 #include <fmt/format.h>
-
+#include <kiraz/ast/Literal.h>
 #include <resource/FILE_io_ki.h>
+
+#define IDENTIFIER(name) {std::string(name), Node::Ptr()}
+
+#define FUNCTION2(name, returnType, argType1, argType2) { \
+    name, std::make_shared<ast::Func>( \
+        std::make_shared<ast::Identifier>(name), \
+        std::make_shared<ast::FuncArgs>(std::vector<Node::Ptr>{ \
+            std::make_shared<ast::FuncArg>(std::make_shared<ast::Identifier>("arg1"), std::make_shared<ast::Identifier>(argType1)), \
+            std::make_shared<ast::FuncArg>(std::make_shared<ast::Identifier>("arg2"), std::make_shared<ast::Identifier>(argType2)) \
+        }), \
+        std::make_shared<ast::Identifier>(returnType), \
+        nullptr  \
+    ) \
+} 
+
 
 Node::Ptr SymbolTable::s_module_ki;
 Node::Ptr SymbolTable::s_module_io;
@@ -103,7 +118,20 @@ int Compiler::compile(Node::Ptr root, std::ostream &ostr) {
 
 SymbolTable::SymbolTable()
         : m_symbols({
-                  std::make_shared<Scope>(Scope::SymTab{}, ScopeType::Module, nullptr),
+                  std::make_shared<Scope>(Scope::SymTab{
+                    IDENTIFIER("Boolean"),
+                    IDENTIFIER("Function"),
+                    IDENTIFIER("Class"),
+                    IDENTIFIER("Integer64"),
+                    IDENTIFIER("Module"),
+                    IDENTIFIER("String"),
+                    IDENTIFIER("Void"),
+                    IDENTIFIER("true"),
+                    IDENTIFIER("false"),
+                    FUNCTION2("and", "Boolean", "Boolean", "Boolean"),
+                    FUNCTION2("or", "Boolean", "Boolean", "Boolean"),
+                    FUNCTION2("not", "Boolean", "Boolean", "")
+                  }, ScopeType::Module, nullptr),
           }) {
     if (! s_module_io) {
         s_module_io = Compiler::current()->compile_module(FILE_io_ki);
