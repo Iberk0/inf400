@@ -6,18 +6,28 @@
 #include <vector>
 #include <set>
 #include <memory>
-
+#include <regex>
 
 
 namespace ast {
 
+inline std::string strip_type(const std::string& as_string_output) {
+    
+    std::regex re("\\(([^)]+)\\)"); 
+    std::smatch match;
+    
+    if (std::regex_search(as_string_output, match, re)) {
+        return match[1]; 
+    }
+    return as_string_output;
+}
 
 class Module : public Node {
 public:
     Module(const Node::Ptr& t) : Node(0), m_body(t) {}
     std::string as_string() const override { return fmt::format("Module({})", m_body->as_string()); }
 
-    // Getter
+
     Node::Ptr get_body() const { return m_body; }
 
     Node::Ptr compute_stmt_type(SymbolTable &st) override;
