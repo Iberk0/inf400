@@ -59,6 +59,8 @@ class_decl:
     KW_CLASS literal OP_LBRACE stmt_list OP_RBRACE 
     { $$ = Node::add<ast::Class>($2, $4); }
     |KW_CLASS literal OP_LBRACE OP_RBRACE { $$ = Node::add<ast::Class>($2);}
+    | KW_CLASS literal OP_COLON literal OP_LBRACE stmt_list OP_RBRACE { $$ = Node::add<ast::Class>($2, $4, $6); }
+    | KW_CLASS literal OP_COLON literal OP_LBRACE OP_RBRACE { $$ = Node::add<ast::Class>($2, $4, nullptr); }
     ;
 
 let_stmt:
@@ -68,6 +70,8 @@ let_stmt:
     { $$ = Node::add<ast::Let>($2, $4, $6); }
     | KW_LET literal OP_COLON literal OP_SCOLON
     { $$ = Node::add<ast::Let>($2, $4, nullptr); }
+    | KW_LET literal OP_ASSIGN call_stmt OP_SCOLON { $$ = Node::add<ast::Let>($2, nullptr, $4); }
+    | KW_LET literal OP_COLON literal OP_ASSIGN call_stmt OP_SCOLON { $$ = Node::add<ast::Let>($2, $4, $6); }
     ;
 
 func_decl:
@@ -100,6 +104,10 @@ if_stmt:
     { $$ = Node::add<ast::If>($3, $6, $9); }
     | KW_IF OP_LPAREN expr OP_RPAREN OP_LBRACE scope OP_RBRACE
     { $$ = Node::add<ast::If>($3, $6, nullptr); }
+    | KW_IF OP_LPAREN call_stmt OP_RPAREN OP_LBRACE scope OP_RBRACE
+    { $$ = Node::add<ast::If>($3, $6, nullptr); }
+    | KW_IF OP_LPAREN call_stmt OP_RPAREN OP_LBRACE scope OP_RBRACE KW_ELSE else_stmt
+    { $$ = Node::add<ast::If>($3, $6, $9); }
     ;
 
 else_stmt:
@@ -135,15 +143,16 @@ dot_NotArg:
 
 call_args:
     { $$ = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{}); }
-    | literal
+    | compare_expr
     { $$ = Node::add<ast::FuncArgs>(std::vector<Node::Ptr>{ $1 }); }
-    | call_args OP_COMMA literal
+    | call_args OP_COMMA compare_expr
     {
         auto args = std::dynamic_pointer_cast<ast::FuncArgs>($1);
         args->add_statement($3);
         $$ = args;
     }
-    ;
+    
+
 return_stmt:
     KW_RETURN return_value           { $$ = Node::add<ast::Return>($2);}
     ;
@@ -173,6 +182,8 @@ expr:
 assign_expr:
     compare_expr 
     | compare_expr OP_ASSIGN compare_expr { $$ = Node::add<ast::OpAssign>($1, $3); }
+    | dot_NotArg OP_ASSIGN compare_expr { $$ = Node::add<ast::OpAssign>($1, $3); }
+    | compare_expr OP_ASSIGN call_stmt { $$ = Node::add<ast::OpAssign>($1, $3); }
     ;
 
 compare_expr:
@@ -226,3 +237,4 @@ int yyerror(const char *s) {
 
     return 1;
 }
+

@@ -6,7 +6,7 @@
 #include <kiraz/ast/Literal.h>
 #include <resource/FILE_io_ki.h>
 
-#define IDENTIFIER(name) {std::string(name), Node::Ptr()}
+#define IDENTIFIER(name) {std::string(name), std::make_shared<ast::Identifier>(name)}
 
 #define FUNCTION2(name, returnType, argType1, argType2) { \
     name, std::make_shared<ast::Func>( \
@@ -119,19 +119,20 @@ int Compiler::compile(Node::Ptr root, std::ostream &ostr) {
 SymbolTable::SymbolTable()
         : m_symbols({
                   std::make_shared<Scope>(Scope::SymTab{
-                    IDENTIFIER("Boolean"),
+                
+                 IDENTIFIER("Boolean"),
                     IDENTIFIER("Function"),
                     IDENTIFIER("Class"),
                     IDENTIFIER("Integer64"),
                     IDENTIFIER("Module"),
                     IDENTIFIER("String"),
                     IDENTIFIER("Void"),
-                    IDENTIFIER("true"),
-                    IDENTIFIER("false"),
+                    {std::string("true"), std::make_shared<ast::Identifier>("Boolean")},
+                    {std::string("false"), std::make_shared<ast::Identifier>("Boolean")},
                     FUNCTION2("and", "Boolean", "Boolean", "Boolean"),
                     FUNCTION2("or", "Boolean", "Boolean", "Boolean"),
                     FUNCTION2("not", "Boolean", "Boolean", "")
-                  }, ScopeType::Module, nullptr),
+              }, ScopeType::Module, nullptr),
           }) {
     if (! s_module_io) {
         s_module_io = Compiler::current()->compile_module(FILE_io_ki);
@@ -141,3 +142,4 @@ SymbolTable::SymbolTable()
 SymbolTable::SymbolTable(ScopeType scope_type) : SymbolTable() {
     m_symbols.back()->scope_type = scope_type;
 }
+

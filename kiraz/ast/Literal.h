@@ -2,25 +2,30 @@
 #define KIRAZ_AST_LITERAL_H
 
 #include <kiraz/Node.h>
-#include <memory>
 #include <kiraz/Compiler.h>
 #include <vector>
+#include <set>
+#include <memory>
+
+
 
 namespace ast {
 
 
 class Module : public Node {
 public:
-    Module(const Node::Ptr& t) : Node(0), m_body(t){}
+    Module(const Node::Ptr& t) : Node(0), m_body(t) {}
     std::string as_string() const override { return fmt::format("Module({})", m_body->as_string()); }
 
     // Getter
     Node::Ptr get_body() const { return m_body; }
+
     Node::Ptr compute_stmt_type(SymbolTable &st) override;
-    
+    Node::Ptr add_to_symtab_forward(SymbolTable &st) override;
+
 private:
-    std::unique_ptr<SymbolTable> m_symtab;
     Node::Ptr m_body;
+    std::unique_ptr<SymbolTable> m_symtab;
 };
 
 class NodeList : public Node {
@@ -56,9 +61,10 @@ public:
         m_statements.push_back(statement);
     }
 
-    // Getter
+    
     const std::vector<Node::Ptr>& get_statements() const { return m_statements; }
-        bool is_stmt_list() const override { return true; }
+    bool is_stmt_list() const override { return true; }
+
 private:
     std::vector<Node::Ptr> m_statements;
 };
@@ -69,39 +75,44 @@ public:
 
     std::string as_string() const override { return fmt::format("Int({})", m_value); }
 
-    // Getter
-    int64_t get_value() const { return m_value; }
     
+    int64_t get_value() const { return m_value; }
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     int64_t m_value;
 };
 
 class Signed : public Node {
 public:
-    Signed(int op, Node::Cptr operand) : Node(L_INTEGER), m_operator(op), m_operand(operand) {}
+    Signed(int op, Node::Ptr operand) : Node(L_INTEGER), m_operator(op), m_operand(operand) {}
     std::string as_string() const override {
-        std::string sign = (m_operator == 260) ? "OP_PLUS" : "OP_MINUS";
+        std::string sign = (m_operator == OP_PLUS) ? "OP_PLUS" : "OP_MINUS";
         return fmt::format("Signed({}, {})", sign, m_operand->as_string());
     }
 
-    // Getters
-    int get_operator() const { return m_operator; }
-    Node::Cptr get_operand() const { return m_operand; }
     
+    int get_operator() const { return m_operator; }
+    Node::Ptr get_operand() const { return m_operand; }
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     int m_operator;
-    Node::Cptr m_operand;
+    Node::Ptr m_operand;
 };
 
 class Identifier : public Node {
 public:
     Identifier(Token::Ptr);
-    Identifier(const std::string& name) : m_name(name) {}
+    Identifier(const std::string& name) : Node(IDENTIFIER), m_name(name) {}
     std::string as_string() const override { return fmt::format("Id({})", m_name); }
 
-    // Getter
-    const std::string& get_name() const { return m_name; }
     
+    const std::string& get_name() const { return m_name; }
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     std::string m_name;
 };
@@ -130,16 +141,18 @@ public:
         return fmt::format("Str({})", res);
     }
 
-    // Getter
+   
     const std::string& get_value() const { return m_value; }
-    
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     std::string m_value;
 };
 
 class Let : public Node {
 public:
-    Let(const Node::Ptr& name, const Node::Ptr& type, const Node::Ptr& init)
+    Let(const Node::Ptr& name, const Node::Cptr& type, const Node::Ptr& init)
         : Node(KW_LET), m_name(name), m_type(type), m_init(init) {}
 
     std::string as_string() const override {
@@ -157,14 +170,15 @@ public:
         return fmt::format("Let({})", fmt::join(components, ", "));
     }
 
-    // Getters
-    Node::Ptr get_name() const { return m_name; }
-    Node::Ptr get_type() const { return m_type; }
-    Node::Ptr get_init() const { return m_init; }
     
+    Node::Ptr get_name() const { return m_name; }
+    Node::Cptr get_type() const { return m_type; }
+    Node::Ptr get_init() const { return m_init; }
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     Node::Ptr m_name;
-    Node::Ptr m_type;
+    Node::Cptr m_type;
     Node::Ptr m_init;
 };
 
@@ -176,29 +190,36 @@ public:
         return fmt::format("Import({})", m_name->as_string());
     }
 
-    // Getter
-    Node::Ptr get_name() const { return m_name; }
     
+    Node::Ptr get_name() const { return m_name; }
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     Node::Ptr m_name;
 };
 
 class FuncArg : public Node {
 public:
-    FuncArg(const Node::Ptr &name, const Node::Ptr &type)
+    FuncArg(const Node::Ptr &name, const Node::Cptr &type)
         : Node(IDENTIFIER), m_name(name), m_type(type) {}
 
     std::string as_string() const override {
         return fmt::format("FArg(n={}, t={})", m_name->as_string(), m_type->as_string());
     }
 
-    // Getters
-    Node::Ptr get_name() const { return m_name; }
-    Node::Ptr get_type() const { return m_type; }
     
+    Node::Ptr get_name() const { return m_name; }
+    Node::Cptr get_type() const { return m_type; }
+
+    
+    void set_stmt_type(const Node::Cptr &type) { Node::set_stmt_type(type); }
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     Node::Ptr m_name;
-    Node::Ptr m_type;
+    Node::Cptr m_type;
 };
 
 class FuncArgs : public Node {
@@ -234,66 +255,90 @@ public:
         m_arguments.push_back(statement);
     }
 
-    // Getter
-    const std::vector<Node::Ptr>& get_arguments() const { return m_arguments; }
     
+    const std::vector<Node::Ptr>& get_arguments() const { return m_arguments; }
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     std::vector<Node::Ptr> m_arguments;
 };
 
 class Func : public Node {
 public:
-    Func(const Node::Ptr &name, const Node::Ptr &args, const Node::Ptr &ret_type, const Node::Ptr &body)
+    Func(const Node::Ptr &name, const Node::Ptr &args, const Node::Cptr &ret_type, const Node::Ptr &body)
         : Node(KW_FUNC), m_name(name), m_args(args), m_return_type(ret_type), m_body(body) {}
-
+    
+    
     std::string as_string() const override {
         std::string return_type_str = m_return_type ? m_return_type->as_string() : "None";
-
+        std::string m_body_str = m_body ? m_body->as_string() : "";
         return fmt::format("Func(n={}, a={}, r={}, s={})",
                            m_name->as_string(),
                            m_args->as_string(),
                            return_type_str,
-                           m_body->as_string());
+                           m_body_str);
     }
     bool is_func() const override { return true; }
 
-
-    // Getters
+    
     Node::Ptr get_name() const { return m_name; }
     Node::Ptr get_args() const { return m_args; }
     Node::Cptr get_return_type() const { return m_return_type; }
     Node::Ptr get_body() const { return m_body; }
-    
-    
+    const std::string &get_name_str() const { return static_cast<const Identifier &>(*m_name).get_name(); }
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+    Node::Ptr add_to_symtab_forward(SymbolTable &st) override;
+
 private:
     Node::Ptr m_name;
     Node::Ptr m_args;
     Node::Cptr m_return_type;
     Node::Ptr m_body;
-    
 };
 
 class Class : public Node {
 public:
+    Class(const Node::Ptr &name, const Node::Cptr &base_class, const Node::Ptr &body)
+        : Node(KW_CLASS), m_name(name), m_base_class(base_class), m_body(body) {}
     Class(const Node::Ptr &name, const Node::Ptr &body)
-        : Node(KW_CLASS), m_name(name), m_body(body) {}
+        : Node(KW_CLASS), m_name(name), m_base_class(nullptr), m_body(body) {}
     Class(const Node::Ptr &name)
-        : Node(KW_CLASS), m_name(name) {}
+        : Node(KW_CLASS), m_name(name), m_base_class(nullptr), m_body(nullptr) {}
 
     std::string as_string() const override {
+        if(!m_base_class){
         return fmt::format("Class(n={}, s={})",
                            m_name->as_string(),
                            m_body ? m_body->as_string() : "[]");
+        }
+        else {
+            std::string base_class_str = m_base_class ? m_base_class->as_string() : "[]";
+            return fmt::format("Class(n={}, s={})",
+                           m_name->as_string(),
+                           m_body ? m_body->as_string() : "[]");
+        }
     }
 
-    // Getters
-    Node::Ptr get_name() const { return m_name; }
+    std::shared_ptr<Scope> get_cur_symtab() const {
+        return m_symtab ? m_symtab->get_cur_symtab() : nullptr;
+    }
     
+   
+    Node::Cptr get_base_class() const { return m_base_class; }
+    SymbolTable* get_symtab() const { return m_symtab.get(); }
+    
+    Node::Ptr get_name() const { return m_name; }
+    const std::string &get_name_str() const { return static_cast<const Identifier &>(*m_name).get_name(); }
     Node::Ptr get_body() const { return m_body; }
     bool is_class() const override { return true; }
     Node::Ptr compute_stmt_type(SymbolTable &st) override;
+    Node::Ptr add_to_symtab_forward(SymbolTable &st) override;
+
 private:
     Node::Ptr m_name;
+    Node::Cptr m_base_class;
     Node::Ptr m_body;
     std::unique_ptr<SymbolTable> m_symtab;
 };
@@ -331,9 +376,11 @@ public:
         m_members.push_back(statement);
     }
 
-    // Getter
-    const std::vector<Node::Ptr>& get_members() const { return m_members; }
     
+    const std::vector<Node::Ptr>& get_members() const { return m_members; }
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     std::vector<Node::Ptr> m_members;
 };
@@ -347,11 +394,11 @@ public:
         return fmt::format("While(?={}, repeat={})", m_condition->as_string(), m_body->as_string());
     }
 
-    // Getters
+    
     Node::Ptr get_condition() const { return m_condition; }
     Node::Ptr get_body() const { return m_body; }
     Node::Ptr compute_stmt_type(SymbolTable &st) override;
-    
+
 private:
     Node::Ptr m_condition;
     Node::Ptr m_body;
@@ -370,11 +417,12 @@ public:
                            else_str);
     }
 
-    // Getters
+   
     Node::Ptr get_condition() const { return m_condition; }
     Node::Ptr get_then_body() const { return m_then_body; }
     Node::Ptr get_else_body() const { return m_else_body; }
     Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     Node::Ptr m_condition;
     Node::Ptr m_then_body;
@@ -386,16 +434,18 @@ public:
     Call(const Node::Ptr &expr, const Node::Ptr &args)
         : Node(0), m_expr(expr), m_args(args) {}
     Call(const Node::Ptr &expr)
-        : Node(0), m_expr(expr) {}
+        : Node(0), m_expr(expr), m_args(nullptr) {}
 
     std::string as_string() const override {
         return fmt::format("Call(n={}, a={})", m_expr->as_string(), m_args ? m_args->as_string() : "[]");
     }
 
-    // Getters
+
     Node::Ptr get_expr() const { return m_expr; }
     Node::Ptr get_args() const { return m_args; }
-    
+
+    Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     Node::Ptr m_expr, m_args;
 };
@@ -408,13 +458,16 @@ public:
         return fmt::format("Return({})", m_body->as_string());
     }
 
-    // Getter
+
     Node::Ptr get_body() const { return m_body; }
     Node::Ptr compute_stmt_type(SymbolTable &st) override;
+
 private:
     Node::Ptr m_body;
 };
 
-}
 
-#endif
+} 
+
+#endif // KIRAZ_AST_LITERAL_H
+
