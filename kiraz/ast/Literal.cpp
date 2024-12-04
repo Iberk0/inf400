@@ -524,7 +524,39 @@ Node::Ptr ast::Module::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr Import::compute_stmt_type(SymbolTable &st) {
+    if (auto ret = Node::compute_stmt_type(st)) {
+        return ret;
+    }
 
+
+    auto module_name_node = get_name();
+    auto module_name = static_cast<const Identifier &>(*module_name_node).get_name();
+
+
+    if (module_name == "io") {
+
+        auto io_module = SymbolTable::get_module_io();
+        if (!io_module) {
+            return set_error("Module 'io' is not found");
+        }
+
+
+        if (auto ret = io_module->compute_stmt_type(st)) {
+            return ret;
+        }
+
+
+        st.add_symbol("io", io_module);
+    } else {
+        return set_error(FF("Module '{}' is not found", module_name));
+    }
+
+
+    auto module_type_entry = st.get_symbol("Module");
+    if (!module_type_entry.stmt) {
+        return set_error("Type 'Module' is not defined");
+    }
+    set_stmt_type(module_type_entry.stmt);
     return nullptr;
 }
 

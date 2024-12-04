@@ -96,6 +96,33 @@ Node::Ptr OpDivF::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr OpAssign::compute_stmt_type(SymbolTable &st) {
+    std::cout << "Opassign'a girdik" << std::endl;
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    if (auto ret = get_right()->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto left_type = get_left()->get_stmt_type();
+    auto right_type = get_right()->get_stmt_type();
+    if(left_type && right_type){
+        std::cout << "left ve right'ı aldık" << std::endl;
+    }
+    std::cout << "left ve right'ı aldık" << std::endl;
+    std::cout << right_type->as_string() << std::endl;
+    std::cout << left_type->as_string() << std::endl;
+    if(left_type->is_func() && right_type->is_func()){
+        return set_error(FF("Overriding builtin '{}' is not allowed",
+                            extract_id(left_type->as_string())));
+    }
+    if (left_type != right_type) {
+        return set_error(FF("Left type '{}' of assignment does not match the right type '{}'",
+                            extract_id(left_type->as_string()), extract_id(right_type->as_string())));
+    }
+    std::cout << "Left type için tip atamadayız" << std::endl;
+    std::cout << left_type->as_string() << std::endl;
+    set_stmt_type(left_type);
     return nullptr;
 }
 

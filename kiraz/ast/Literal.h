@@ -11,6 +11,19 @@
 
 namespace ast {
 
+inline std::string extract_id(const std::string& input) {
+    size_t start_pos = input.find("Id(");
+    if (start_pos == std::string::npos) {
+        return "";  
+    }
+    start_pos += 3;  
+    size_t end_pos = input.find(')', start_pos);
+    if (end_pos == std::string::npos) {
+        return "";  
+    }
+    return input.substr(start_pos, end_pos - start_pos);
+}
+
 inline std::string strip_type(const std::string& as_string_output) {
     
     std::regex re("\\(([^)]+)\\)"); 
