@@ -232,6 +232,38 @@ Node::Ptr OpGreaterEq::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr OpDot::compute_stmt_type(SymbolTable &st) {
+    std::cout << "opdota girdik"<< std::endl;
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    
+
+    auto left_type = get_left()->get_stmt_type();
+    
+    std::cout << "left aldık"<< std::endl;
+    auto class_node = std::dynamic_pointer_cast<const Class>(get_left());
+    auto module_node = std::dynamic_pointer_cast<const Module>(get_left());
+    std::cout << "leftin classını oluşturduk"<< std::endl;
+    if (!class_node || !module_node) {
+        return set_error(FF("Type '{}' is not a class or a module", strip_type(left_type->as_string())));
+    }
+    
+    
+    auto class_symtab = (!class_node) ? module_node->get_symtab() : class_node->get_symtab();
+    std::cout << "class symtab aldık"<< std::endl;
+    if (!class_symtab) {
+        return set_error(FF("Class '{}' has no symbol table", left_type->as_string()));
+    }
+
+    auto member_name_node = get_right();
+    auto member_name = static_cast<const Identifier &>(*member_name_node).get_name();
+    auto member_entry = class_symtab->get_symbol(member_name);
+    auto left_name = static_cast<const Identifier &>(*get_left()).get_name();
+    if (!member_entry || !member_entry.stmt) {
+        return set_error(FF("Identifier '{}.{}' is not found",left_name , member_name));
+    }
+
+    set_stmt_type(member_entry.stmt->get_stmt_type());
     return nullptr;
 }
 

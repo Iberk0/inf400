@@ -431,7 +431,44 @@ Node::Ptr If::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr Call::compute_stmt_type(SymbolTable &st) {
+    std::cout << "call'a girdik" << std::endl;
+    if (auto ret = m_expr->compute_stmt_type(st)) {
+        return ret;
+    }
+    for (const auto &[name, entry] : st.get_cur_symtab()->symbols) {
+                            fmt::print("name: '{}' -- entry : '{}'\n", name, entry->as_string());
+                        }
+    auto func_entry = m_expr->get_stmt_type();
+    if (!func_entry || !func_entry->is_func()) {
+        return set_error(FF("Identifier '{}' is not a function", strip_type(m_expr->as_string())));
+    }
+
+    auto func_node = std::dynamic_pointer_cast<const Func>(func_entry);
+    auto func_args = func_node->get_args();
+    auto call_args = m_args;
+
+    size_t provided_args = 0;
+    if (call_args && call_args->is_funcarg_list()) {
+        provided_args = static_cast<const FuncArgs &>(*call_args).get_arguments().size();
+    }
+
+    if (provided_args > 0) {
+        auto call_arg_nodes = static_cast<const FuncArgs &>(*call_args).get_arguments();
+
+        for (size_t i = 0; i < provided_args; ++i) {
+            auto call_arg = call_arg_nodes[i];
+
+            if (auto ret = call_arg->compute_stmt_type(st)) {
+                return ret;
+            }
+            auto call_arg_type = call_arg->get_stmt_type();
+
+            
+        }
+    }
     
+    set_stmt_type(func_node->get_return_type());
+
     return nullptr;
 }
 

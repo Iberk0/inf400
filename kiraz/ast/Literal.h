@@ -29,7 +29,7 @@ public:
 
 
     Node::Ptr get_body() const { return m_body; }
-
+    SymbolTable* get_symtab() const { return m_symtab.get(); }
     Node::Ptr compute_stmt_type(SymbolTable &st) override;
     Node::Ptr add_to_symtab_forward(SymbolTable &st) override;
 
