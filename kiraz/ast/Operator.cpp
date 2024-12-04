@@ -101,27 +101,134 @@ Node::Ptr OpAssign::compute_stmt_type(SymbolTable &st) {
 
 
 Node::Ptr OpEqual::compute_stmt_type(SymbolTable &st) {
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    if (auto ret = get_right()->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto bool_type_entry = st.get_symbol("Boolean");
+    if (!bool_type_entry || !bool_type_entry.stmt) {
+        return set_error("Type 'Boolean' is not defined");
+    }
+    set_stmt_type(bool_type_entry.stmt);
     return nullptr;
 }
+
 
 Node::Ptr OpNotEqual::compute_stmt_type(SymbolTable &st) {
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    if (auto ret = get_right()->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto bool_type_entry = st.get_symbol("Boolean");
+    if (!bool_type_entry || !bool_type_entry.stmt) {
+        return set_error("Type 'Boolean' is not defined");
+    }
+    set_stmt_type(bool_type_entry.stmt);
     return nullptr;
 }
+
 
 Node::Ptr OpLess::compute_stmt_type(SymbolTable &st) {
-   return nullptr;
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    if (auto ret = get_right()->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto left_type = get_left()->get_stmt_type();
+    auto right_type = get_right()->get_stmt_type();
+
+    if (left_type == right_type && is_arithmetic_type(left_type)) {
+        auto bool_type_entry = st.get_symbol("Boolean");
+        if (!bool_type_entry || !bool_type_entry.stmt) {
+            return set_error("Type 'Boolean' is not defined");
+        }
+        set_stmt_type(bool_type_entry.stmt);
+        return nullptr;
+    } else {
+        return set_error(FF("Operator '<' not defined for types '{}' and '{}'",
+                            strip_type(left_type->as_string()), strip_type(right_type->as_string())));
+    }
 }
 
+
 Node::Ptr OpLessEq::compute_stmt_type(SymbolTable &st) {
-    return nullptr;
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    if (auto ret = get_right()->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto left_type = get_left()->get_stmt_type();
+    auto right_type = get_right()->get_stmt_type();
+
+    if (left_type == right_type && is_arithmetic_type(left_type)) {
+        auto bool_type_entry = st.get_symbol("Boolean");
+        if (!bool_type_entry || !bool_type_entry.stmt) {
+            return set_error("Type 'Boolean' is not defined");
+        }
+        set_stmt_type(bool_type_entry.stmt);
+        return nullptr;
+    } else {
+        return set_error(FF("Operator '<=' not defined for types '{}' and '{}'",
+                            strip_type(left_type->as_string()), strip_type(right_type->as_string())));
+    }
 }
 
 Node::Ptr OpGreater::compute_stmt_type(SymbolTable &st) {
-    return nullptr;
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    if (auto ret = get_right()->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto left_type = get_left()->get_stmt_type();
+    auto right_type = get_right()->get_stmt_type();
+
+    if (left_type == right_type && is_arithmetic_type(left_type)) {
+        auto bool_type_entry = st.get_symbol("Boolean");
+        if (!bool_type_entry || !bool_type_entry.stmt) {
+            return set_error("Type 'Boolean' is not defined");
+        }
+        set_stmt_type(bool_type_entry.stmt);
+        return nullptr;
+    } else {
+        return set_error(FF("Operator '>' not defined for types '{}' and '{}'",
+                            strip_type(left_type->as_string()), strip_type(right_type->as_string())));
+    }
 }
 
 Node::Ptr OpGreaterEq::compute_stmt_type(SymbolTable &st) {
-    return nullptr;
+    if (auto ret = get_left()->compute_stmt_type(st)) {
+        return ret;
+    }
+    if (auto ret = get_right()->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto left_type = get_left()->get_stmt_type();
+    auto right_type = get_right()->get_stmt_type();
+
+    if (left_type == right_type && is_arithmetic_type(left_type)) {
+        auto bool_type_entry = st.get_symbol("Boolean");
+        if (!bool_type_entry || !bool_type_entry.stmt) {
+            return set_error("Type 'Boolean' is not defined");
+        }
+        set_stmt_type(bool_type_entry.stmt);
+        return nullptr;
+    } else {
+        return set_error(FF("Operator '>=' not defined for types '{}' and '{}'",
+                            strip_type(left_type->as_string()), strip_type(right_type->as_string())));
+    }
 }
 
 Node::Ptr OpDot::compute_stmt_type(SymbolTable &st) {

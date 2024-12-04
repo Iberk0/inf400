@@ -87,6 +87,68 @@ Node::Ptr Identifier::compute_stmt_type(SymbolTable &st) {
 
 
 Node::Ptr Let::compute_stmt_type(SymbolTable &st) {
+    std::cout << "lete girdik"<< std::endl;
+    if (auto ret = Node::compute_stmt_type(st)) {
+        return ret;
+    }
+    for (const auto &[name, entry] : st.get_cur_symtab()->symbols) {
+                            fmt::print("name: '{}' -- entry : '{}'\n", name, entry->as_string());
+                        }
+    auto var_name_node = m_name;
+    std::cout << var_name_node->as_string()<< std::endl;
+    auto var_name = static_cast<const Identifier &>(*var_name_node).get_name();
+    std::cout << var_name<< std::endl;
+    if (st.get_symbol(var_name)) {
+        return set_error(FF("Identifier '{}' is already in symtab", var_name));
+    }
+    std::cout << "sembol yok"<< std::endl;
+    if (var_name[0] >= 'A' && var_name[0] <= 'Z') {
+        return set_error(FF("Variable name '{}' can not start with an uppercase letter", var_name));
+    }
+
+    st.add_symbol(var_name, shared_from_this());
+    std::cout << "sembol ekledik"<< std::endl;
+    
+    if (m_type) {
+        std::cout << "type bakıyoz"<< std::endl;
+        auto type_name = static_cast<const Identifier &>(*m_type).get_name();
+        std::cout << m_type->as_string()<< std::endl;
+        auto ste = st.get_symbol(type_name);
+        std::cout << "sembol bakıyoz"<< std::endl;
+        if (!ste || !ste.stmt) {
+            return set_error(FF("Type '{}' in declaration of '{}' is not found", type_name, var_name));
+        }
+        m_type = ste.stmt;
+        std::cout << m_type->as_string()<< std::endl;
+    }
+    
+    std::cout << "type bitti"<< std::endl;
+    if (m_init) {
+        std::cout << "inite girdik"<< std::endl;
+        if (auto ret = m_init->compute_stmt_type(st)) {
+            return ret;
+        }
+        std::cout << m_init->as_string()<< std::endl;
+        auto init_type = m_init->get_stmt_type();
+        if (!init_type) {
+            return set_error(FF("Cannot determine type of initializer in declaration of '{}'", var_name));
+        }
+
+        if (m_type) {
+            if (m_type != init_type) {
+                return set_error(FF("Initializer type '{}' doesn't match explicit type '{}'", strip_type(init_type->as_string()), strip_type(m_type->as_string())));
+            }
+        } else {
+            m_type = init_type;
+        }
+    } else {
+        if (!m_type) {
+            return set_error(FF("Cannot infer type of variable '{}'", var_name));
+        }
+    }
+
+    set_stmt_type(m_type);
+    std::cout << "letten çıktık"<< std::endl;
     return nullptr;
 }
 
@@ -269,35 +331,102 @@ Node::Ptr ClassBody::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr Return::compute_stmt_type(SymbolTable &st) {
-    if(auto ret = Node::compute_stmt_type(st)){
-            return ret;
-        }
-    auto scope = st.get_scope_type();
-    if(scope == ScopeType::Module || scope == ScopeType::Class){
+    if (auto ret = Node::compute_stmt_type(st)) {
+        return ret;
+    }
+    for (const auto &[name, entry] : st.get_cur_symtab()->symbols) {
+                            fmt::print("name: '{}' -- entry : '{}'\n", name, entry->as_string());
+                        }
+    auto scope_type = st.get_scope_type();
+    if (scope_type != ScopeType::Func && scope_type != ScopeType::Method) {
         return set_error("Misplaced return statement");
     }
+
+    auto func_node = st.get_scope_stmt();
+    auto func_return_type = static_cast<const Func &>(*func_node).get_return_type();
+
+    if (m_body) {
+        if (auto ret = m_body->compute_stmt_type(st)) {
+            return ret;
+        }
+
+        auto return_expr_type = m_body->get_stmt_type();
+
+        if (strip_type(func_return_type->as_string()) != strip_type(return_expr_type->as_string())) {
+            return set_error(FF("Return statement type '{}' does not match function return type '{}'", strip_type(return_expr_type->as_string()), strip_type(func_return_type->as_string())));
+        }
+    } else {
+        if (func_return_type && func_return_type->as_string() != "Void") {
+            return set_error(FF("Return statement type 'Void' does not match function return type '{}'", strip_type(func_return_type->as_string())));
+        }
+    }
+
     return nullptr;
 }
 
 Node::Ptr While::compute_stmt_type(SymbolTable &st) {
-    if(auto ret = Node::compute_stmt_type(st)){
-            return ret;
-        }
-    auto scope = st.get_scope_type();
-    if(scope == ScopeType::Module || scope == ScopeType::Class){
+    if (auto ret = Node::compute_stmt_type(st)) {
+        return ret;
+    }
+    for (const auto &[name, entry] : st.get_cur_symtab()->symbols) {
+                            fmt::print("name: '{}' -- entry : '{}'\n", name, entry->as_string());
+                        }
+    auto scope_type = st.get_scope_type();
+    if (scope_type == ScopeType::Module || scope_type == ScopeType::Class) {
         return set_error("Misplaced while statement");
     }
+
+    if (auto ret = m_condition->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto condition_type = m_condition->get_stmt_type();
+    if (strip_type(condition_type->as_string()) != "Boolean") {
+        return set_error("While only accepts tests of type 'Boolean'");
+    }
+
+    if (m_body) {
+        if (auto ret = m_body->compute_stmt_type(st)) {
+            return ret;
+        }
+    }
+
     return nullptr;
 }
 
 Node::Ptr If::compute_stmt_type(SymbolTable &st) {
-    if(auto ret = Node::compute_stmt_type(st)){
-            return ret;
-        }
-    auto scope = st.get_scope_type();
-    if(scope == ScopeType::Module || scope == ScopeType::Class){
+    if (auto ret = Node::compute_stmt_type(st)) {
+        return ret;
+    }
+    for (const auto &[name, entry] : st.get_cur_symtab()->symbols) {
+                            fmt::print("name: '{}' -- entry : '{}'\n", name, entry->as_string());
+                        }
+    auto scope_type = st.get_scope_type();
+    if (scope_type == ScopeType::Module || scope_type == ScopeType::Class) {
         return set_error("Misplaced if statement");
     }
+
+    if (auto ret = m_condition->compute_stmt_type(st)) {
+        return ret;
+    }
+
+    auto condition_type = m_condition->get_stmt_type();
+    if (strip_type(condition_type->as_string()) != "Boolean") {
+        return set_error("If only accepts tests of type 'Boolean'");
+    }
+
+    if (m_then_body) {
+        if (auto ret = m_then_body->compute_stmt_type(st)) {
+            return ret;
+        }
+    }
+
+    if (m_else_body) {
+        if (auto ret = m_else_body->compute_stmt_type(st)) {
+            return ret;
+        }
+    }
+
     return nullptr;
 }
 
