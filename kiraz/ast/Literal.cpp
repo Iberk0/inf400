@@ -101,13 +101,93 @@ Node::Ptr FuncArgs::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr Func::add_to_symtab_forward(SymbolTable &st) {
-   
+    auto func_name = static_cast<const Identifier &>(*m_name).get_name();
+
+    if (st.get_symbol(func_name)) {
+        return set_error(FF("Identifier '{}' is already in symtab", func_name));
+    }
+
+    st.add_symbol(func_name, shared_from_this());
     return nullptr;
 }
 
-
 Node::Ptr Func::compute_stmt_type(SymbolTable &st) {
-    
+    if (auto ret = Node::compute_stmt_type(st)) {
+        return ret;
+    }
+    std::cout << "func girdik"<< std::endl;
+    if (st.get_scope_type() != ScopeType::Module && st.get_scope_type() != ScopeType::Class) {
+        return set_error("Misplaced function definition");
+    }
+    std::cout << "func scope kontrol ettik"<< std::endl;
+    auto return_type_name = static_cast<const Identifier &>(*m_return_type).get_name();
+    std::cout << "return type name aldık"<< std::endl;
+    auto ste = st.get_symbol(return_type_name);
+    std::cout << m_return_type->as_string()<< std::endl;
+    if (m_return_type) {
+        if (!ste || !ste.stmt) {
+            return set_error(FF("Return type '{}' of function '{}' is not found", strip_type(return_type_name), get_name_str()));
+        }
+    }else {
+        m_return_type = ste.stmt;
+    }
+    std::cout << "func rettype bitti"<< std::endl;
+    ScopeType scope_type;
+    if (st.get_scope_type() == ScopeType::Class) {
+        scope_type = ScopeType::Method;
+    } else {
+        scope_type = ScopeType::Func;
+    }
+    std::cout << "func scope type aldık"<< std::endl;
+
+    auto scope = st.enter_scope(scope_type, shared_from_this());
+    std::cout << "func scope girdik"<< std::endl;
+    if (m_args && m_args->is_funcarg_list()) {
+        std::cout << "func arg girdik"<< std::endl;
+        auto args = static_cast<const FuncArgs &>(*m_args).get_arguments();
+        std::set<std::string> arg_names;
+        
+        for (const auto &arg : args) {
+            std::cout << "argları dönüyz"<< std::endl;
+            auto arg_name_node = static_cast<const FuncArg &>(*arg).get_name();
+            auto arg_name = static_cast<const Identifier &>(*arg_name_node).get_name();
+            std::cout << "arg name aldık"<< std::endl;
+            std::cout << arg_name<< std::endl;
+            if (arg_names.count(arg_name)) {
+                return set_error(FF("Identifier '{}' in argument list of function '{}' is already in symtab", arg_name, get_name_str()));
+            }
+            arg_names.insert(arg_name);
+
+            if (st.get_symbol(arg_name)) {
+                return set_error(FF("Identifier '{}' in argument list of function '{}' is already in symtab", arg_name, get_name_str()));
+            }
+            std::cout << "arg name sembol baktık"<< std::endl;
+            st.add_symbol(arg_name, arg);
+            std::cout << "argname sembol ekledik"<< std::endl;
+            auto arg_type_node = static_cast<const FuncArg &>(*arg).get_type();
+            auto arg_type_name = static_cast<const Identifier &>(*arg_type_node).get_name();
+            auto ste = st.get_symbol(arg_type_name);
+            if (!ste) {
+                return set_error(FF("Identifier '{}' in type of argument '{}' in function '{}' is not found", arg_type_name, arg_name, get_name_str()));
+            }
+
+            static_cast<FuncArg &>(*arg).set_stmt_type(ste.stmt);
+        }
+    }
+
+
+    if (m_body) {
+    std::cout << "func body girdik"<< std::endl;
+    std::cout << m_body->as_string()<< std::endl;
+        for(const auto &stmt : static_cast<const NodeList &>(*m_body).get_statements()){
+            std::cout << stmt->as_string() << std::endl;
+            if (auto ret = stmt->compute_stmt_type(st)) {
+                return ret;
+            }
+        }
+        
+    }
+    std::cout << "func çıktık"<< std::endl;
     return nullptr;
 }
 Node::Ptr Class::add_to_symtab_forward(SymbolTable &st) {
