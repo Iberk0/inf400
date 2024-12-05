@@ -20,6 +20,16 @@
     ) \
 } 
 
+#define FUNCTIONNOT(name, returnType, argType1) { \
+    name, std::make_shared<ast::Func>( \
+        std::make_shared<ast::Identifier>(name), \
+        std::make_shared<ast::FuncArgs>(std::vector<Node::Ptr>{ \
+            std::make_shared<ast::FuncArg>(std::make_shared<ast::Identifier>("arg1"), std::make_shared<ast::Identifier>(argType1)), \
+        }), \
+        std::make_shared<ast::Identifier>(returnType), \
+        nullptr  \
+    ) \
+} 
 
 Node::Ptr SymbolTable::s_module_ki;
 Node::Ptr SymbolTable::s_module_io;
@@ -131,7 +141,7 @@ SymbolTable::SymbolTable()
                     {std::string("false"), std::make_shared<ast::Identifier>("Boolean")},
                     FUNCTION2("and", "Boolean", "Boolean", "Boolean"),
                     FUNCTION2("or", "Boolean", "Boolean", "Boolean"),
-                    FUNCTION2("not", "Boolean", "Boolean", "")
+                    FUNCTIONNOT("not", "Boolean", "Boolean")
               }, ScopeType::Module, nullptr),
           }) {
     if (! s_module_io) {

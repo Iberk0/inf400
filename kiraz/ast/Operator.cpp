@@ -96,7 +96,7 @@ Node::Ptr OpDivF::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr OpAssign::compute_stmt_type(SymbolTable &st) {
-    std::cout << "Opassign'a girdik" << std::endl;
+    //std::cout << "Opassign'a girdik" << std::endl;
     if (auto ret = get_left()->compute_stmt_type(st)) {
         return ret;
     }
@@ -107,11 +107,11 @@ Node::Ptr OpAssign::compute_stmt_type(SymbolTable &st) {
     auto left_type = get_left()->get_stmt_type();
     auto right_type = get_right()->get_stmt_type();
     if(left_type && right_type){
-        std::cout << "left ve right'ı aldık" << std::endl;
+        //std::cout << "left ve right'ı aldık" << std::endl;
     }
-    std::cout << "left ve right'ı aldık" << std::endl;
-    std::cout << right_type->as_string() << std::endl;
-    std::cout << left_type->as_string() << std::endl;
+    //std::cout << "left ve right'ı aldık" << std::endl;
+    //std::cout << right_type->as_string() << std::endl;
+    //std::cout << left_type->as_string() << std::endl;
     if(left_type->is_func() && right_type->is_func()){
         return set_error(FF("Overriding builtin '{}' is not allowed",
                             extract_id(left_type->as_string())));
@@ -120,8 +120,8 @@ Node::Ptr OpAssign::compute_stmt_type(SymbolTable &st) {
         return set_error(FF("Left type '{}' of assignment does not match the right type '{}'",
                             extract_id(left_type->as_string()), extract_id(right_type->as_string())));
     }
-    std::cout << "Left type için tip atamadayız" << std::endl;
-    std::cout << left_type->as_string() << std::endl;
+    //std::cout << "Left type için tip atamadayız" << std::endl;
+    //std::cout << left_type->as_string() << std::endl;
     set_stmt_type(left_type);
     return nullptr;
 }
@@ -264,16 +264,16 @@ Node::Ptr OpDot::compute_stmt_type(SymbolTable &st) {
     }
 
     auto left_name = strip_type(get_left()->as_string());
-    std::cout << left_name << std::endl;
+    //std::cout << left_name << std::endl;
 
     auto left_symbol = st.get_symbol(left_name);
     if (!left_symbol.stmt) {
         return set_error(FF("Identifier '{}' is not found", left_name));
     }
-    std::cout << left_symbol.stmt->as_string() << std::endl;
+    //std::cout << left_symbol.stmt->as_string() << std::endl;
     auto left_node = left_symbol.stmt;
     auto left_type = left_node->get_stmt_type();
-    std::cout << left_type->as_string() << std::endl;
+    //std::cout << left_type->as_string() << std::endl;
 
     SymbolTable *member_symtab = nullptr;
     if (left_type->as_string() == "Id(Class)") {
@@ -297,21 +297,21 @@ Node::Ptr OpDot::compute_stmt_type(SymbolTable &st) {
 
     auto member_name_node = get_right();
     auto member_name = static_cast<const Identifier &>(*member_name_node).get_name();
-    std::cout << "buna giriyo mu?" << std::endl;
+    //std::cout << "buna giriyo mu?" << std::endl;
     auto member_entry = member_symtab->get_symbol(member_name);
-    std::cout << "buna giriyo mu?2" << std::endl;
+    //std::cout << "buna giriyo mu?2" << std::endl;
 
     if (!member_entry.stmt) {
         return set_error(FF("Identifier '{}.{}' is not found", left_name, member_name));
     }
-    std::cout << "buna giriyo mu?3" << std::endl;
+    //std::cout << "buna giriyo mu?3" << std::endl;
     auto non_const_member_stmt = std::const_pointer_cast<Node>(member_entry.stmt);
-    std::cout << "buna giriyo mu?4" << std::endl;
-    std::cout << non_const_member_stmt->as_string() << std::endl;
+    //std::cout << "buna giriyo mu?4" << std::endl;
+    //std::cout << non_const_member_stmt->as_string() << std::endl;
     if (auto ret = non_const_member_stmt->compute_stmt_type(st)) {
         return ret;
     }
-    std::cout << "aaaaaaa" << std::endl;
+    
     set_stmt_type(member_entry.stmt);
     return nullptr;
 }
