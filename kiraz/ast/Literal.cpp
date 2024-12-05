@@ -136,7 +136,7 @@ Node::Ptr Let::compute_stmt_type(SymbolTable &st) {
 
         if (m_type) {
             if (m_type != init_type) {
-                return set_error(FF("Initializer type '{}' doesn't match explicit type '{}'", strip_type(init_type->as_string()), strip_type(m_type->as_string())));
+                return set_error(FF("Initializer type '{}' doesn't match explicit type '{}'", extract_id(init_type->as_string()), extract_id(m_type->as_string())));
             }
         } else {
             m_type = init_type;
@@ -151,7 +151,6 @@ Node::Ptr Let::compute_stmt_type(SymbolTable &st) {
     std::cout << "letten çıktık"<< std::endl;
     return nullptr;
 }
-
 Node::Ptr FuncArg::compute_stmt_type(SymbolTable &st) {
 
     return nullptr;
@@ -178,9 +177,7 @@ Node::Ptr Func::compute_stmt_type(SymbolTable &st) {
         return ret;
     }
     std::cout << "func girdik"<< std::endl;
-    if (st.get_scope_type() != ScopeType::Module && st.get_scope_type() != ScopeType::Class) {
-        return set_error("Misplaced function definition");
-    }
+
     std::cout << "func scope kontrol ettik"<< std::endl;
     auto return_type_name = static_cast<const Identifier &>(*m_return_type).get_name();
     std::cout << "return type name aldık"<< std::endl;
@@ -273,7 +270,9 @@ Node::Ptr Class::compute_stmt_type(SymbolTable &st) {
         std::cout << "class'a girdik ret döncek" << std::endl;
         return ret;
     }
-    
+    for (const auto &[name, entry] : st.get_cur_symtab()->symbols) {
+                            fmt::print("name: '{}' -- entry : '{}'\n", name, entry->as_string());
+                        }
     if (!st.add_symbol(get_name_str(), shared_from_this())) {
         return set_error(FF("Identifier '{}' is already in symtab", get_name_str()));
     }
@@ -316,9 +315,16 @@ Node::Ptr Class::compute_stmt_type(SymbolTable &st) {
             if (auto ret = stmt->add_to_symtab_forward(*m_symtab)) {
                 return ret;
             }
+            if (auto ret = stmt->add_to_symtab_ordered(st)) {
+                return ret;
+            }
+            if (auto ret = stmt->add_to_symtab_ordered(*m_symtab)) {
+                return ret;
+            }
             if (auto ret = stmt->compute_stmt_type(st)) {
                 return ret;
             }
+            
         }
         
     }
@@ -429,7 +435,6 @@ Node::Ptr If::compute_stmt_type(SymbolTable &st) {
 
     return nullptr;
 }
-
 Node::Ptr Call::compute_stmt_type(SymbolTable &st) {
     std::cout << "call'a girdik" << std::endl;
     if (auto ret = m_expr->compute_stmt_type(st)) {
@@ -447,23 +452,43 @@ Node::Ptr Call::compute_stmt_type(SymbolTable &st) {
     auto func_args = func_node->get_args();
     auto call_args = m_args;
 
+    size_t expected_args = 0;
+    if (func_args && func_args->is_funcarg_list()) {
+        expected_args = static_cast<const FuncArgs &>(*func_args).get_arguments().size();
+    }
+
     size_t provided_args = 0;
     if (call_args && call_args->is_funcarg_list()) {
         provided_args = static_cast<const FuncArgs &>(*call_args).get_arguments().size();
     }
+    if (provided_args != expected_args) {
+        return set_error(FF("Call to function '{}' has wrong number of arguments", extract_id(m_expr->as_string()) + "." + extract_call(m_expr->as_string())));
+    }
 
     if (provided_args > 0) {
+        auto func_arg_nodes = static_cast<const FuncArgs &>(*func_args).get_arguments();
         auto call_arg_nodes = static_cast<const FuncArgs &>(*call_args).get_arguments();
 
         for (size_t i = 0; i < provided_args; ++i) {
+            auto func_arg = static_cast<const FuncArg &>(*func_arg_nodes[i]);
             auto call_arg = call_arg_nodes[i];
 
             if (auto ret = call_arg->compute_stmt_type(st)) {
                 return ret;
             }
-            auto call_arg_type = call_arg->get_stmt_type();
-
-            
+            auto stmt_name = extract_id(m_expr->as_string());
+            if(stmt_name != "and" && stmt_name != "or" && stmt_name != "not"){
+                auto func_arg_type = func_arg.get_stmt_type();
+                auto call_arg_type = call_arg->get_stmt_type();
+                std::cout << "son buraya" << std::endl;
+                std::cout << func_arg_type->as_string() << std::endl;
+                std::cout << m_expr->as_string() << std::endl;
+                std::cout << extract_call(m_expr->as_string()) << std::endl;
+                if (func_arg_type->as_string() != call_arg_type->as_string()) {
+                    return set_error(FF("Argument {} in call to function '{}' has type '{}' which does not match definition type '{}'",
+                                    i + 1, extract_id(m_expr->as_string()) + "." + extract_call(m_expr->as_string()), strip_type(call_arg_type->as_string()), strip_type(func_arg_type->as_string())));
+                }
+            }
         }
     }
     

@@ -259,38 +259,60 @@ Node::Ptr OpGreaterEq::compute_stmt_type(SymbolTable &st) {
 }
 
 Node::Ptr OpDot::compute_stmt_type(SymbolTable &st) {
-    std::cout << "opdota girdik"<< std::endl;
     if (auto ret = get_left()->compute_stmt_type(st)) {
         return ret;
     }
-    
 
-    auto left_type = get_left()->get_stmt_type();
-    
-    std::cout << "left aldık"<< std::endl;
-    auto class_node = std::dynamic_pointer_cast<const Class>(get_left());
-    auto module_node = std::dynamic_pointer_cast<const Module>(get_left());
-    std::cout << "leftin classını oluşturduk"<< std::endl;
-    if (!class_node || !module_node) {
-        return set_error(FF("Type '{}' is not a class or a module", strip_type(left_type->as_string())));
+    auto left_name = strip_type(get_left()->as_string());
+    std::cout << left_name << std::endl;
+
+    auto left_symbol = st.get_symbol(left_name);
+    if (!left_symbol.stmt) {
+        return set_error(FF("Identifier '{}' is not found", left_name));
+    }
+    std::cout << left_symbol.stmt->as_string() << std::endl;
+    auto left_node = left_symbol.stmt;
+    auto left_type = left_node->get_stmt_type();
+    std::cout << left_type->as_string() << std::endl;
+
+    SymbolTable *member_symtab = nullptr;
+    if (left_type->as_string() == "Id(Class)") {
+        auto class_node = std::dynamic_pointer_cast<ast::Class>(std::const_pointer_cast<Node>(left_node));
+        if (!class_node) {
+            return set_error("Failed to cast to Class");
+        }
+        member_symtab = class_node->get_symtab();
+    } else if (left_type->as_string() == "Id(Module)") {
+        auto module_node = std::dynamic_pointer_cast<ast::Module>(std::const_pointer_cast<Node>(left_node));
+        if (!module_node) {
+            return set_error("Failed to cast to Module");
+        }
+        
+        member_symtab = module_node->get_symtab();
     }
     
-    
-    auto class_symtab = (!class_node) ? module_node->get_symtab() : class_node->get_symtab();
-    std::cout << "class symtab aldık"<< std::endl;
-    if (!class_symtab) {
-        return set_error(FF("Class '{}' has no symbol table", left_type->as_string()));
+    if (!member_symtab) {
+        return set_error(FF("Type '{}' has no symbol table", strip_type(left_type->as_string())));
     }
 
     auto member_name_node = get_right();
     auto member_name = static_cast<const Identifier &>(*member_name_node).get_name();
-    auto member_entry = class_symtab->get_symbol(member_name);
-    auto left_name = static_cast<const Identifier &>(*get_left()).get_name();
-    if (!member_entry || !member_entry.stmt) {
-        return set_error(FF("Identifier '{}.{}' is not found",left_name , member_name));
-    }
+    std::cout << "buna giriyo mu?" << std::endl;
+    auto member_entry = member_symtab->get_symbol(member_name);
+    std::cout << "buna giriyo mu?2" << std::endl;
 
-    set_stmt_type(member_entry.stmt->get_stmt_type());
+    if (!member_entry.stmt) {
+        return set_error(FF("Identifier '{}.{}' is not found", left_name, member_name));
+    }
+    std::cout << "buna giriyo mu?3" << std::endl;
+    auto non_const_member_stmt = std::const_pointer_cast<Node>(member_entry.stmt);
+    std::cout << "buna giriyo mu?4" << std::endl;
+    std::cout << non_const_member_stmt->as_string() << std::endl;
+    if (auto ret = non_const_member_stmt->compute_stmt_type(st)) {
+        return ret;
+    }
+    std::cout << "aaaaaaa" << std::endl;
+    set_stmt_type(member_entry.stmt);
     return nullptr;
 }
 
